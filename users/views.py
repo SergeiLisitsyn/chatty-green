@@ -63,7 +63,8 @@ def login_view(request):
 
 class CustomLoginView(LoginView):
     def get_success_url(self):
-        return '/posts/create/'
+        #return '/posts/create/'
+        return '/posts/'  # после входа отправлять пользователя на /posts/.
         # return f'/profile/{self.request.user.username}'
 
 
@@ -96,11 +97,11 @@ def change_password(request):
     return render(request, 'users/change_password.html', {'form': form})
 
 
-class CustomLoginView(LoginView):
-    template_name = 'users/login.html'  # Твой шаблон входа
+#class CustomLoginView(LoginView):
+    #template_name = 'users/login.html'  # Твой шаблон входа
 
-    def get_success_url(self):
-        return reverse('profile', kwargs={'username': self.request.user.username})
+    #def get_success_url(self):
+        #return reverse('profile', kwargs={'username': self.request.user.username})
 
 
 from django.contrib.auth.views import PasswordResetConfirmView
