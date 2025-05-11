@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django.contrib.sites',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -60,6 +61,8 @@ INSTALLED_APPS = [
     'chat',
     'widget_tweaks',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -187,16 +190,16 @@ if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)
 
 # URL для входа
-LOGIN_URL = 'login'  # Используем имя нашего URL-пути для входа
-LOGIN_REDIRECT_URL = '/'  # Куда перенаправляет после успешного входа
+LOGIN_URL = 'home'  # Используем имя нашего URL-пути для входа на домашнюю страницу
+LOGIN_REDIRECT_URL = '/home/' # Куда перенаправляет после успешного входа
 
 
 # Проверка загрузки переменных окружения
-print("\n=== Email Configuration ===")
-print(f"EMAIL_HOST: {EMAIL_HOST}")
-print(f"EMAIL_PORT: {EMAIL_PORT}")
-print(f"EMAIL_USE_TLS: {EMAIL_USE_TLS}")
-print(f"EMAIL_HOST_USER: {EMAIL_HOST_USER or 'не установлен'}")
-print(f"EMAIL_HOST_PASSWORD: {'установлен' if EMAIL_HOST_PASSWORD else 'не установлен'}")
-print(f"DEFAULT_FROM_EMAIL: {DEFAULT_FROM_EMAIL}")
-print("=========================\n")
+# print("\n=== Email Configuration ===")
+# print(f"EMAIL_HOST: {EMAIL_HOST}")
+# print(f"EMAIL_PORT: {EMAIL_PORT}")
+# print(f"EMAIL_USE_TLS: {EMAIL_USE_TLS}")
+# print(f"EMAIL_HOST_USER: {EMAIL_HOST_USER or 'не установлен'}")
+# print(f"EMAIL_HOST_PASSWORD: {'установлен' if EMAIL_HOST_PASSWORD else 'не установлен'}")
+# print(f"DEFAULT_FROM_EMAIL: {DEFAULT_FROM_EMAIL}")
+# print("=========================\n")

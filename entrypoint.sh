@@ -2,9 +2,12 @@
 set -e
 
 # Ожидаем доступности БД
-/app/wait-for-db.sh db 5432
+while ! /app/wait-for-db.sh db 5432; do
+    sleep 0.5
+done
+echo "PostgreSQL started"
 
-# Выполняем миграции
+# Выполняем миграцииуexit
 python manage.py migrate
 
 # Создаем суперпользователя, если его нет

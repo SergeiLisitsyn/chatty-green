@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {% if form.instance.pk %}Редактировать пост{% else %}Создать пост{% endif %}
+{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">{% if form.instance.pk %}Редактировать пост{% else %}Создать пост{% endif %}</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary mt-3">💾 Сохранить</button>
+    <a href="{% url 'post_list' %}" class="btn btn-secondary mt-3 ms-2">Отмена</a>
+  </form>
+{% endblock %}
