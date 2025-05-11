@@ -13,6 +13,8 @@ urlpatterns = [
     path('<slug:slug>/delete/', PostDeleteView.as_view(), name='post_delete'),       # Удаление
     path('<slug:slug>/like/', views.like_post, name='like_post'),                    # AJAX-лайк
     path('<slug:slug>/dislike/', views.dislike_post, name='dislike_post'),           # AJAX-дизлайк
-    path('<slug:slug>/', PostDetailView.as_view(), name='post_detail'),              # Детали поста (в конце!)
+    path('<slug:slug>/', views.PostDetailViewSlug.as_view(),name='post_detail_slug'),
+    path('id/<int:pk>/', views.PostDetailViewId.as_view(), name='post_detail_id'),
+
 ]
 
