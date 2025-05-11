@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Post
 from django.views.generic import ListView, DetailView
-from django.core.paginator import Paginator
 
 def post_list(request):
     posts = Post.objects.all()
@@ -15,7 +14,7 @@ class PostListView(ListView):
     model = Post
     template_name = 'post_list.html'
     context_object_name = 'posts'
-    paginate_by = 10
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

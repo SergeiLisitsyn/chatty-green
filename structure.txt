@@ -1,4 +1,5 @@
 Chatty_green/
+├── Dockerfile
 ├── Print_three_project.py
 ├── chat/
 │   ├── __init__.py
@@ -14,6 +15,7 @@ Chatty_green/
 │   ├── asgi.py
 │   ├── settings.py
 │   ├── urls.py
+│   ├── views.py
 │   └── wsgi.py
 ├── core/
 │   ├── __init__.py
@@ -24,24 +26,44 @@ Chatty_green/
 │   ├── models.py
 │   ├── tests.py
 │   └── views.py
+├── create_admin.py
+├── db/
+│   └── Dockerfile
+├── docker-compose.yml
+├── entrypoint.sh
 ├── manage.py
 ├── media/
 │   ├── avatars/
 │   │   ├── _brunette_man_2.jpg
 │   │   ├── _brunette_man_2_O3wICJm.jpg
 │   │   ├── boy_w_1.jpg
+│   │   ├── boy_w_1_4c6yQT7.jpg
 │   │   ├── boy_w_1_JdhL1R3.jpg
 │   │   ├── default.png
 │   │   └── wom_2.jpg
 │   └── test.txt
+├── nginx/
+│   ├── Dockerfile
+│   └── nginx.conf
 ├── posts/
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
+│   ├── forms.py
 │   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_post_title.py
 │   │   └── __init__.py
 │   ├── models.py
+│   ├── templates/
+│   │   ├── post_list.html
+│   │   └── posts/
+│   │       ├── post_confirm_delete.html
+│   │       ├── post_detail.html
+│   │       ├── post_edit.html
+│   │       └── post_form.html
 │   ├── tests.py
+│   ├── urls.py
 │   └── views.py
 ├── requirements.txt
 ├── static/
@@ -66,6 +88,9 @@ Chatty_green/
 │   │   ├── footer.html
 │   │   └── navbar.html
 │   ├── register.html
+│   ├── registration/
+│   │   └── login.html
+│   ├── welcome.html
 │   └── {% static 'images/
 ├── users/
 │   ├── __init__.py
@@ -74,7 +99,6 @@ Chatty_green/
 │   ├── forms.py
 │   ├── migrations/
 │   │   ├── 0001_initial.py
-│   │   ├── 0002_alter_customuser_avatar.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── signals.py
@@ -91,13 +115,14 @@ Chatty_green/
 │   │       ├── password_reset_done.html
 │   │       ├── password_reset_form.html
 │   │       ├── profile.html
-│   │       └── register.html
-│   ├── templatetags/
-│   │   ├── __init__.py
-│   │   └── form_filters.py
+│   │       ├── register.html
+│   │       └── templatetags/
+│   │           ├── __init__.py
+│   │           └── form_filters.py
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
-└── venv/
-    ├── Include/
-    ├── Scripts/
+├── venv/
+│   ├── Include/
+│   ├── Scripts/
+└── wait-for-db.sh

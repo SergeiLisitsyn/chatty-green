@@ -63,7 +63,8 @@ def login_view(request):
 
 class CustomLoginView(LoginView):
     def get_success_url(self):
-        return f'/profile/{self.request.user.username}'
+        return '/posts/create/'
+        # return f'/profile/{self.request.user.username}'
 
 
 def edit_profile(request, username):
