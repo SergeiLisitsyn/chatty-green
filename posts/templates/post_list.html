@@ -4,7 +4,7 @@
 
 {% block content %}
 <h1 class="text-center mb-4"> Каталог постов Chatty-green  </h1>
-   {% comment %} {% include "include/search_form.html" %} {% endcomment %}
+  {% comment %} {% include "include/search_form.html" %} {% endcomment %}
     <h1 class="text-center mb-4"></h1>
 
     <div class="row">
@@ -14,6 +14,6 @@
             {% include "include/post_preview.html" with post=post %}
         {% endfor %}
 
-         {% comment %} {% include "include/paginator.html" with page=page_obj %} {% endcomment %}
+ {% include "include/paginator.html" with page=page_obj %}
     </div>
 {% endblock %}
