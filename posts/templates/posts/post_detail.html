@@ -5,9 +5,9 @@
 {% block content %}
 <div class="container mt-5">
   <div class="mb-4">
-    <h2>{{ post.title|default:"(Без заголовка)" }}</h2>
-    <p class="text-muted">Автор: {{ post.author.username }} • {{ post.created_at|date:"d.m.Y H:i" }}</p>
-    <p>{{ post.content }}</p>
+    <h2>Название поста: {{ post.title|default:"(Без заголовка)" }}</h2>
+    <p class="text-muted">Автор: {{ post.author.username }} • {{ post.publication_date|date:"d.m.Y H:i" }}</p>
+    <p>{{ post.text }}</p>
 
     <!-- Блок лайков и дизлайков -->
     <div class="d-flex gap-3 align-items-center mt-3">

@@ -1,12 +1,28 @@
 
 <div class="card card-shadow">
     <div class="card-body">
-        <h5 class="card-title"> Пост:  #{{ post.id }}</h5>
-        <p class="card-text">{{ post.text|truncatewords:7 }}</p>
+          {% if post.slug %}
+        <h5 class="card-title"> Пост ID:  #{{ post.id }}</h5>
+        <a href="{% url 'post_detail_slug' post.slug %}" class="fw-bold text-decoration-none text-dark">
+              Название Поста: {{ post.title|default:"(Без заголовка)" }}
+            </a>
+          {% else %}
+            <span class="text-danger">Пост без slug: {{ post.title|default:"(Без заголовка)" }}</span>
+          {% endif %}
+
+        <p class="card-text">Содержание поста: {{ post.text|truncatewords:7 }}</p>
 
         <p class="card-text d-flex justify-content-between">
             <small class="text-muted"><i class="bi bi-calendar"></i> Дата публикации:  {{ post.publication_date }}</small>
         </p>
          <p class="card-text"><i class="bi bi-person-fill"></i> Автор поста: {{ post.author|default:'Аноним' }}</p>
+        <!-- Лайки и дизлайки -->
+          <div class="mt-2 d-flex align-items-center gap-2">
+            <button class="btn-like btn btn-sm btn-outline-primary" data-action="like">👍</button>
+            <span class="like-count">{{ post.likes.count }}</span>
+
+            <button class="btn-dislike btn btn-sm btn-outline-danger" data-action="dislike">👎</button>
+            <span class="dislike-count">{{ post.dislikes.count }}</span>
+          </div>
     </div>
 </div>
