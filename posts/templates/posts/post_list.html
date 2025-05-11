@@ -1,28 +1,63 @@
 {% extends 'base.html' %}
 
-{% block title %}Каталог постов Chatty-green{% endblock %}
+{% block title %}Посты{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-0">Каталог постов Chatty-green </h2>
+    <h2 class="mb-0">Список постов</h2>
   </div>
-  {% include "include/paginator.html" with page=page_obj %}
-  {% if posts %}
-    <ul class="list-group">
-      {% for post in page_obj %}
-            {% include "include/post_preview.html" with post=post %}
-        {% endfor %}
-    </ul>
-  {% else %}
-    <div class="alert alert-info mt-4" role="alert">
-      Пока нет опубликованных постов.
-    </div>
-  {% endif %}
-  {% if user.is_authenticated %}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Показываем кнопку "Новый пост" только для авторизованных пользователей -->
+    {% if user.is_authenticated %}
       <a href="{% url 'post_create' %}" class="btn btn-success">➕ Новый пост</a>
     {% endif %}
+  </div>
+
+  {% if posts %}
+   {% include "include/paginator.html" with page=page_obj %}
+    <ul class="list-group">
+      {% for post in posts %}
+        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap" data-post-slug="{{ post.slug }}">
+
+          <!-- Заголовок поста с проверкой slug -->
+          {% if post.slug %}
+            <a href="{% url 'post_detail' post.slug %}" class="fw-bold text-decoration-none text-dark">
+              {{ post.title|default:"(Без заголовка)" }}
+            </a>
+          {% else %}
+            <span class="text-danger">Пост без slug: {{ post.title|default:"(Без заголовка)" }}</span>
+          {% endif %}
+
+            <!-- Информация о посте -->
+          <div class="text-muted small">
+            Автор: {{ post.author.username }} • {{ post.created_at|date:"d.m.Y H:i" }}
+          </div>
+
+          <!-- Действия: Лайк, дизлайк и редактирование (только для автора) -->
+          <div class="mt-2 d-flex align-items-center gap-2">
+            <button class="btn-like btn btn-sm btn-outline-primary" data-action="like">👍</button>
+            <span class="like-count">{{ post.likes.count }}</span>
+
+            <button class="btn-dislike btn btn-sm btn-outline-danger" data-action="dislike">👎</button>
+            <span class="dislike-count">{{ post.dislikes.count }}</span>
+
+            {% if user == post.author %}
+              <a href="{% url 'post_update' post.slug %}" class="btn btn-sm btn-warning">✏️ Редактировать</a>
+              <a href="{% url 'post_delete' post.slug %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
   {% include "include/paginator.html" with page=page_obj %}
+  {% else %}
+  <!-- Сообщение, если постов пока нет -->
+    <div class="alert alert-info mt-4" role="alert">
+      Пока нет опубликованных постов. Будьте первым (для публикации поста просто зарегистрируйтесь)
+    </div>
+
+  {% endif %}
 </div>
 
 <!-- JS для обработки лайков/дизлайков -->
