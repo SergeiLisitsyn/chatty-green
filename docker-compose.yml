@@ -14,6 +14,16 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5435:5432"
+  psql:
+    image: postgres:13-alpine
+    container_name: psql
+    depends_on:
+      - db
+    env_file:
+      - .env
+    command: sh -c "exec psql -h ${PG_HOST} -p ${PG_PORT} -U ${PG_USER} -d ${PG_NAME}"
+    tty: true
+
 
   web:
     image: chatty_green_web:latest      # <-- добавили
@@ -46,3 +56,4 @@ services:
 volumes:
   postgres_data:
   media_volume:
+
