@@ -4,6 +4,7 @@
 {% block content %}
 <div class="container mt-4">
     <h2>Вы успешно вышли из системы.</h2>
-    <p><a href="{% url 'home' %}">Перейти на главную страницу</a></p>
+
+    <p><a href="{% url 'posts:post_list' %}">Пернейти на главную страницу</a></p>
 </div>
 {% endblock %}
