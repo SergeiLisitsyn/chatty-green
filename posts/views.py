@@ -129,7 +129,7 @@ class FeedView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'posts/feed.html'
     context_object_name = 'posts'
-    paginate_by = 10
+    paginate_by = 10 # Количество постов на одной странице
 
     def get_queryset(self):
         # Получаем список авторов, на которых подписан текущий пользователь
