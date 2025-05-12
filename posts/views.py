@@ -1,3 +1,5 @@
+#posts/views.py
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseForbidden
 from .models import Post, Comment
@@ -8,7 +10,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from subscriptions.models import Subscription
 
 
 # Классы для работы с Post
@@ -16,7 +17,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'posts/post_form.html'
-    success_url = reverse_lazy('post_list')
+    success_url = reverse_lazy('posts:post_list')
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -26,7 +27,7 @@ class PostListView(ListView):
     model = Post
     template_name = 'posts/post_list.html'
     context_object_name = 'posts'
-    paginate_by = 20
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -46,6 +47,9 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+
+    def get_success_url(self):
+        return reverse_lazy('posts:post_detail', kwargs={'slug': self.object.slug})  # ✅ Добавляем namespace
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
@@ -125,14 +129,17 @@ def dislike_post(request, slug):
         'dislikes_count': post.dislikes.count()
     })
 
-class FeedView(LoginRequiredMixin, ListView):
+class PostDetailViewSlug(DetailView):
     model = Post
-    template_name = 'posts/feed.html'
-    context_object_name = 'posts'
-    paginate_by = 10 # Количество постов на одной странице
+    template_name = 'post_detail.html'
+    context_object_name = 'post'
+    slug_field = 'slug'  # Поле модели для поиска по слагу
+    slug_url_kwarg = 'slug'  # Название параметра в URL
 
-    def get_queryset(self):
-        # Получаем список авторов, на которых подписан текущий пользователь
-        subscribed_authors = Subscription.objects.filter(subscriber=self.request.user).values_list('author', flat=True)
-        # Фильтруем посты только от этих авторов
-        return Post.objects.filter(author__in=subscribed_authors).order_by('-publication_date')
+class PostDetailViewId(DetailView):
+    model = Post
+    template_name = 'post_detail.html'  # Можно использовать тот же шаблон
+    context_object_name = 'post'
+    pk_field = 'pk'
+    pk_url_kwarg = 'pk'  # Явное указание параметра URL
+    print(f'pk_url_kwarg = {pk_url_kwarg}')
