@@ -1,6 +1,3 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Post
-from django.views.generic import ListView, DetailView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseForbidden
 from .models import Post, Comment
@@ -11,6 +8,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from subscriptions.models import Subscription
+
+
+# Классы для работы с Post
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'posts/post_form.html'
+    success_url = reverse_lazy('post_list')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 class PostListView(ListView):
     model = Post
@@ -26,33 +36,6 @@ class PostListView(ListView):
             post.likes_users = post.likes.all()
             post.dislikes_users = post.dislikes.all()
         return context
-
-class PostDetailViewSlug(DetailView):
-    model = Post
-    template_name = 'posts/post_detail.html'
-    context_object_name = 'post'
-    slug_field = 'slug'  # Поле модели для поиска по слагу
-    slug_url_kwarg = 'slug'  # Название параметра в URL
-
-class PostDetailViewId(DetailView):
-    model = Post
-    template_name = 'post_detail.html'  # Можно использовать тот же шаблон
-    context_object_name = 'post'
-    pk_field = 'pk'
-    pk_url_kwarg = 'pk'  # Явное указание параметра URL
-    print(f'pk_url_kwarg = {pk_url_kwarg}')
-
-
-# Классы для работы с Post
-class PostCreateView(LoginRequiredMixin, CreateView):
-    model = Post
-    form_class = PostForm
-    template_name = 'posts/post_form.html'
-    success_url = reverse_lazy('post_list')
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -141,3 +124,15 @@ def dislike_post(request, slug):
         'disliked': disliked,
         'dislikes_count': post.dislikes.count()
     })
+
+class FeedView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'posts/feed.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+
+    def get_queryset(self):
+        # Получаем список авторов, на которых подписан текущий пользователь
+        subscribed_authors = Subscription.objects.filter(subscriber=self.request.user).values_list('author', flat=True)
+        # Фильтруем посты только от этих авторов
+        return Post.objects.filter(author__in=subscribed_authors).order_by('-publication_date')

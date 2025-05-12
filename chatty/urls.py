@@ -23,7 +23,8 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
-    path("posts/", include("posts.urls")),
+    path('posts/', include('posts.urls')),
+    path('subscriptions/', include('subscriptions.urls')),
 ]
 
 # Добавляем поддержку медиа-файлов (аватары, изображения и т.д.)
