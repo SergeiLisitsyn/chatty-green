@@ -18,5 +18,5 @@ urlpatterns = [
     path('<slug:slug>/', PostDetailView.as_view(), name='post_detail'),#Этот маршрут позволяет просматривать посты по их `slug`.
     path('<slug:slug>/like/', like_post, name='like_post'),  #Этот маршрут обрабатывает лайк для поста.
     path('<slug:slug>/dislike/', dislike_post, name='dislike_post'),  # ✅ Должен быть этот маршрут!
-    path('feed/', FeedView.as_view(), name='feed'),
+    path('feed/', FeedView.as_view(), name='feed'),# URL-адрес для ленты постов
 ]
