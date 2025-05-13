@@ -7,3 +7,4 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('text', 'title', 'author__username')
     list_filter = ('publication_date',)
     actions = ['mark_deleted']
+
