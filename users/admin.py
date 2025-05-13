@@ -6,55 +6,41 @@ from .models import CustomUser, UserProfile
 
 
 class CustomUserAdmin(UserAdmin):
-    model = CustomUser
-    fieldsets = UserAdmin.fieldsets + (
-        ('Дополнительно', {'fields': ('avatar', 'bio', 'contacts')}),
-    )
-
-# Фильтр для бана
-class BannedFilter(admin.SimpleListFilter):
-    title = 'Бан'
-    parameter_name = 'is_banned'
-
-    def lookups(self, request, model_admin):
-        return (
-            ('yes', 'Забаненные'),
-            ('no', 'Не забаненные'),
-        )
-
-    def queryset(self, request, queryset):
-        if self.value() == 'yes':
-            return queryset.filter(profile__is_banned=True)
-        if self.value() == 'no':
-            return queryset.filter(profile__is_banned=False)
-
-# Inline для профиля
-class UserProfileInline(admin.StackedInline):
-    model = UserProfile
-    can_delete = False
-
-# Кастомный UserAdmin
-class UserAdmin(UserAdmin):
-    inlines = (UserProfileInline,)
-    list_display = ('username', 'email', 'is_banned', 'is_staff')
-    list_filter = (BannedFilter, 'is_staff', 'is_superuser')
+    list_display = ('username', 'email', 'is_banned', 'banned_until', 'is_staff')
+    list_filter = ('is_banned', 'is_staff', 'is_superuser')
     actions = ['ban_users', 'unban_users']
 
-    def is_banned(self, obj):
-        return obj.profile.is_banned
-    is_banned.boolean = True
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Персональная информация', {'fields': ('first_name', 'last_name', 'email', 'avatar', 'bio', 'contacts')}),
+        ('Права доступа', {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+        }),
+        ('Бан', {
+            'fields': ('is_banned', 'ban_reason', 'banned_until'),
+        }),
+        ('Важные даты', {'fields': ('last_login', 'date_joined')}),
+    )
 
     def ban_users(self, request, queryset):
-        for user in queryset:
-            user.profile.is_banned = True
-            user.profile.save()
-    ban_users.short_description = "Забанить"
+        queryset.update(is_banned=True)
+
+    ban_users.short_description = "Забанить выбранных пользователей"
 
     def unban_users(self, request, queryset):
-        for user in queryset:
-            user.profile.is_banned = False
-            user.profile.save()
-    unban_users.short_description = "Разбанить"
+        queryset.update(is_banned=False, ban_reason=None, banned_until=None)
+
+    unban_users.short_description = "Разбанить выбранных пользователей"
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'get_banned_status')
+
+    def get_banned_status(self, obj):
+        return obj.user.is_banned
+
+    get_banned_status.short_description = 'Статус бана'
