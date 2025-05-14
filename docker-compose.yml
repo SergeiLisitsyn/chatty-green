@@ -13,7 +13,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5435:5432"
+      - "5432:5432"
   psql:
     image: postgres:13-alpine
     container_name: psql
@@ -41,6 +41,22 @@ services:
     volumes:
       - .:/app
       - media_volume:/media
+
+  tests:
+    build: .
+    command: pytest /code/tests/
+    volumes:
+      - .:/app
+    env_file: # <-- добавьте это!
+      - .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=chatty.settings
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - web
+      - db
+
 
 #  nginx:
 #    build:
