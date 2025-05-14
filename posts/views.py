@@ -10,6 +10,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from posts.templatetags import time_filters
+from posts.models import Post
 
 
 # Классы для работы с Post
@@ -51,6 +53,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('posts:post_detail', kwargs={'slug': self.object.slug})  # ✅ Добавляем namespace
 
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = reverse_lazy('post_list')
@@ -59,6 +62,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+
 
 # Детали поста с формой комментариев (CBV)
 class PostDetailView(DetailView):
@@ -129,12 +133,14 @@ def dislike_post(request, slug):
         'dislikes_count': post.dislikes.count()
     })
 
+
 class PostDetailViewSlug(DetailView):
     model = Post
     template_name = 'post_detail.html'
     context_object_name = 'post'
     slug_field = 'slug'  # Поле модели для поиска по слагу
     slug_url_kwarg = 'slug'  # Название параметра в URL
+
 
 class PostDetailViewId(DetailView):
     model = Post
@@ -143,3 +149,18 @@ class PostDetailViewId(DetailView):
     pk_field = 'pk'
     pk_url_kwarg = 'pk'  # Явное указание параметра URL
     print(f'pk_url_kwarg = {pk_url_kwarg}')
+
+
+def archive_post(request, slug):
+    if request.method == "POST":
+        post = get_object_or_404(Post, slug=slug)
+        if request.user == post.author:
+            post.is_archived = True  # Должно быть поле `is_archived`
+            post.save()
+            return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
+
+def home(request):
+    latest_posts = Post.objects.filter(is_archived=False).order_by('-created_at')[:5]  # 5 свежих постов
+    return render(request, 'home.html', {'latest_posts': latest_posts})

@@ -591,6 +591,8 @@ DATABASES = {
 1. Запуск контейнеров:
 ``` 
 docker-compose up
+docker restart web /перезапуск контенера - web/
+
 ``` 
 2. Выполнение миграций:
 ``` 

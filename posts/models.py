@@ -4,11 +4,13 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
-
+from posts.templatetags import time_filters
 from django.contrib.auth import get_user_model
+from unidecode import unidecode
+import uuid
+from django.utils.timezone import now
 
 User = get_user_model()
-
 
 
 class Post(models.Model):
@@ -16,18 +18,23 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
     image = models.ImageField(upload_to='post_images/', null=True, blank=True)
-    publication_date = models.DateTimeField(auto_now_add=True)
+    publication_date = models.DateTimeField(auto_now_add=True)  # Дата публикации
+    created_at = models.DateTimeField(auto_now_add=True)  # Дата создания
+    updated_at = models.DateTimeField(auto_now=True)  # Дата последнего обновления
     slug = models.SlugField(unique=True, blank=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
     dislikes = models.ManyToManyField(User, related_name='disliked_posts', blank=True)
+    is_archived = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base_slug = slugify(self.title) if self.title else 'post'
-            slug = base_slug
+            slug = slugify(self.title)
+            slug = slug[:45]  # ограничим, чтобы осталось место для "-1", "-2" и т.д.
             counter = 1
-            while Post.objects.filter(slug=slug).exclude(pk=self.pk).exists():
-                slug = f"{base_slug}-{counter}"
+            original_slug = slug
+            while Post.objects.filter(slug=slug).exists():
+                suffix = f"-{counter}"
+                slug = f"{original_slug[:45 - len(suffix)]}{suffix}"
                 counter += 1
             self.slug = slug
         super().save(*args, **kwargs)
