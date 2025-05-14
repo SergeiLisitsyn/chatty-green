@@ -1,15 +1,6 @@
 Chatty_green/
 ├── Dockerfile
 ├── Print_three_project.py
-├── chat/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── migrations/
-│   │   └── __init__.py
-│   ├── models.py
-│   ├── tests.py
-│   └── views.py
 ├── chatty/
 │   ├── __init__.py
 │   ├── asgi.py
@@ -17,15 +8,6 @@ Chatty_green/
 │   ├── urls.py
 │   ├── views.py
 │   └── wsgi.py
-├── core/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── migrations/
-│   │   └── __init__.py
-│   ├── models.py
-│   ├── tests.py
-│   └── views.py
 ├── create_admin.py
 ├── db/
 │   └── Dockerfile
@@ -34,13 +16,7 @@ Chatty_green/
 ├── manage.py
 ├── media/
 │   ├── avatars/
-│   │   ├── _brunette_man_2.jpg
-│   │   ├── _brunette_man_2_O3wICJm.jpg
-│   │   ├── boy_w_1.jpg
-│   │   ├── boy_w_1_4c6yQT7.jpg
-│   │   ├── boy_w_1_JdhL1R3.jpg
-│   │   ├── default.png
-│   │   └── wom_2.jpg
+│   ├── post_images/
 │   └── test.txt
 ├── nginx/
 │   ├── Dockerfile
@@ -53,23 +29,30 @@ Chatty_green/
 │   ├── migrations/
 │   │   ├── 0001_initial.py
 │   │   ├── 0002_post_title.py
+│   │   ├── 0003_comment.py
+│   │   ├── 0004_alter_comment_options_post_likes.py
+│   │   ├── 0005_post_dislikes.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── templates/
-│   │   ├── post_list.html
+│   │   ├── include/
+│   │   │   ├── paginator.html
+│   │   │   └── post_preview.html
 │   │   └── posts/
 │   │       ├── post_confirm_delete.html
 │   │       ├── post_detail.html
 │   │       ├── post_edit.html
-│   │       └── post_form.html
+│   │       ├── post_form.html
+│   │       └── post_list.html
+│   ├── templatetags/
+│   │   ├── __init__.py
+│   │   └── time_filters.py
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
 ├── requirements.txt
 ├── static/
 │   ├── images/
-│   │   ├── backgraunt.jpg
-│   │   └── backgraunt_2.jpg
 │   └── test.txt
 ├── structure.txt
 ├── subscriptions/
@@ -77,9 +60,11 @@ Chatty_green/
 │   ├── admin.py
 │   ├── apps.py
 │   ├── migrations/
+│   │   ├── 0001_initial.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── tests.py
+│   ├── urls.py
 │   └── views.py
 ├── templates/
 │   ├── base.html
@@ -87,6 +72,7 @@ Chatty_green/
 │   ├── include/
 │   │   ├── footer.html
 │   │   └── navbar.html
+│   ├── login.html
 │   ├── register.html
 │   ├── registration/
 │   │   └── login.html

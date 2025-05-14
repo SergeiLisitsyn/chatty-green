@@ -1,4 +1,5 @@
-{% extends "base.html" %} <!-- Будет искать в templates/base.html -->
+{% extends "base.html" %}
+{% load static %}
 
 {% block title %}Главная - Chatty{% endblock %}
 
@@ -12,14 +13,91 @@
     body.fade-in {
       opacity: 1;
     }
+
+    .welcome-message {
+      font-size: 32px;
+      font-weight: bold;
+      color: #007BFF;
+      text-align: center;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 10px rgba(0, 123, 255, 0.3);
+    }
+
+    .news-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #007BFF;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .post-card {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    }
+
+
+    .chat-description {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      color: #333;
+    }
   </style>
 
+  <!-- Блок приветствия -->
   <div style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
-      <h1>Добро пожаловать в Chatty Green!</h1>
-      <p>Лучший чат для социальных новостей  .</p>
-          <a href="{% url 'posts:post_list' %}">
-            <button type="submit" class="btn btn-primary">Перейти в чат</button>
-          </a>
+      <h1 class="welcome-message">
+        {% if user.is_authenticated %}
+          {{ user.username }}, добро пожаловать в Chatty Green!
+        {% else %}
+          Добро пожаловать в Chatty Green!
+        {% endif %}
+      </h1>
+      <p class="chat-description">Лучший чат для социальных новостей.</p>
+      <a href="{% url 'posts:post_list' %}">
+        <button type="submit" class="btn btn-primary">Перейти в чат</button>
+      </a>
+  </div>
+
+  <!-- Блок свежих новостей -->
+  <div class="container mt-5">
+    <h2 class="news-title">Свежие новости</h2>
+
+    <div class="list-group">
+         <h3 class="text-success">Новость: {{ post.title }}</h3>
+       <h4 class="text-warning">📰 Пост: {{ post.title }}</h4>
+  <p class="text-secondary">Автор: {{ post.author.username }}</p>
+  <hr>
+        {% for post in latest_posts %}
+        <div class="list-group-item py-3 d-flex gap-3 post-card">
+             <p class="text-warning">📰 Загружается пост: {{ post.title }}</p>
+            <div class="flex-shrink-0">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Превью поста" class="rounded" width="100" height="100" style="object-fit: cover;">
+                {% else %}
+                <img src="{% static 'images/default_post.jpg' %}" alt="Без изображения" class="rounded" width="100" height="100" style="object-fit: cover;">
+                {% endif %}
+            </div>
+            <div class="w-100">
+                <a href="{% url 'posts:post_detail' post.slug %}" class="h5 fw-bold text-decoration-none text-dark d-block">
+                    {{ post.title|default:"(Без заголовка)" }}
+                </a>
+                <p class="text-muted small mb-1">{{ post.created_at|date:"d M Y H:i" }} • {{ post.author.username }}</p>
+                <p class="mb-0">{{ post.text|truncatewords:30 }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
   </div>
 
   <script>
