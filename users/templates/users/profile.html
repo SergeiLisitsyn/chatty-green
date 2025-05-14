@@ -1,19 +1,75 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Профиль {{ user.username }}</h2>
-
+    <h2>Профиль {{ profile_user.username }}</h2>
     <div class="row">
         <div class="col-md-3">
-            <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}" alt="Аватар" class="img-thumbnail" width="200">
+            <img src="{% if profile_user.avatar %}{{ profile_user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
+                 alt="Аватар" class="img-thumbnail" width="200">
         </div>
         <div class="col-md-9">
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>О себе:</strong> {{ user.bio|default:"Не указано" }}</p>
-            <a href="{% url 'edit_profile' username=user.username %}" class="btn btn-primary">Редактировать профиль</a>
-            <a href="{% url 'change_password' %}" class="btn btn-warning">Сменить пароль</a>
+            <p><strong>Email:</strong> {{ profile_user.email }}</p>
+            <p><strong>О себе:</strong> {{ profile_user.bio|default:"Не указано" }}</p>
+
+            {% if request.user == profile_user %}
+                <a href="{% url 'edit_profile' username=profile_user.username %}" class="btn btn-primary">
+                    Редактировать профиль
+                </a>
+                <a href="{% url 'change_password' %}" class="btn btn-warning">
+                    Сменить пароль
+                </a>
+            {% else %}
+                <form class="d-inline" method="post" action="{% url 'subscriptions:toggle' profile_user.username %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="btn subscription-toggle {% if is_subscribed %}btn-outline-secondary{% else %}btn-primary{% endif %}"
+                        data-username="{{ profile_user.username }}">
+                        {% if is_subscribed %}
+                            <i class="fa-solid fa-user-minus me-1"></i>Отписаться
+                        {% else %}
+                            <i class="fa-solid fa-user-plus me-1"></i>Подписаться
+                        {% endif %}
+                    </button>
+                </form>
+            {% endif %}
+
+            <!-- Статистика подписок -->
+            <p>
+                Подписчиков: <span id="subscribers-count">{{ profile_user.followers.count }}</span>
+                &nbsp;|&nbsp;
+                Подписок: {{ profile_user.subscriptions.count }}
+            </p>
+
+            <!-- Дополнительно: вывод последних статей пользователя -->
+            <div class="profile-posts mt-4">
+                <h3>Статьи</h3>
+                {% if user_posts %}
+                    {% for post in user_posts %}
+                        <div class="post-preview">
+                            <h4>
+                                <a href="{% url 'posts:post_detail' post.slug %}">{{ post.title }}</a>
+                            </h4>
+                            <p>{{ post.text|truncatechars:150 }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Нет опубликованных статей.</p>
+                {% endif %}
+            </div>
+
+            <!-- Навигация к страницам подписок -->
+            <p class="mt-3">
+                <a href="{% url 'subscriptions:feed' %}">Лента</a> |
+                <a href="{% url 'subscriptions:followers' profile_user.username %}">Подписчики</a> |
+                <a href="{% url 'subscriptions:following' profile_user.username %}">Подписки</a>
+            </p>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'subscriptions/js/subscriptions.js' %}"></script>
 {% endblock %}

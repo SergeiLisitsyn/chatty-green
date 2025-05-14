@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ post.title|default:"(Без заголовка)" }}{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <div class="mb-4">
-    <h2>Название поста: {{ post.title|default:"(Без заголовка)" }}</h2>
-    <p class="text-muted">Автор: {{ post.author.username }} </p>
+  <div class="container mt-4">
+    <h2>{{ post.title|default:"(Без заголовка)" }}</h2>
+    <p>Автор: <a href="{% url 'profile' username=post.author.username %}">{{ post.author.username }}</a></p>
+
     <p><strong>Дата публикации:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
 
     <!-- Проверяем, загружено ли изображение -->
@@ -15,54 +15,43 @@
     {% endif %}
 
     <p>{{ post.text }}</p>
-     <hr>
-    <!-- Блок лайков и дизлайков -->
-    <div class="d-flex gap-3 align-items-center mt-3">
-      <button id="like-button" class="btn btn-outline-warning">
-        <span id="like-icon">
-          {% if user in post.likes.all %}св <С</Ср>
-            <span style="color: white;">👎</span>
-          {% endif %}
-        </span>
-        <span id="dislike-count">{{ post.dislikes.count }}</span>
-      </button>
-    </div>
-  </div>
 
-  <!-- Комментарии -->
-  <div class="mt-5">
-    <h5>Комментарии</h5>
-    {% for comment in post.comments.all %}
-      <div class="border rounded p-3 mb-2">
-        <strong>{{ comment.author.username }}</strong>
-        <small class="text-muted">• {{ comment.created_at|date:"d.m.Y H:i" }}</small>
-        <p class="mb-0">{{ comment.text }}</p>
-      </div>
-    {% empty %}
-      <p class="text-muted">Комментариев пока нет.</p>
-    {% endfor %}
-  </div>
+    <hr>
 
-  <!-- Форма комментария -->
-  {% if user.is_authenticated %}
-    <div class="mt-4">
-      <h6>Добавить комментарий</h6>
-      <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Отправить</button>
-      </form>
-    </div>
-  {% else %}
-    <p class="mt-4">Чтобы оставить комментарий, <a href="{% url 'login' %}">войдите в аккаунт</a>.</p>
-  {% endif %}
-</div>
+    <!-- Кнопка редактирования (только для автора поста) -->
+    {% if user == post.author %}
+      <a href="{% url 'posts:post_update' post.slug %}" class="btn btn-warning mt-3">✏️ Редактировать</a>
+    {% endif %}
+
+    <h3>Комментарии</h3>
+    <ul>
+      {% for comment in post.comments.all %}
+        <li><strong>{{ comment.author.username }}</strong>: {{ comment.text }}</li>
+      {% empty %}
+        <li>Комментариев пока нет.</li>
+      {% endfor %}
+    </ul>
+
+    <!-- Форма для добавления нового комментария -->
+    <h4>Оставить комментарий:</h4>
+    {% if user.is_authenticated %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary mt-2">Добавить</button>
+    </form>
+    {% else %}
+  <p class="text-danger">Пожалуйста, нажмите кнопку <a href="{% url 'login' %}">войти</a>, чтобы оставить комментарий.</p>
+    {% endif %}
+    <a href="{% url 'posts:post_list' %}" class="btn btn-secondary mt-3">Назад</a>
+
+  </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
   document.getElementById('like-button').addEventListener('click', function () {
-    fetch("{% url 'like_post' post.slug %}", {
+    fetch("{% url 'posts:like_post' post.slug %}", {
       method: "POST",
       headers: {
         'X-CSRFToken': '{{ csrf_token }}',
@@ -80,7 +69,7 @@
   });
 
   document.getElementById('dislike-button').addEventListener('click', function () {
-    fetch("{% url 'dislike_post' post.slug %}", {
+    fetch("{% url 'posts:dislike_post' post.slug %}", {
       method: "POST",
       headers: {
         'X-CSRFToken': '{{ csrf_token }}',
