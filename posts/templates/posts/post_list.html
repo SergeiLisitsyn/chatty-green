@@ -1,4 +1,4 @@
-{#--post_list.html--#}
+{# posts/templates/posts/post_list.html #}
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
@@ -10,6 +10,8 @@
 <div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0">Список постов</h2>
+  </div>
+  <div class="d-flex justify-content-between align-items-center mb-4">
     {% if user.is_authenticated %}
       <a href="{% url 'posts:post_create' %}" class="btn btn-success">➕ Новый пост</a>
     {% endif %}
@@ -20,9 +22,7 @@
 
     <div class="list-group">
       {% for post in posts %}
-        <div class="list-group-item py-3 d-flex gap-3 post-card"> <!-- Добавлен класс post-card -->
-
-          <!-- Миниатюра поста -->
+        <div id="post-{{ post.id }}" class="list-group-item py-3 d-flex gap-3 post-card">
           <div class="flex-shrink-0">
             {% if post.image %}
               <img src="{{ post.image.url }}" alt="Миниатюра" class="rounded" width="100" height="100" style="object-fit: cover;">
@@ -31,7 +31,6 @@
             {% endif %}
           </div>
 
-          <!-- Контент поста -->
           <div class="w-100">
             {% if post.slug %}
               <a href="{% url 'posts:post_detail' post.slug %}" class="h5 fw-bold text-decoration-none text-dark d-block">
@@ -45,18 +44,19 @@
               {{ post.text|truncatewords:50 }}
             </p>
 
-            <!-- Дата публикации и время создания -->
             <div class="d-flex justify-content-between text-muted small mt-2">
               <div class="d-flex gap-3 align-items-center">
-                <span class="like-button" data-slug="{{ post.slug }}" style="cursor: pointer;">
-                  👍 <span class="like-count">{{ post.likes.count }}</span>
-                </span>
-                <span class="dislike-button" data-slug="{{ post.slug }}" style="cursor: pointer;">
-                  👎 <span class="dislike-count">{{ post.dislikes.count }}</span>
-                </span>
-                <a href="{% url 'posts:post_detail' post.slug %}" class="text-decoration-none text-muted">
-                  💬 {{ post.comments.count }}
-                </a>
+                {% if post.slug %}
+                  <span class="like-button" data-slug="{{ post.slug }}" style="cursor: pointer;">
+                    👍 <span class="like-count">{{ post.likes.count }}</span>
+                  </span>
+                  <span class="dislike-button" data-slug="{{ post.slug }}" style="cursor: pointer;">
+                    👎 <span class="dislike-count">{{ post.dislikes.count }}</span>
+                  </span>
+                  <a href="{% url 'posts:post_detail' post.slug %}" class="text-decoration-none text-muted">
+                    💬 {{ post.comments.count }}
+                  </a>
+                {% endif %}
               </div>
               <div>
                 {{ post.publication_date|date:"d M Y H:i" }} • {{ post.created_at|ru_timesince }} • {{ post.author.username }}
@@ -80,35 +80,49 @@
 {% block extra_js %}
 {% if user.is_authenticated %}
 <script>
-  function sendReaction(slug, action, callback) {
-    fetch(`/posts/${slug}/${action}/`, {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}',
-        'X-Requested-With': 'XMLHttpRequest',
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".delete-post").forEach(button => {
+      button.addEventListener("click", async function () {
+        const postId = this.dataset.id;
+
+        if (!confirm("Вы уверены, что хотите удалить этот пост?")) return;  // ✅ Подтверждение перед удалением
+
+        try {
+          const response = await fetch(`/posts/delete/${postId}/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCSRFToken(),
+              "X-Requested-With": "XMLHttpRequest",
+            },
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            alert("✅ Пост успешно удалён!");
+            document.getElementById(`post-${data.post_id}`).remove();  // ✅ Удаляем пост из DOM
+          } else {
+            alert("❌ Ошибка при удалении поста!");
+          }
+        } catch (error) {
+          console.error("❌ Ошибка при удалении:", error);
+          alert("❌ Ошибка удаления поста.");
+        }
+      });
+    });
+  });
+
+  function getCSRFToken() {
+    let cookieValue = null;
+    document.cookie.split(";").forEach(cookie => {
+      const trimmed = cookie.trim();
+      if (trimmed.startsWith("csrftoken=")) {
+        cookieValue = decodeURIComponent(trimmed.split("=")[1]);
       }
-    })
-    .then(response => response.json())
-    .then(data => callback(data));
+    });
+    return cookieValue;
   }
-
-  document.querySelectorAll('.like-button').forEach(el => {
-    el.addEventListener('click', () => {
-      const slug = el.dataset.slug;
-      sendReaction(slug, 'like', data => {
-        el.querySelector('.like-count').textContent = data.likes_count;
-      });
-    });
-  });
-
-  document.querySelectorAll('.dislike-button').forEach(el => {
-    el.addEventListener('click', () => {
-      const slug = el.dataset.slug;
-      sendReaction(slug, 'dislike', data => {
-        el.querySelector('.dislike-count').textContent = data.dislikes_count;
-      });
-    });
-  });
 </script>
 {% endif %}
 {% endblock %}
+

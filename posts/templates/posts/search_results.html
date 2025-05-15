@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Результаты поиска{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>🔍 Результаты поиска для "{{ query }}"</h2>
+
+    {% if posts %}
+        <ul class="list-group">
+            {% for post in posts %}
+                <li class="list-group-item">
+                    <a href="{% url 'posts:post_detail' post.slug %}" class="fw-bold">
+                        {{ post.title }}
+                    </a>
+                    <p class="small text-muted">{{ post.text|truncatewords:30 }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="alert alert-info">❌ Ничего не найдено.</p>
+    {% endif %}
+</div>
+{% endblock %}
