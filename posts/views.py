@@ -184,9 +184,13 @@ def archive_post(request, slug):
     return JsonResponse({'success': False})
 
 
+from django.shortcuts import render
+from posts.models import Post
+
 def home(request):
-    latest_posts = Post.objects.filter(is_archived=False).order_by('-created_at')[:5]  # 5 свежих постов
-    return render(request, 'home.html', {'latest_posts': latest_posts})
+    # Выбираем 5 последних неархивированных постов, отсортированных по дате создания (от новых к старым)
+    latest_posts = Post.objects.filter(is_archived=False).order_by('-created_at')[:5]
+    return render(request, 'home.html', {'latest_posts':  latest_posts})
 
 
 def delete_post(request, slug):

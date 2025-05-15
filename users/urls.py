@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 
 urlpatterns = [
     path('', views.welcome_view, name='welcome'),  # Приветственная страница
-    path('home/', views.home_view, name='home'),  # Основная страница
+    #path('home/', views.home_view, name='home'),  # Основная страница
     path('register/', views.register, name='register'),
     path('login/', CustomLoginView.as_view(template_name='users/login.html'), name='login'),  # используем кастомное представление
     path('logout/', auth_views.LogoutView.as_view(next_page=reverse_lazy('posts:post_list')), name='logout'),

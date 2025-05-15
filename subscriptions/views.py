@@ -75,7 +75,7 @@ class SubscriptionToggleView(LoginRequiredMixin, View):
                 'subscribers_count': author.subscribers.count()
             })
         else:
-            # Для обычного запроса перенаправляем на URL из параметра next или на профиль
+            # Для обычного запроса перенаправляем  на профиль
             if next_url:
                 return redirect(next_url)
             else:
@@ -93,8 +93,8 @@ class FollowersListView(ListView):
 
     def get_queryset(self):
         self.profile_user = get_object_or_404(User, username=self.kwargs['username'])
-        # Получаем подписки, где profile_user является автором (т.е. его подписчики)
-        return Subscription.objects.filter(author=self.profile_user).select_related('subscriber')
+        return Subscription.objects.filter(author=self.profile_user).exclude(
+            subscriber=self.profile_user).select_related('subscriber')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
