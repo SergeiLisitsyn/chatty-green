@@ -1,43 +1,45 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid" style="padding-right: 40px;">
-        <a class="navbar-brand" href="#">Chatty</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <a class="navbar-brand me-3" href="#">Chatty</a>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav d-flex align-items-center gap-3 ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">Главная</a>
+        <!-- 🔍 Поле поиска (Добавлено между Chatty и Главная) -->
+        <form action="{% url 'search' %}" method="GET" class="d-flex flex-grow-1">
+            <div class="input-group" style="max-width: 900px;">
+                <input type="text" name="q" class="form-control rounded-pill ps-4" placeholder="🔍 Найти пост..." style="height: 32px;">
+            </div>
+        </form>
+
+        <ul class="navbar-nav d-flex align-items-center gap-3 ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Главная</a>
+            </li>
+
+            {% if user.is_authenticated %}
+                <!-- Аватар и имя пользователя -->
+                <li class="nav-item d-flex align-items-center">
+                    <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
+                         alt="Аватар"
+                         class="rounded-circle" width="40" height="40"
+                         style="object-fit: cover; margin-right: 8px;">
+                    <a class="nav-link" href="{% url 'profile' username=user.username %}">{{ user.username }}</a>
                 </li>
 
-                {% if user.is_authenticated %}
-                    <!-- Аватар и имя пользователя -->
-                    <li class="nav-item d-flex align-items-center">
-                        <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
-                             alt="Аватар"
-                             class="rounded-circle" width="40" height="40"
-                             style="object-fit: cover; margin-right: 8px;">
-                        <a class="nav-link" href="{% url 'profile' username=user.username %}">{{ user.username }}</a>
-                    </li>
-
-                    <!-- Форма выхода -->
-                    <li class="nav-item">
-                        <form method="POST" action="{% url 'logout' %}" style="display: inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="nav-link btn btn-link text-white">Выход</button>
-                        </form>
-                    </li>
-                {% else %}
-                    <!-- Вход и регистрация -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Войти</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white" href="{% url 'register' %}">Регистрация</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
+                <!-- Форма выхода -->
+                <li class="nav-item">
+                    <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link text-white">Выход</button>
+                    </form>
+                </li>
+            {% else %}
+                <!-- Вход и регистрация -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Войти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary text-white" href="{% url 'register' %}">Регистрация</a>
+                </li>
+            {% endif %}
+        </ul>
     </div>
 </nav>

@@ -28,8 +28,9 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug = slugify(self.title)
-            slug = slug[:45]  # ограничим, чтобы осталось место для "-1", "-2" и т.д.
+            transliterated_title = unidecode(self.title)  # Конвертируем кириллицу в латиницу
+            slug = slugify(transliterated_title)  # Генерируем slug
+            slug = slug[:45]  # Обрезаем для корректности
             counter = 1
             original_slug = slug
             while Post.objects.filter(slug=slug).exists():
