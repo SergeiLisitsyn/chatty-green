@@ -1,4 +1,4 @@
---
+docker-compose exec -T db psql -U ${PG_USER} -d ${PG_NAME} < backup.sql--
 -- PostgreSQL database dump
 --
 
