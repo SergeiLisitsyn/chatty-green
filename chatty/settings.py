@@ -23,8 +23,6 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')  # Явное указание пути
 
-FONT_AWESOME_INTEGRITY = os.getenv("FONT_AWESOME_INTEGRITY")
-
 env_path = BASE_DIR / '.env'
 if not env_path.exists():
     print(f"\n⚠️ Внимание: файл .env не найден по пути: {env_path}\n")
@@ -37,7 +35,7 @@ SECRET_KEY = 'django-insecure-n=s5kr%x^h$7ur^*wwt6skj&pn$wm49##$9a)prz8_nv4nd09t
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web']  # 'web' - имя сервиса в docker-compose
 
@@ -115,8 +113,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-"""DATABASES = {
+"""
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('PG_NAME'),
