@@ -11,6 +11,7 @@ def register(request):
 
 
 def search_results(request):
-    query = request.GET.get("q", "")
+    query = request.GET.get("q", "").strip()
     posts = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query), is_archived=False)
+
     return render(request, "posts/search_results.html", {"posts": posts, "query": query})

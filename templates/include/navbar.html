@@ -2,12 +2,13 @@
     <div class="container-fluid" style="padding-right: 40px;">
         <a class="navbar-brand me-3" href="#">Chatty</a>
 
-        <!-- 🔍 Поле поиска (Добавлено между Chatty и Главная) -->
-        <form action="{% url 'search' %}" method="GET" class="d-flex flex-grow-1">
-            <div class="input-group" style="max-width: 900px;">
-                <input type="text" name="q" class="form-control rounded-pill ps-4" placeholder="🔍 Найти пост..." style="height: 32px;">
-            </div>
-        </form>
+<!-- 🔍 Поле поиска (Размещено по центру между Chatty и Главная) -->
+<form action="{% url 'posts:search' %}" method="GET" class="d-flex justify-content-center flex-grow-1">
+    <div class="input-group" style="max-width: 1200px;">
+        <input type="text" name="q" class="form-control rounded-pill ps-4 text-left"
+               placeholder="🔍 Найти пост..." style="height: 32px;">
+    </div>
+</form>
 
         <ul class="navbar-nav d-flex align-items-center gap-3 ms-auto">
             <li class="nav-item">

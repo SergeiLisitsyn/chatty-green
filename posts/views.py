@@ -1,7 +1,7 @@
 #posts/views.py
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse, HttpResponseForbidden
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
 from .models import Post, Comment
 from .forms import CommentForm, PostForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -13,6 +13,7 @@ from django.views.decorators.http import require_POST
 from subscriptions.models import Subscription
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from posts.templatetags import time_filters
+from django.db.models import Q
 
 
 # Классы для работы с Post
@@ -26,9 +27,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-
-from django.core.paginator import EmptyPage, PageNotAnInteger
-from django.shortcuts import redirect
 
 class PostListView(ListView):
     model = Post
@@ -56,7 +54,6 @@ class PostListView(ListView):
         return context
 
 
-
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
@@ -68,8 +65,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('posts:post_detail', kwargs={'slug': self.object.slug})  # ✅ Добавляем namespace
-      
-      
+
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = reverse_lazy('post_list')
@@ -110,9 +107,6 @@ class PostDetailView(DetailView):
 @login_required
 @require_POST
 def like_post(request, slug):
-    if not request.user.is_authenticated:
-        return HttpResponseForbidden("You must be logged in to like a post.")
-
     post = get_object_or_404(Post, slug=slug)
     user = request.user
 
@@ -124,16 +118,13 @@ def like_post(request, slug):
         liked = True
 
     return JsonResponse({
+        'success': True,  # ✅ Добавляем статус success
         'liked': liked,
-        'likes_count': post.likes.count()
+        'likes_count': post.likes.count(),
     })
-
 
 @require_POST
 def dislike_post(request, slug):
-    if not request.user.is_authenticated:
-        return HttpResponseForbidden("You must be logged in to dislike a post.")
-
     post = get_object_or_404(Post, slug=slug)
     user = request.user
 
@@ -143,11 +134,11 @@ def dislike_post(request, slug):
     else:
         post.dislikes.add(user)
         disliked = True
-        post.likes.remove(user)  # ❗ убираем лайк, если ставится дизлайк
 
     return JsonResponse({
+        'success': True,  # ✅ Добавляем статус success
         'disliked': disliked,
-        'dislikes_count': post.dislikes.count()
+        'dislikes_count': post.dislikes.count(),
     })
 
 
@@ -207,3 +198,8 @@ def delete_post(request, slug):
     return JsonResponse({"success": False, "error": "❌ Ошибка удаления поста"})
 
 
+def search_results(request):
+    query = request.GET.get("q", "").strip()
+    posts = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query), is_archived=False)
+
+    return render(request, "posts/search_results.html", {"posts": posts, "query": query})
