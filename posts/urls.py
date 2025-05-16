@@ -4,12 +4,12 @@ from django.urls import path
 from . import views
 from .views import PostListView
 from posts.views import archive_post
-
+from .views import search_results
 
 app_name = 'posts'
 
-urlpatterns = [
 
+urlpatterns = [
     path('', views.PostListView.as_view(), name='post_list'),  # Список постов
     path('create/', views.PostCreateView.as_view(), name='post_create'),  # Создание поста
     path('<slug:slug>/', views.PostDetailView.as_view(), name='post_detail'),  # Детали поста
@@ -19,6 +19,7 @@ urlpatterns = [
     path('<slug:slug>/like/', views.like_post, name='like_post'),  # Лайк поста
     path('<slug:slug>/dislike/', views.dislike_post, name='dislike_post'),  # Дизлайк поста
     path('id/<int:pk>/', views.PostDetailViewId.as_view(), name='post_detail_id'),  # Детали поста по ID
+    path("search/", search_results, name="search"),  # ✅ Должен быть!  # ✅ Объявляем маршрут
 ]
 
 
