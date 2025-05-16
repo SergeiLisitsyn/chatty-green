@@ -12,16 +12,12 @@ def register(request):
     return render(request, "register.html")
 
 
-def search_results(request):
+def search_view(request):
     """
-        Выполняет поиск публикаций по заголовку или тексту, исключая архивированные.
-
-        Аргументы:
-        - request: объект запроса Django, содержащий параметры поиска.
-
-        Возвращает:
-        - HTML-страницу с результатами поиска.
+        ищет посты по заголовку (title) и содержанию (content). icontains
         """
-    query = request.GET.get("q", "")
-    posts = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query), is_archived=False)
-    return render(request, "posts/search_results.html", {"posts": posts, "query": query})
+
+    query = request.GET.get('q')  # Получаем введенный запрос
+    results = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query)) if query else None
+    return render(request, 'include/search_results.html', {'results': results})
+

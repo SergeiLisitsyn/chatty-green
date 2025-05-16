@@ -5,7 +5,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
-from .views import search_results
+from .views import search_view
 from posts.views import home  # импортируем наше представление
 
 urlpatterns = [
@@ -17,7 +17,9 @@ urlpatterns = [
     path('posts/', include('posts.urls', namespace='posts')),# Маршруты приложения "posts" (управление публикациями)
 
     path('subscriptions/', include('subscriptions.urls', namespace='subscriptions')),# Маршруты приложения "subscriptions" (подписки пользователей)
-    path('posts/search/', search_results, name='search'),  #  Поиск публикаций (функция `search_results`)
+    path('search/', search_view, name='search'),  #  Поиск публикаций (функция `search_results`)
+
+
 
 
 ]
