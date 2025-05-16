@@ -53,8 +53,9 @@ services:
       sh -c "python manage.py check &&
              pytest /app/tests/"
     depends_on:
-      db:
-        condition: service_healthy
+      - web
+      - db
+
     environment:
       - DJANGO_SETTINGS_MODULE=chatty.settings
       - PYTHONUNBUFFERED=1
