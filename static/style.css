@@ -1,0 +1,76 @@
+
+
+
+
+/* interaction-buttons.css */
+
+/* Общий стиль контейнера кнопок */
+.interaction-buttons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+/* Общий стиль кнопок */
+.btn-interaction {
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    position: relative;
+}
+
+/* Подсказка при наведении */
+.btn-interaction[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: #fff;
+    background: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0.95;
+}
+
+/* Подсветка при наведении */
+.btn-interaction:hover {
+    color: #f97316; /* Оранжевый — Tailwind orange-500 */
+}
+
+/* Стиль активной кнопки (например, лайкнутый пост) */
+.btn-interaction.active {
+    color: #f97316;
+    font-weight: bold;
+}
+
+/* Иконка и число */
+.btn-interaction i {
+    margin-right: 6px;
+}
+
+.interaction-count {
+    font-size: 0.95rem;
+}
+
+/* Темная тема */
+body.dark-mode .btn-interaction {
+    color: #bbb;
+}
+
+body.dark-mode .btn-interaction:hover {
+    color: #f97316;
+}
+
+body.dark-mode .btn-interaction[title]:hover::after {
+    background: #222;
+}
