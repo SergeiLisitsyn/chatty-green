@@ -610,53 +610,12 @@ docker exec -it web python manage.py migrate
 развертывания и миграций.
 
 Проект использует Django для построения веб-приложения, PostgreSQL для хранения данных и Docker для контейнеризации.
-
-# Выгрузка базы данных в постами для членов комманды
-$  docker-compose exec db pg_dump -U postgres -d postgres --data-only > data.sql
-- Альтернативный вариант-создание скрипта:
-```
-echo "🚀 Запуск автоматического развертывания Chatty..."
-
-# ✅ Остановка контейнеров
-echo "🛑 Остановка контейнеров..."
-docker-compose down
-
-# ✅ Перезапуск с пересборкой
-echo "🔄 Запуск контейнеров..."
-docker-compose up --build -d
-
-# ✅ Ожидание запуска (даем контейнерам время стартовать)
-echo "⏳ Ожидание 10 секунд..."
-sleep 10
-
-# ✅ Применение миграций
-echo "⚙️ Выполнение миграций..."
-docker exec -it web python manage.py migrate
-
-# ✅ Импорт данных, если `backup.json` существует
-if [ -f "backup.json" ]; then
-    echo "📥 Импорт данных из backup.json..."
-    docker exec -it web python manage.py loaddata backup.json
-else
-    echo "⚠️ Файл backup.json отсутствует! Пропускаем импорт..."
-fi
-
-# ✅ Настройка прав на медиафайлы
-echo "🛠️ Настройка доступа к изображениям..."
-docker exec -it web chmod -R 777 /app/media/
-
-# ✅ Проверка количества статей
-echo "📂 Проверка базы данных..."
-docker exec -it web python manage.py shell <<EOF
-from posts.models import Post
-print(f"📝 Всего статей: {Post.objects.count()}")
-EOF
-echo "✅ Развертывание завершено! Проверьте проект 🚀"
-
-Сохранение файла deploy.sh в корне проекта и предоставление права на исполнение 
-chmod +x deploy.sh
-
-Запуск 
-./deploy.sh
-```
-
+# Создание тестов. 
+Созданы тесты для тестирования создания и редактирования постов (post_create, post_update ) и
+Интеграционные тесты: регистрация → пост → комментарий в одном файле тестируется цепочка действий:
+регистрация пользователя, создание поста, добавление комментария, отображение поста.
+Тесты добавлен в docker-compose как service tests. 
+После обновления проекта нужно вначале сделать 
+docker-compose build а затем запустить тесты
+docker-compose run --rm tests.
+После прохождения тестов контейнер с тестами удалится и можно работать с проектом.
