@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Лайк поста
+  // ✅ Лайк поста
   document.querySelectorAll(".like-button").forEach(button => {
     button.addEventListener("click", async function () {
-      const slug = this.dataset.slug;
+      const slug = this.dataset.slug;  // ✅ ИСПРАВЛЕНО: использовано правильное имя переменной
 
       try {
-        const response = await fetch(`/posts/${slug}/like/`, {
+        const response = await fetch(`/posts/${slug}/like/`, {  // ✅ Используем переменную slug
           method: "POST",
           headers: {
             "X-CSRFToken": getCSRFToken(),
@@ -26,10 +26,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Дизлайк поста
+  // ✅ Дизлайк поста
   document.querySelectorAll(".dislike-button").forEach(button => {
     button.addEventListener("click", async function () {
-      const slug = this.dataset.slug;
+      const slug = this.dataset.slug;  // ✅ Оставляем `slug`
 
       try {
         const response = await fetch(`/posts/${slug}/dislike/`, {
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Переход к комментариям
+  // ✅ Комментарии - переход к блоку комментариев
   document.querySelectorAll(".comment-button").forEach(button => {
     button.addEventListener("click", function () {
       const slug = this.dataset.slug;
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Архивирование поста
+  // ✅ Автоматическое удаление поста после архивирования
   document.querySelectorAll(".archive-post").forEach(button => {
     button.addEventListener("click", async function () {
       const postId = this.dataset.id;
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// Получение CSRF-токена из куки
+// ✅ Функция получения CSRF-токена
 function getCSRFToken() {
   let cookieValue = null;
   document.cookie.split(";").forEach(cookie => {

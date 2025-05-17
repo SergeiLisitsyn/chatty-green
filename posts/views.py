@@ -106,19 +106,21 @@ class PostDetailView(DetailView):
 
 @login_required
 @require_POST
-def like_post(request, slug):
-    post = get_object_or_404(Post, slug=slug)
-    user = request.user
+def toggle_like(request, slug):
+    try:
+        post = get_object_or_404(Post, slug=slug)
+    except Post.DoesNotExist:
+        return JsonResponse({'error': 'Пост не найден'}, status=404)
 
-    if user in post.likes.all():
-        post.likes.remove(user)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
         liked = False
     else:
-        post.likes.add(user)
+        post.likes.add(request.user)
         liked = True
 
     return JsonResponse({
-        'success': True,  # ✅ Добавляем статус success
+        'success': True,
         'liked': liked,
         'likes_count': post.likes.count(),
     })

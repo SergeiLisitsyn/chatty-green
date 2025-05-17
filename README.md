@@ -610,3 +610,4 @@ docker exec -it web python manage.py migrate
 развертывания и миграций.
 
 Проект использует Django для построения веб-приложения, PostgreSQL для хранения данных и Docker для контейнеризации.
+

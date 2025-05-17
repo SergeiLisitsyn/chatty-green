@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Subscription script loaded!');
 
     // Находим все элементы, с которыми можно работать
-    const subscriptionButtons = document.querySelectorAll('.subscription-toggle, [data-username], .otpis-btn, button:contains("Отписаться")');
+    const subscriptionButtons = document.querySelectorAll('.subscription-toggle, [data-username], .otpis-btn')
+
     console.log('Found subscription elements:', subscriptionButtons.length);
 
     // Обрабатываем клики на всем документе
