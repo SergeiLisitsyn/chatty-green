@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
+
 class Subscription(models.Model):
     subscriber = models.ForeignKey(
         settings.AUTH_USER_MODEL,

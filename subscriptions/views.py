@@ -1,3 +1,5 @@
+# subscriptions/views.py
+
 from django.views.generic import ListView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
