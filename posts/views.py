@@ -97,7 +97,7 @@ class PostDetailView(DetailView):
             comment.post = self.object
             comment.author = request.user
             comment.save()
-            return redirect('post_list')
+            return redirect('posts:post_list')
 
         context = self.get_context_data()
         context['form'] = form
