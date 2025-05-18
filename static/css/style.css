@@ -1,8 +1,5 @@
 
-
-
-
-/* interaction-buttons.css */
+/* static/css/style.css */
 
 /* Общий стиль контейнера кнопок */
 .interaction-buttons {
@@ -73,4 +70,35 @@ body.dark-mode .btn-interaction:hover {
 
 body.dark-mode .btn-interaction[title]:hover::after {
     background: #222;
+}
+
+/* Контейнер поиска */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Поле ввода */
+.search-input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc; /* Серый цвет обводки */
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* Обводка при фокусе */
+.search-input:focus {
+    outline: none;
+    border-color: #007bff; /* Синий цвет при фокусе */
+    background-color: #f8f9fa; /* Светлый фон */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* Лёгкая подсветка */
+}
+
+/* Обводка при наведении */
+.search-input:hover {
+    border-color: #28a745; /* Зеленая обводка */
 }
