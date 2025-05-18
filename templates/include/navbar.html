@@ -4,7 +4,7 @@
 
         <!-- 🔍 Поле поиска с автоподсказками -->
         <form action="{% url 'search' %}" method="GET" class="d-flex flex-grow-1">
-            <div class="input-group" style="max-width: 900px;">
+            <div class="input-group" style="max-width: 1200px;">
                 <input type="text" id="search-box" name="q" class="form-control rounded-pill ps-4"
                     placeholder="🔍 Найти пост..." style="height: 32px;" onkeyup="showSuggestions(this.value)">
                 <ul id="suggestions-list" class="list-group position-absolute w-100"></ul>
