@@ -1,0 +1,183 @@
+/* === БАЗОВЫЙ СТИЛЬ САЙТА === */
+
+body {
+    background-image: url("../images/background.jpg"); /* Фоновое изображение (исправлено название) */
+    background-size: cover;                           /* Растягиваем фон на весь экран */
+    background-position: center;                      /* Центрируем изображение */
+    background-attachment: fixed;                     /* Фиксируем фон при скролле */
+    background-repeat: no-repeat;                     /* Не повторяем изображение */
+    margin: 0;                                        /* Убираем отступы у body */
+    min-height: 100vh;                                /* Минимальная высота экрана — 100% */
+    font-family: Arial, sans-serif;                   /* Шрифт по умолчанию */
+    display: flex;                                    /* Включаем флекс-бокс для высоты */
+    flex-direction: column;                           /* Расположение сверху вниз */
+}
+
+/* Навигационная панель */
+.navbar {
+    position: fixed;                                  /* Фиксируем наверху */
+    top: 0;
+    left: 0;
+    width: 100%;                                      /* На всю ширину */
+    z-index: 1000;                                    /* Поверх всего */
+    background-color: rgba(0, 0, 0, 0.8);             /* Полупрозрачный черный фон */
+}
+
+/* Контейнер контента главной страницы */
+.content-wrapper.first-page {
+    width: calc(100% - 20mm);                         /* Отступ по краям */
+    background: rgba(255, 255, 255, 0.6);             /* Светлый фон с прозрачностью */
+    min-height: 800px;                                /* Минимальная высота */
+    backdrop-filter: blur(10px);                      /* Эффект размытия */
+    -webkit-backdrop-filter: blur(10px);              /* Поддержка Safari */
+    border-radius: 12px;                              /* Скругление краев */
+    padding: 30px;                                    /* Внутренние отступы */
+    margin: 20px auto;                                /* Центрирование по горизонтали */
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);       /* Тень */
+    flex-grow: 1;                                     /* Растягивание по высоте */
+}
+
+/* Контейнер для остальных страниц */
+.content-wrapper.other-page {
+    width: calc(100% - 20mm);
+    background: rgba(245, 245, 245, 0.8);
+    min-height: 800px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 40px auto;
+    box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.15);
+    flex-grow: 1;
+}
+
+/* Карточка приветствия */
+.welcome-card {
+    background-color: rgba(0, 123, 255, 0.85);         /* Синий фон с прозрачностью */
+    color: white;
+    border-radius: 10px;
+    padding: 30px 15px;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    text-align: center;
+    max-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Описание чата */
+.chat-description {
+    font-family: 'TildaSans', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    color: #333;
+}
+
+/* Комментарии (контейнер) */
+.comment-box {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 15px;
+    min-height: 80px;
+    max-height: 180px; /* Ограничение по высоте */
+    overflow-y: hidden;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Поле ввода комментария */
+.comment-input {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* Кнопка действия */
+.btn-action {
+    background-color: #007BFF; /* Синий фон */
+    color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.btn-action:hover {
+    background-color: #0056b3; /* Темнее при наведении */
+}
+
+/* Карточка регистрации */
+.register-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    margin: 60px auto;
+}
+
+/* Кнопка */
+.btn {
+    background-color: #007BFF;
+    color: white;
+    border-radius: 10px;
+    padding: 12px 20px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Контейнер по ширине */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Заголовки */
+h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Анимация карточек постов при наведении */
+.post-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Отступы между элементами формы */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Стили для muted текста */
+.text-muted {
+    font-size: 14px;
+}
+
+/* Нижний колонтитул */
+footer {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+}

@@ -1,0 +1,27 @@
+/* === Стили списка постов (post_list.html) === */
+
+.post-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /* обрезаем изображение в заданных размерах */
+  border-radius: 8px;
+}
+
+/* Повторное определение если не используется общий base.css */
+.post-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Метаинформация о посте */
+.post-meta {
+  font-size: 0.75rem;
+  font-family: 'Tilda Sans', sans-serif;
+}
