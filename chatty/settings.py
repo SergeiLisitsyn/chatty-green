@@ -26,6 +26,8 @@ load_dotenv(BASE_DIR / '.env')
 
 # Проверка наличия `.env`
 
+FONT_AWESOME_INTEGRITY = os.getenv("FONT_AWESOME_INTEGRITY")
+
 env_path = BASE_DIR / '.env'
 if not env_path.exists():
     print(f"\n⚠️ Внимание: файл .env не найден по пути: {env_path}\n")
