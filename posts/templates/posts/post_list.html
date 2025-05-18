@@ -71,10 +71,9 @@
                     </a>
 
                       <!-- Иконка "Поделиться" в Base64 -->
-                    <span class="share-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Поделиться">
+                    <span class="share-button" data-slug="{{ post.slug }}" data-bs-toggle="modal" data-bs-target="#shareModal" style="cursor: pointer;" title="Поделиться">
                       <img src="{% static 'images/share_8358780.png' %}" alt="Поделиться" width="16" height="16">
                     </span>
-
 
                     {% endif %}
                   </div>
@@ -101,4 +100,5 @@
   {% if user.is_authenticated %}
     <script src="{% static 'js/likes.js' %}"></script>
   {% endif %}
+{% include 'posts/share.html' %}
 {% endblock %}
