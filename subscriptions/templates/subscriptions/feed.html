@@ -1,6 +1,7 @@
+<! --subscriptions/templates/subscriptions/feed.html-- >
 {% extends 'base.html' %}
 {% load static %}
-
+{% load time_filters %}
 {% block title %}Лента подписок - Chatty{% endblock %}
 
 {% block content %}
@@ -53,36 +54,37 @@
                   </a>
                 {% endif %}
 
-                <!-- Действия -->
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="d-flex gap-3">
+         <!-- Блок кнопок действия -->
+            <div class="d-flex justify-content-between text-muted small mt-2">
+              <div class="d-flex gap-3 align-items-center">
+                {% if post.slug %}
+                  <!-- Лайк с подсказкой -->
+                  <span class="like-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Нравится">
+                    👍 <span class="like-count">{{ post.likes.count }}</span>
+                  </span>
 
-                    <!-- Лайк -->
-                    <a href="#" class="btn btn-sm btn-outline-danger like-button {% if post.is_liked %}active{% endif %}"
-                       data-post-id="{{ post.pk }}" title="Нравится">
-                      <i class="bi {% if post.is_liked %}bi-heart-fill{% else %}bi-heart{% endif %} me-1"></i>
-                      <span class="like-count">{{ post.num_likes }}</span>
+                  <!-- Дизлайк с подсказкой -->
+                  <span class="dislike-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Не нравится">
+                    👎 <span class="dislike-count">{{ post.dislikes.count }}</span>
+                  </span>
+
+                    <!-- Иконка "Комментарии" с ссылкой на страницу поста -->
+                    <a href="{% url 'posts:post_detail' post.slug %}#comments" class="share-button" title="Комментарии">
+                      <img src="{% static 'images/chat_18866235.png' %}" alt="Комментарии" width="16" height="16">
                     </a>
 
-                    <!-- Дизлайк -->
-                    <a href="#" class="btn btn-sm btn-outline-primary dislike-button {% if post.is_disliked %}active{% endif %}"
-                       data-post-id="{{ post.pk }}" title="Не нравится">
-                      <i class="bi {% if post.is_disliked %}bi-hand-thumbs-down-fill{% else %}bi-hand-thumbs-down{% endif %} me-1"></i>
-                      <span class="dislike-count">{{ post.num_dislikes }}</span>
-                    </a>
-
-                    <!-- Комментарии -->
-                    <a href="{% url 'posts:post_detail' post.slug %}#comments" class="btn btn-sm btn-outline-secondary" title="Комментарии">
-                      <i class="bi bi-chat-left-text me-1"></i>{{ post.num_comments }}
-                    </a>
+                      <!-- Иконка "Поделиться" в Base64 -->
+                    <span class="share-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Поделиться">
+                      <img src="{% static 'images/share_8358780.png' %}" alt="Поделиться" width="16" height="16">
+                    </span>
+                 {% endif %}
                   </div>
-
-                  <!-- Поделиться -->
-                  <a href="#" class="btn btn-sm btn-outline-secondary" title="Поделиться">
-                    <i class="bi bi-share me-1"></i>
-                  </a>
+               <!-- Дата и автор -->
+              <div class="post-meta text-muted small" style="font-size: 0.75rem; font-family: 'Tilda Sans', sans-serif;">
+                {{ post.created_at|date:"d.m.Y H:i" }} • {{ post.author.username }}
+              </div>
                 </div>
-
+                </div>
               </div>
             </div>
           {% endfor %}
