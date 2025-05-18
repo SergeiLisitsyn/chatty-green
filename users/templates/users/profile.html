@@ -16,12 +16,20 @@
             <p><strong>О себе:</strong> {{ profile_user.bio|default:"Не указано" }}</p>
 
             {% if request.user == profile_user %}
+                 {% if request.user.is_banned %}
+                  <p><strong>Ваш профиль забаннен</strong></p>
+                  <p><strong>Причина банна</strong> {{request.user.ban_reason}}</p>
+                  <p><strong>Срок банна</strong> {{request.user.banned_until}}</p>
+
+                 {% else %}
+
                 <a href="{% url 'edit_profile' username=profile_user.username %}" class="btn btn-primary">
                     Редактировать профиль
                 </a>
                 <a href="{% url 'change_password' %}" class="btn btn-warning">
                     Сменить пароль
                 </a>
+                {% endif %}
             {% else %}
                 <form class="d-inline" method="post" action="{% url 'subscriptions:toggle' profile_user.username %}">
                     {% csrf_token %}

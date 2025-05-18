@@ -41,6 +41,12 @@
 
  <h4>Оставить комментарий:</h4>
 {% if user.is_authenticated %}
+      {% if user.is_banned %}
+            <h2><strong>Ваш профиль забаннен!</strong></h2>
+            <p><strong>Причина банна:</strong> {{request.user.ban_reason}}</p>
+            <p><strong>Срок банна:</strong> {{request.user.banned_until}}</p>
+
+      {% else %}
 <div class="comment-box p-3">
     <form method="post" class="d-flex flex-column gap-2">
         {% csrf_token %}
@@ -51,10 +57,12 @@
         </div>
     </form>
 </div>
+      {% endif %}
 {% else %}
     <p class="text-danger">Пожалуйста, <a href="{% url 'login' %}">войдите</a>, чтобы оставить комментарий.</p>
     <a href="{% url 'posts:post_list' %}" class="btn btn-action mt-3">Назад</a>
 {% endif %}
+
 
   </div>
 {% endblock %}
