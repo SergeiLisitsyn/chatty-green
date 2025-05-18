@@ -54,10 +54,11 @@
                   </a>
                 {% endif %}
 
-         <!-- Блок кнопок действия -->
-            <div class="d-flex justify-content-between text-muted small mt-2">
-              <div class="d-flex gap-3 align-items-center">
-                {% if post.slug %}
+                <!-- Действия (обновлённый блок) -->
+                <div class="d-flex justify-content-between text-muted small mt-2">
+                  <div class="d-flex gap-3 align-items-center">
+                    {% if post.slug %}
+
                   <!-- Лайк с подсказкой -->
                   <span class="like-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Нравится">
                     👍 <span class="like-count">{{ post.likes.count }}</span>
@@ -77,13 +78,15 @@
                     <span class="share-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Поделиться">
                       <img src="{% static 'images/share_8358780.png' %}" alt="Поделиться" width="16" height="16">
                     </span>
-                 {% endif %}
+
+                    {% endif %}
                   </div>
-               <!-- Дата и автор -->
+
+                  <!-- Дата и автор -->
               <div class="post-meta text-muted small" style="font-size: 0.75rem; font-family: 'Tilda Sans', sans-serif;">
                 {{ post.created_at|date:"d.m.Y H:i" }} • {{ post.author.username }}
               </div>
-                </div>
+
                 </div>
               </div>
             </div>
