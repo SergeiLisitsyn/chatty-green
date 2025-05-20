@@ -5,21 +5,27 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
-from .views import search_view
+from .views import search_view, welcome, home
 from posts.views import home  # импортируем наше представление
+from ads.views import home  # отсюда идет функция home()
+
+app_name = 'users'
+
 
 urlpatterns = [
+
     path('admin/', admin.site.urls), #Панель администратора Djan
-    path('home/', home, name='home'), # Основная страница
-    path('', include('users.urls')),  # ✅ Подключаем маршруты из `users/urls.py` регистрация, вход
+    path('', welcome, name='welcome'),  # сначала приветствие
+    path('home/', home, name='home'),  # главная страница —  с ads.views.home
+    path('users/', include('users.urls')),  # все роуты users под префиксом users/
+    # path('', include('users.urls')),  # ✅ Подключаем маршруты из `users/urls.py` регистрация, вход
+    # path('', include('chatty.urls')),  # остальные маршруты (home, search и т.д.)
+    path('ads/', include('ads.urls', namespace='ads')),    # Роуты для рекламы
     path('accounts/', include('django.contrib.auth.urls')), # Стандартные маршруты аутентификации Django
-
     path('posts/', include('posts.urls', namespace='posts')),# Маршруты приложения "posts" (управление публикациями)
-
     path('subscriptions/', include('subscriptions.urls', namespace='subscriptions')),# Маршруты приложения "subscriptions" (подписки пользователей)
     path('search/', search_view, name='search'),  #  Поиск публикаций (функция `search_results`)
-
-
+    # path('', include('ads.urls')),  # главная страница теперь будет из ads.views.home
 
 
 ]

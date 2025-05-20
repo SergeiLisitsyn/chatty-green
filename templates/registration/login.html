@@ -3,11 +3,34 @@
 {% block title %}Вход - Chatty{% endblock %}
 
 {% block content %}
-    <h1>Вход в систему</h1>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Логин" required>
-        <input type="password" name="password" placeholder="Пароль" required>
-        <button type="submit" class="btn btn-primary">Войти</button>
-    </form>
+<div class="container mt-5">
+    <h1 class="text-center">Вход в систему</h1>
+    <div class="d-flex justify-content-center">
+        <form method="post" class="w-50 p-4 border rounded bg-light">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Логин</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Введите логин" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Пароль</label>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Введите пароль" required>
+                    <span class="input-group-text" onclick="togglePassword()" style="cursor: pointer;">
+                        👁️
+                    </span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm w-100">Войти</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function togglePassword() {
+    const passwordInput = document.getElementById("password");
+    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+}
+</script>
+
 {% endblock %}
