@@ -1,15 +1,14 @@
-{# templates/home.html#}
 {% extends "base.html" %}
 {% load static %}
+{% load time_filters %}
 
 {% block title %}Главная - Chatty{% endblock %}
 
 {% block content %}
 
-<!-- Ссылка на стили в home.css -->
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
-  <!-- Блок приветствия -->
+<!-- Блок приветствия -->
   <div style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
       <h1 class="welcome-message">
         {% if user.is_authenticated %}
@@ -19,47 +18,88 @@
         {% endif %}
       </h1>
 
-      <p class="chat-description">Лучший чат новостей</p>
-      <a href="{% url 'posts:post_list' %}">
-        <button type="submit" class="btn btn-primary">Перейти в чат</button>
-      </a>
+    <p class="chat-description">Лучший чат новостей</p>
+    <a href="{% url 'posts:post_list' %}" class="btn btn-primary">Перейти в чат</a>
+</div> <!-- Конец блока приветствия -->
 
-  </div>
-
-  <!-- Блок свежих новостей, выводимый под приветствием -->
-  <div class="container mt-5">
-      <h2 class="news-title">Свежие новости</h2>
-      {% if latest_posts %}
-        <div class="list-group">
+<!-- Контейнер свежих новостей: ширина такая же, как у приветствия -->
+<div class="container mt-4">
+  <div class="card p-3 mb-4">
+    <h2 class="section-title">Свежие новости</h2>
+    {% if latest_posts %}
+      <div class="scrollable-news">
+        <div class="row g-4">
           {% for post in latest_posts %}
-          <div class="list-group-item py-3 d-flex gap-3 post-card">
-              <div class="w-100">
-                  <a href="{% url 'posts:post_detail' post.slug %}" class="h5 fw-bold text-decoration-none text-dark d-block">
-                      {{ post.title|default:"(Без заголовка)" }}
-                  </a>
-                  <p class="text-muted small mb-1">
-                      {{ post.created_at|date:"d M Y H:i" }} • {{ post.author.username }}
-                  </p>
-                  <p class="mb-0">{{ post.text|truncatewords:30 }}</p>
+          <div class="col-md-6 col-lg-4">
+            <div class="card news-card shadow-sm">
+              {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Превью поста" class="card-img-top" style="object-fit: cover; height: 200px;">
+              {% else %}
+                <img src="{% static 'images/default_post.jpg' %}" alt="Без изображения" class="card-img-top" style="object-fit: cover; height: 200px;">
+              {% endif %}
+              <div class="card-body">
+                <a href="{% url 'posts:post_detail' post.slug %}" class="h5 fw-bold text-decoration-none text-dark d-block">
+                  {{ post.title|default:"(Без заголовка)" }}
+                </a>
+                <p class="time-info">
+                  {{ post.created_at|ru_timesince }} • {{ post.author.username }}
+                </p>
+                <p class="mb-0">
+                  {{ post.text|truncatechars:110 }}…
+                  <a href="{% url 'posts:post_detail' post.slug %}" class="text-primary read-more">Читать далее</a>
+                </p>
               </div>
-              <div class="flex-shrink-0">
-                  {% if post.image %}
-                  <img src="{{ post.image.url }}" alt="Превью поста" class="rounded" width="100" height="100" style="object-fit: cover;">
-                  {% else %}
-                  <img src="{% static 'images/default_post.jpg' %}" alt="Без изображения" class="rounded" width="100" height="100" style="object-fit: cover;">
-                  {% endif %}
-              </div>
+            </div>
           </div>
           {% endfor %}
         </div>
-      {% else %}
-          <p class="text-center py-4">Пока нет свежих новостей. Пожалуйста, зайдите позже.</p>
-      {% endif %}
+      </div>
+    {% else %}
+      <p class="text-center py-4">Пока нет свежих новостей. Пожалуйста, зайдите позже.</p>
+    {% endif %}
   </div>
+</div>
 
-  <script>
-    window.addEventListener('load', function () {
-      document.body.classList.add('fade-in');
-    });
-  </script>
+<!-- Блок рекламы - вне контейнера, смещён вправо -->
+<div class="ad-sidebar" style="
+    position: fixed;
+    top: 150px; /* примерно на уровень свежих новостей */
+    right: 20px;
+    width: 300px;
+    max-width: 20vw;
+    z-index: 1000;
+">
+  <h2 class="section-title">Реклама</h2>
+  {% if ads %}
+    <div class="scrollable-ad">
+      <div class="row g-4">
+        {% for ad in ads %}
+        <div class="col-12">
+          <div class="card ad-card shadow-sm">
+            {% if ad.image %}
+              <img src="{{ ad.image.url }}" alt="Рекламное объявление" class="card-img-top" style="object-fit: cover; height: 200px;">
+            {% else %}
+              <img src="{% static 'images/default_ad.jpg' %}" alt="Реклама" class="card-img-top" style="object-fit: cover; height: 200px;">
+            {% endif %}
+            <div class="card-body text-center">
+              <p class="fw-bold">{{ ad.title }}</p>
+              <p class="text-muted small">{{ ad.description|truncatechars:90 }}</p>
+              <a href="{{ ad.link }}" class="btn btn-primary btn-sm">Подробнее</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <p>Рекламных объявлений пока нет.</p>
+  {% endif %}
+</div>
+
+<script>
+  window.addEventListener('load', function () {
+    document.body.classList.add('fade-in');
+  });
+</script>
+
 {% endblock %}

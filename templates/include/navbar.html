@@ -3,24 +3,15 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid" style="padding-right: 40px;">
-        <!-- Логотип -->
+<nav class="navbar navbar-expand-lg navbar-dark custom-gray">
+    <div class="container-fluid" style="padding-right: 30px;">
         <a class="navbar-brand me-3" href="#">Chatty</a>
 
-        <!-- Форма поиска -->
-        <form action="{% url 'search' %}" method="GET" class="d-flex flex-grow-1 justify-content-center position-relative">
-            <div class="search-container">
-                <input
-                    type="text"
-                    id="search-box"
-                    name="q"
-                    class="search-input"
-                    placeholder="🔍 Найти пост..."
-                    autocomplete="off"
-                    onkeyup="showSuggestions(this.value)"
-                />
-                <ul id="suggestions-list"></ul>
+        <!-- 🔍 Поле поиска (Размещено по центру между Chatty и Главная) -->
+        <form action="{% url 'search' %}" method="GET" class="d-flex justify-content-center flex-grow-1">
+            <div class="input-group" style="max-width: 1200px;">
+                <input type="text" name="q" class="form-control rounded-pill ps-4 text-left"
+                       placeholder="🔍 Найти пост..." style="height: 32px;">
             </div>
         </form>
 
@@ -36,16 +27,18 @@
                         src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
                         alt="Аватар"
                         class="rounded-circle"
-                        width="40"
-                        height="40"
+                        width="30"
+                        height="30"
                         style="object-fit: cover; margin-right: 8px;"
                     />
-                    <a class="nav-link" href="{% url 'profile' username=user.username %}">{{ user.username }}</a>
+
+                    <a class="nav-link" href="{% url 'users:profile' username=user.username %}">{{ user.username }}</a>
+
                 </li>
                 <li class="nav-item">
                     <form method="POST" action="{% url 'logout' %}" style="display: inline;">
                         {% csrf_token %}
-                        <button type="submit" class="nav-link btn btn-link text-white p-0">Выход</button>
+                        <button type="submit" class="nav-link btn btn-link text-white">Выход</button>
                     </form>
                 </li>
             {% else %}

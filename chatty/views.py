@@ -1,6 +1,11 @@
+# -- chatty/views.py
 from django.shortcuts import render
 from posts.models import Post
 from django.db.models import Q
+
+def welcome(request):
+    """Отображает страницу приветствия (welcome.html)."""
+    return render(request, 'welcome.html')
 
 def home(request):
     """Отображает главную страницу."""
