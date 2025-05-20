@@ -1,13 +1,11 @@
+# ads/urls.py
+
 from django.urls import path
-from .views import home, create_advertisement
-from .views import advertisement_list
+from .views import create_advertisement, advertisement_list
 
-
-
-app_name = 'ads'  # ← это обязательно, при использовании namespace в include()
+app_name = 'ads'
 
 urlpatterns = [
-    path('', home, name='home'),
-    path('', advertisement_list, name='list'),
-    path('create/', create_advertisement, name='create'),  # ← новая форма
+    path('', advertisement_list, name='list'),  # Главная страница рекламы: /ads/
+    path('create/', create_advertisement, name='create'),  # Страница создания рекламы: /ads/create/
 ]

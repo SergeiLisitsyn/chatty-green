@@ -4,17 +4,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from . import views
 from .views import search_view, welcome, home
 from posts.views import home  # импортируем наше представление
 from ads.views import home  # отсюда идет функция home()
-
+from users import views as users_views
 app_name = 'users'
 
 
 urlpatterns = [
 
     path('admin/', admin.site.urls), #Панель администратора Djan
+    path('profile/<str:username>/', users_views.profile, name='profile'),
     path('', welcome, name='welcome'),  # сначала приветствие
     path('home/', home, name='home'),  # главная страница —  с ads.views.home
     path('users/', include('users.urls')),  # все роуты users под префиксом users/

@@ -12,7 +12,7 @@
   <div style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
       <h1 class="welcome-message">
         {% if user.is_authenticated %}
-          {{ user.username }}, добро пожаловать в Chatty Green!
+          {{ user.username|capfirst }}, добро пожаловать в Chatty Green!
         {% else %}
           Добро пожаловать в Chatty Green!
         {% endif %}
@@ -23,8 +23,7 @@
 </div> <!-- Конец блока приветствия -->
 
 <!-- Контейнер свежих новостей: ширина такая же, как у приветствия -->
-<div class="container mt-4">
-  <div class="card p-3 mb-4">
+<div class="scrollable-news-container mt-4">
     <h2 class="section-title">Свежие новости</h2>
     {% if latest_posts %}
       <div class="scrollable-news">
@@ -61,44 +60,50 @@
 </div>
 
 <!-- Блок рекламы - вне контейнера, смещён вправо -->
-<div class="ad-sidebar" style="
-    position: fixed;
-    top: 150px; /* примерно на уровень свежих новостей */
-    right: 20px;
-    width: 300px;
-    max-width: 20vw;
-    z-index: 1000;
-">
-  <h2 class="section-title">Реклама</h2>
-  {% if ads %}
-    <div class="scrollable-ad">
-      <div class="row g-4">
-        {% for ad in ads %}
-        <div class="col-12">
-          <div class="card ad-card shadow-sm">
-            {% if ad.image %}
-              <img src="{{ ad.image.url }}" alt="Рекламное объявление" class="card-img-top" style="object-fit: cover; height: 200px;">
-            {% else %}
-              <img src="{% static 'images/default_ad.jpg' %}" alt="Реклама" class="card-img-top" style="object-fit: cover; height: 200px;">
-            {% endif %}
-            <div class="card-body text-center">
-              <p class="fw-bold">{{ ad.title }}</p>
-              <p class="text-muted small">{{ ad.description|truncatechars:90 }}</p>
-              <a href="{{ ad.link }}" class="btn btn-primary btn-sm">Подробнее</a>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
+<div class="ad-sidebar"> <!-- Контейнер сбоку -->
+  {% for ad in ads %} <!-- Проходим по всем активным рекламам -->
+    <div class="ad-card {% if forloop.first %}active{% endif %}"> <!-- Первая активная карточка -->
+
+      {% if ad.is_video %} <!-- Проверка: если видео -->
+        <video class="ad-media" autoplay muted loop playsinline>
+          <source src="{{ ad.image.url }}" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      {% elif ad.image %} <!-- Иначе — изображение -->
+        <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="ad-media">
+      {% endif %}
+
+      <div class="ad-title">{{ ad.title }}</div> <!-- Заголовок рекламы -->
+      <div class="ad-description">{{ ad.description }}</div> <!-- Текст рекламы -->
+      <a href="{{ ad.link }}" target="_blank" class="ad-read-more">Подробнее</a> <!-- Переход по ссылке -->
     </div>
-  {% else %}
-    <p>Рекламных объявлений пока нет.</p>
-  {% endif %}
+  {% endfor %}
 </div>
+
+
 
 <script>
   window.addEventListener('load', function () {
     document.body.classList.add('fade-in');
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const ads = document.querySelectorAll('.ad-card');  // Находим все карточки рекламы
+    let currentIndex = 0;                               // Индекс активной рекламы
+
+    function showAd(index) {
+      ads.forEach((ad, i) => {
+        ad.classList.toggle('active', i === index);    // Показываем только выбранную карточку
+      });
+    }
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % ads.length;  // Цикл по рекламе
+      showAd(currentIndex);                             // Показать следующую рекламу
+    }, 3000);                                          // Интервал 3 секунды
+
+    showAd(currentIndex);                              // Показать первую рекламу при загрузке
   });
 </script>
 
