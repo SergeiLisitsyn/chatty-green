@@ -7,7 +7,7 @@ from .views import CustomLoginView
 
 from django.urls import reverse_lazy
 
-app_name = 'users'
+
 
 urlpatterns = [
     path('', views.welcome_view, name='welcome'),  # Приветственная страница

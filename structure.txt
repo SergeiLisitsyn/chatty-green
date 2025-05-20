@@ -1,6 +1,20 @@
 Chatty_green/
 ├── Dockerfile
 ├── Print_three_project.py
+├── add_ad_block.py
+├── ads/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── forms.py
+│   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── templates/
+│   │   └── ads/
+│   │       └── create_ad.html
+│   ├── urls.py
+│   └── views.py
 ├── chatty/
 │   ├── __init__.py
 │   ├── asgi.py
@@ -16,6 +30,7 @@ Chatty_green/
 ├── entrypoint.sh
 ├── manage.py
 ├── media/
+│   ├── ads_images/
 │   ├── avatars/
 │   ├── post_images/
 │   └── test.txt
@@ -35,6 +50,7 @@ Chatty_green/
 │   │   ├── 0005_post_dislikes.py
 │   │   ├── 0006_post_created_at.py
 │   │   ├── 0007_post_is_archived_post_updated_at.py
+│   │   ├── 0008_advertisement_post_advertisement.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── templates/
@@ -86,6 +102,9 @@ Chatty_green/
 │   ├── urls.py
 │   └── views.py
 ├── templates/
+│   ├── ads/
+│   │   ├── ads_list.html
+│   │   └── advertisement_form.html
 │   ├── base.html
 │   ├── home.html
 │   ├── include/

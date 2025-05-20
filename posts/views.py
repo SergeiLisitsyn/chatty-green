@@ -14,7 +14,8 @@ from subscriptions.models import Subscription
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from posts.templatetags import time_filters
 from django.db.models import Q
-
+from django.shortcuts import render
+from posts.models import Post
 
 # Классы для работы с Post
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -183,9 +184,6 @@ def archive_post(request, slug):
             return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
-
-from django.shortcuts import render
-from posts.models import Post
 
 def home(request):
     # Выбираем 5 последних неархивированных постов, отсортированных по дате создания (от новых к старым)
