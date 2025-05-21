@@ -8,7 +8,7 @@ body {
     background-repeat: no-repeat;                     /* Не повторяем изображение */
     margin: 0;                                        /* Убираем отступы у body */
     min-height: 100vh;                                /* Минимальная высота экрана — 100% */
-    font-family: Arial, sans-serif;                   /* Шрифт по умолчанию */
+    font-family: Tilda Sans, sans-serif;                   /* Шрифт по умолчанию */
     display: flex;                                    /* Включаем флекс-бокс для высоты */
     flex-direction: column;                           /* Расположение сверху вниз */
 }

@@ -7,7 +7,7 @@
 
   <div class="container mt-4">
     <h2>{{ post.title|default:"(Без заголовка)" }}</h2>
-    <p>Автор: <a href="{% url 'profile' username=post.author.username %}">{{ post.author.username }}</a></p>
+    <p>Автор: <a href="{% url 'profile' username=post.author.username %}">{{ post.author.username|capfirst }}</a></p>
 
     <p><strong>Дата публикации:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
     <p><strong>Создан:</strong> {{ post.created_at|ru_timesince }}</p>
@@ -33,7 +33,7 @@
     <h3>Комментарии</h3>
     <ul>
       {% for comment in post.comments.all %}
-        <li><strong>{{ comment.author.username }}</strong>: {{ comment.text }}</li>
+        <li><strong>{{ comment.author.username|capfirst }}</strong>: {{ comment.text }}</li>
       {% empty %}
         <li>Комментариев пока нет.</li>
       {% endfor %}

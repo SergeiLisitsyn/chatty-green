@@ -41,7 +41,7 @@
                   {{ post.title|default:"(Без заголовка)" }}
                 </a>
                 <p class="time-info">
-                  {{ post.created_at|ru_timesince }} • {{ post.author.username }}
+                  {{ post.created_at|ru_timesince }} • {{ post.author.username|capfirst }}
                 </p>
                 <p class="mb-0">
                   {{ post.text|truncatechars:110 }}…

@@ -85,7 +85,7 @@
 
                   <!-- Дата и автор -->
               <div class="post-meta text-muted small" style="font-size: 0.75rem; font-family: 'Tilda Sans', sans-serif;">
-                {{ post.created_at|date:"d.m.Y H:i" }} • {{ post.author.username }}
+                {{ post.created_at|date:"d.m.Y H:i" }} • {{ post.author.username|capfirst }}
               </div>
 
                 </div>
