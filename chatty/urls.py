@@ -8,7 +8,7 @@ from .views import search_view, welcome, home
 from posts.views import home  # импортируем наше представление
 from ads.views import home  # отсюда идет функция home()
 from users import views as users_views
-app_name = 'users'
+
 
 
 urlpatterns = [
@@ -25,7 +25,8 @@ urlpatterns = [
     path('posts/', include('posts.urls', namespace='posts')),# Маршруты приложения "posts" (управление публикациями)
     path('subscriptions/', include('subscriptions.urls', namespace='subscriptions')),# Маршруты приложения "subscriptions" (подписки пользователей)
     path('search/', search_view, name='search'),  #  Поиск публикаций (функция `search_results`)
-    # path('', include('ads.urls')),  # главная страница теперь будет из ads.views.home
+    path('social-auth/', include('social_django.urls', namespace='social')),
+
 
 
 ]
