@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static socialaccount %}
 
 {% block title %}Вход - Chatty{% endblock %}
 
@@ -22,6 +23,9 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-sm w-100">Войти</button>
+            <!-- Блок для соц. входа -->
+             <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google">
+                 <img src="{% static 'img/google_icon-icons.com_62736.png' %}" alt="Google Icon" style="height:20px; vertical-align: middle; margin-right: 8px;"> Быстрый вход через Google </a>
         </form>
     </div>
 </div>
