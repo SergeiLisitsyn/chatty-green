@@ -9,7 +9,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')  # Обязательно через пер
 DEBUG = False
 # Разрешенные хосты (добавьте домен Render/VPS после деплоя)
 ALLOWED_HOSTS = [
-    'chatty.onrender.com', #'your-app.onrender.com'
+    'chatty-green.onrender.com', #'your-app.onrender.com'
     'your-domain.com',
     'localhost'  # если нужно для тестов
 ]
