@@ -7,6 +7,20 @@
     <div class="container-fluid" style="padding-right: 30px;">
         <a class="navbar-brand me-3" href="#">Chatty</a>
 
+         <!-- Левая часть: логотип и кнопка-гамбургер для полного меню -->
+        <div class="d-flex align-items-center">
+
+          <button
+            class="btn btn-dark"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#fullMenuOffcanvas"
+            aria-controls="fullMenuOffcanvas"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+
         <!-- 🔍 Поле поиска (Размещено по центру между Chatty и Главная) -->
         <form action="{% url 'search' %}" method="GET" class="d-flex justify-content-center flex-grow-1">
             <div class="input-group" style="max-width: 1200px;">
@@ -56,6 +70,82 @@
       </div>
     </nav>
 
+<!-- Offcanvas-панель для полного списка функций (открывается слева) -->
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="fullMenuOffcanvas"
+      aria-labelledby="fullMenuOffcanvasLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="fullMenuOffcanvasLabel">
+          Полный список функций сайта
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Закрыть"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <!-- Базовое меню пользователя (повтор) -->
+        <ul class="navbar-nav mb-3">
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="{% url 'welcome' %}">Приветственная страница</a>
+          </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+          </li>
+          {% if not user.is_authenticated %}
+            <li class="nav-item mb-2">
+              <a class="nav-link" href="{% url 'login' %}">Вход</a>
+            </li>
+          {% endif %}
+          {% if user.is_authenticated %}
+           <li class="nav-item mb-2">
+          <a class="nav-link" href="{% url 'login' %}">Вход</a>
+        </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" href="{% url 'profile' username=user.username %}">Профиль</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" href="{% url 'change_password' %}">Изменить пароль</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" href="{% url 'edit_profile' username=user.username %}">Редактировать профиль</a>
+            </li>
+
+              <li class="nav-item">
+    <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <a class="nav-link" href="#" onclick="event.preventDefault(); this.closest('form').submit();">Выход</a>
+    </form>
+</li>
+
+
+
+          {% endif %}
+        </ul>
+
+        <hr />
+
+        <!-- Дополнительное меню: функции приложения posts -->
+        <div class="full-functionality-menu">
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <a href="{% url 'posts:post_list' %}">Список постов</a>
+            </li>
+            <li class="list-group-item">
+              <a href="{% url 'posts:post_create' %}">Создать пост</a>
+            </li>
+            <li class="list-group-item">
+
+          </ul>
+        </div>
+</div>
+    </div>
  <script>
 function showSuggestions(query) {
     const suggestionsList = document.getElementById("suggestions-list");
@@ -82,4 +172,16 @@ function showSuggestions(query) {
             console.error('Ошибка загрузки подсказок:', error);
         });
 }
+
+     <script>
+function logoutFunction(e) {
+    e.preventDefault();
+    var logoutForm = document.getElementById("logout-form");
+    if (logoutForm) {
+       logoutForm.submit();
+    } else {
+       console.error("Logout form not found!");
+    }
+}
 </script>
+
