@@ -1,9 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 15.12 (Debian 15.12-1.pgdg120+1)
--- Dumped by pg_dump version 15.12 (Debian 15.12-1.pgdg120+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -40,206 +34,8 @@ COPY public.users_customuser (id, password, last_login, is_superuser, username, 
 19	pbkdf2_sha256$870000$kuM9hQgaxTrIiAXuP1nT9L$vO9bkMt29AEJKT6KHbQsGqTYSQL9uxwIZEL1gPyiY8M=	2025-05-13 20:01:43.795792+00	f	Melony			melony@example.com	f	t	2025-05-13 20:01:43.453251+00	avatars/Melony.jpg			\N	\N	f
 14	pbkdf2_sha256$870000$wLK9cBNManDkvxqOpCU4mr$C+YjHpK8AQzJrdWFKqE9aYWorsaB9ebTSS4G9nRoaJs=	2025-05-13 23:25:27.330563+00	f	Jobs			Jobs@example.com	f	t	2025-05-13 19:44:48.363616+00	avatars/Jobs.jpg			\N	\N	f
 18	pbkdf2_sha256$870000$iMEwtBFkPe03Gt41aUHeab$Xp/OYNES3cCJRKD2JjruOC8lwyIjHyTttU+qMl+8ezE=	2025-05-14 17:20:52.447159+00	f	Mark			mark@example.com	f	t	2025-05-13 19:58:48.598927+00	avatars/Mark.jpg			\N	\N	f
-1	pbkdf2_sha256$870000$wA9txB2KUdi9aNt7M6JTXM$AjoL1yxUC3TgSnDB/OQi4DmomjO5FX7gdXuOG29+dUY=	2025-05-17 21:24:05.326603+00	t	alex			alex1@example.com	t	t	2025-05-08 14:49:26.466555+00	avatars/default.png			\N	\N	f
-\.
 
 
---
--- Data for Name: account_emailaddress; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.account_emailaddress (id, email, verified, "primary", user_id) FROM stdin;
-\.
-
-
---
--- Data for Name: account_emailconfirmation; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.account_emailconfirmation (id, created, sent, key, email_address_id) FROM stdin;
-\.
-
-
---
--- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.auth_group (id, name) FROM stdin;
-\.
-
-
---
--- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.django_content_type (id, app_label, model) FROM stdin;
-1	admin	logentry
-2	auth	permission
-3	auth	group
-4	contenttypes	contenttype
-5	sessions	session
-6	sites	site
-7	account	emailaddress
-8	account	emailconfirmation
-9	socialaccount	socialaccount
-10	socialaccount	socialapp
-11	socialaccount	socialtoken
-12	users	customuser
-13	users	userprofile
-14	posts	post
-15	posts	comment
-16	subscriptions	subscription
-17	users	profile
-\.
-
-
---
--- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
-1	Can add log entry	1	add_logentry
-2	Can change log entry	1	change_logentry
-3	Can delete log entry	1	delete_logentry
-4	Can view log entry	1	view_logentry
-5	Can add permission	2	add_permission
-6	Can change permission	2	change_permission
-7	Can delete permission	2	delete_permission
-8	Can view permission	2	view_permission
-9	Can add group	3	add_group
-10	Can change group	3	change_group
-11	Can delete group	3	delete_group
-12	Can view group	3	view_group
-13	Can add content type	4	add_contenttype
-14	Can change content type	4	change_contenttype
-15	Can delete content type	4	delete_contenttype
-16	Can view content type	4	view_contenttype
-17	Can add session	5	add_session
-18	Can change session	5	change_session
-19	Can delete session	5	delete_session
-20	Can view session	5	view_session
-21	Can add site	6	add_site
-22	Can change site	6	change_site
-23	Can delete site	6	delete_site
-24	Can view site	6	view_site
-25	Can add email address	7	add_emailaddress
-26	Can change email address	7	change_emailaddress
-27	Can delete email address	7	delete_emailaddress
-28	Can view email address	7	view_emailaddress
-29	Can add email confirmation	8	add_emailconfirmation
-30	Can change email confirmation	8	change_emailconfirmation
-31	Can delete email confirmation	8	delete_emailconfirmation
-32	Can view email confirmation	8	view_emailconfirmation
-33	Can add social account	9	add_socialaccount
-34	Can change social account	9	change_socialaccount
-35	Can delete social account	9	delete_socialaccount
-36	Can view social account	9	view_socialaccount
-37	Can add social application	10	add_socialapp
-38	Can change social application	10	change_socialapp
-39	Can delete social application	10	delete_socialapp
-40	Can view social application	10	view_socialapp
-41	Can add social application token	11	add_socialtoken
-42	Can change social application token	11	change_socialtoken
-43	Can delete social application token	11	delete_socialtoken
-44	Can view social application token	11	view_socialtoken
-45	Can add user	12	add_customuser
-46	Can change user	12	change_customuser
-47	Can delete user	12	delete_customuser
-48	Can view user	12	view_customuser
-49	Can add user profile	13	add_userprofile
-50	Can change user profile	13	change_userprofile
-51	Can delete user profile	13	delete_userprofile
-52	Can view user profile	13	view_userprofile
-53	Can add post	14	add_post
-54	Can change post	14	change_post
-55	Can delete post	14	delete_post
-56	Can view post	14	view_post
-57	Can add comment	15	add_comment
-58	Can change comment	15	change_comment
-59	Can delete comment	15	delete_comment
-60	Can view comment	15	view_comment
-61	Can add Подписка	16	add_subscription
-62	Can change Подписка	16	change_subscription
-63	Can delete Подписка	16	delete_subscription
-64	Can view Подписка	16	view_subscription
-65	Can add profile	17	add_profile
-66	Can change profile	17	change_profile
-67	Can delete profile	17	delete_profile
-68	Can view profile	17	view_profile
-\.
-
-
---
--- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
-\.
-
-
---
--- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
-1	2025-05-14 22:10:46.247819+00	28	Рынок нефти и нефтепродуктов сегодня: ключевые тенденции и прогнозы	2	[{"changed": {"fields": ["Slug"]}}]	14	1
-\.
-
-
---
--- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2025-05-08 14:49:24.765356+00
-2	contenttypes	0002_remove_content_type_name	2025-05-08 14:49:24.772891+00
-3	auth	0001_initial	2025-05-08 14:49:24.833689+00
-4	auth	0002_alter_permission_name_max_length	2025-05-08 14:49:24.839885+00
-5	auth	0003_alter_user_email_max_length	2025-05-08 14:49:24.845625+00
-6	auth	0004_alter_user_username_opts	2025-05-08 14:49:24.851632+00
-7	auth	0005_alter_user_last_login_null	2025-05-08 14:49:24.859399+00
-8	auth	0006_require_contenttypes_0002	2025-05-08 14:49:24.862126+00
-9	auth	0007_alter_validators_add_error_messages	2025-05-08 14:49:24.868259+00
-10	auth	0008_alter_user_username_max_length	2025-05-08 14:49:24.873947+00
-11	auth	0009_alter_user_last_name_max_length	2025-05-08 14:49:24.881469+00
-12	auth	0010_alter_group_name_max_length	2025-05-08 14:49:24.888313+00
-13	auth	0011_update_proxy_permissions	2025-05-08 14:49:24.899674+00
-14	auth	0012_alter_user_first_name_max_length	2025-05-08 14:49:24.909313+00
-15	users	0001_initial	2025-05-08 14:49:25.003476+00
-16	account	0001_initial	2025-05-08 14:49:25.05964+00
-17	account	0002_email_max_length	2025-05-08 14:49:25.072051+00
-18	account	0003_alter_emailaddress_create_unique_verified_email	2025-05-08 14:49:25.095291+00
-19	account	0004_alter_emailaddress_drop_unique_email	2025-05-08 14:49:25.111073+00
-20	account	0005_emailaddress_idx_upper_email	2025-05-08 14:49:25.12589+00
-21	account	0006_emailaddress_lower	2025-05-08 14:49:25.136663+00
-22	account	0007_emailaddress_idx_email	2025-05-08 14:49:25.159199+00
-23	account	0008_emailaddress_unique_primary_email_fixup	2025-05-08 14:49:25.17056+00
-24	account	0009_emailaddress_unique_primary_email	2025-05-08 14:49:25.182544+00
-25	admin	0001_initial	2025-05-08 14:49:25.212392+00
-26	admin	0002_logentry_remove_auto_add	2025-05-08 14:49:25.222776+00
-27	admin	0003_logentry_add_action_flag_choices	2025-05-08 14:49:25.230934+00
-28	posts	0001_initial	2025-05-08 14:49:25.263487+00
-29	posts	0002_post_title	2025-05-08 14:49:25.273177+00
-30	sessions	0001_initial	2025-05-08 14:49:25.295126+00
-31	sites	0001_initial	2025-05-08 14:49:25.304275+00
-32	sites	0002_alter_domain_unique	2025-05-08 14:49:25.316247+00
-33	socialaccount	0001_initial	2025-05-08 14:49:25.433568+00
-34	socialaccount	0002_token_max_lengths	2025-05-08 14:49:25.457578+00
-35	socialaccount	0003_extra_data_default_dict	2025-05-08 14:49:25.468037+00
-36	socialaccount	0004_app_provider_id_settings	2025-05-08 14:49:25.487179+00
-37	socialaccount	0005_socialtoken_nullable_app	2025-05-08 14:49:25.506519+00
-38	socialaccount	0006_alter_socialaccount_extra_data	2025-05-08 14:49:25.53221+00
-39	posts	0003_comment	2025-05-08 20:58:56.082986+00
-40	posts	0004_alter_comment_options_post_likes	2025-05-08 21:53:27.513799+00
-41	posts	0005_post_dislikes	2025-05-09 15:39:46.630762+00
-42	subscriptions	0001_initial	2025-05-12 20:23:06.633267+00
-43	users	0002_alter_userprofile_user_profile	2025-05-12 21:19:51.483639+00
-44	posts	0006_post_created_at	2025-05-13 22:09:30.314882+00
-45	subscriptions	0002_remove_subscription_temp_field	2025-05-13 22:09:30.331313+00
-46	posts	0007_post_is_archived_post_updated_at	2025-05-13 22:38:12.649564+00
-47	subscriptions	0003_alter_subscription_options_and_more	2025-05-14 21:23:43.565224+00
-48	users	0002_customuser_ban_reason_customuser_banned_until_and_more	2025-05-14 21:23:43.609915+00
-\.
 
 
 --
@@ -250,16 +46,6 @@ COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 hvpgzpjg6a5u9o0w0cb8ckgenlnoj2tn	.eJxVjEEOwiAQAP_C2RAKAsWjd99AdtlFqgaS0p6MfzckPeh1ZjJvEWHfStw7r3EhcRFanH4ZQnpyHYIeUO9Npla3dUE5EnnYLm-N-HU92r9BgV7GFlAZa1mRSgH1bFgbJCACx56zA6PPxpNVU0CcmDKHYA0rnJ1ynrL4fAH6zziH:1uDSfW:TcG4rQ_uNDyWTRIl73UOA7znQsopFA3fiZUiUdO8r2E	2025-05-23 18:41:58.484659+00
 yiwkylue8y24oen0jcoq6u3d7ff4wuuo	.eJxVjDsOwjAQBe_iGllrxwSHkp4zWPszDiBHipMKcXeIlALaNzPvZRKuS0lr0zmNYs7GmcPvRsgPrRuQO9bbZHmqyzyS3RS702avk-jzsrt_BwVb-dbexeijkHasBM67HI-AMADTcKIQufOQkYPvWcCDKABSwJAZY59JzPsD3lA4Zg:1uG6mx:x0j0Q8qJpbjNba_2FZFW4kZEMwVXxg7o-vzIBPQXNgs	2025-05-31 01:56:35.403425+00
 09scoahxv55z1ka2a14hspwkbsdjaz61	.eJxVjEEOwiAQAP_C2RAKAsWjd99AdtlFqgaS0p6MfzckPeh1ZjJvEWHfStw7r3EhcRFanH4ZQnpyHYIeUO9Npla3dUE5EnnYLm-N-HU92r9BgV7GFlAZa1mRSgH1bFgbJCACx56zA6PPxpNVU0CcmDKHYA0rnJ1ynrL4fAH6zziH:1uGiE7:P72CH--mEsChXixqv1SqhG4r0mWN-82CUQcBuP5MQxI	2025-06-01 17:55:07.959754+00
-\.
-
-
---
--- Data for Name: django_site; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.django_site (id, domain, name) FROM stdin;
-1	127.0.0.1	127.0.0.1
-\.
 
 
 --
@@ -300,7 +86,6 @@ COPY public.posts_post (id, text, image, publication_date, slug, author_id, titl
 33	Тест поста на удаление , Тест поста на удаление , Тест поста на удаление	post_images/IMG_2127_wzHDA2j.JPEG	2025-05-15 23:00:31.540257+00	test-posta-na-udalenie	2	Тест поста на удаление	2025-05-15 23:00:31.540292+00	t	2025-05-15 23:00:48.857604+00
 35	Климатические изменения на планете. Климатические изменения на планете\r\nКлиматические изменения на планете. Климатические изменения на планете	post_images/ice_4.jpg	2025-05-17 18:09:13.705505+00	klimaticheskie-izmeneniia-na-planete-1	1	Климатические изменения на планете	2025-05-17 18:09:13.705524+00	t	2025-05-17 18:11:50.413652+00
 36	Климат Земли стремительно меняется, и последствия этих изменений становятся все более ощутимыми. Глобальное потепление, экстремальные погодные явления и повышение уровня мирового океана — лишь часть проблем, с которыми сталкивается человечество. Проверка на удаление\r\n\r\n📌 Основные причины климатических изменений\r\n\r\nВыбросы парниковых газов — сжигание ископаемого топлива увеличивает концентрацию CO₂ в атмосфере.\r\n\r\nВырубка лесов — сокращение зеленых насаждений снижает способность планеты поглощать углекислый газ.\r\n\r\nПромышленное производство — выбросы вредных веществ усиливают загрязнение воздуха и воды.\r\n\r\n📌 Последствия для экосистем и общества ✅ Таяние ледников — уровень мирового океана повышается, угрожая прибрежным регионам. ✅ Экстремальные погодные явления — ураганы, засухи и наводнения становятся более частыми. ✅ Изменение сельскохозяйственных условий — урожайность снижается, что влияет на продовольственную безопасность.\r\n\r\n📌 Что можно сделать? 🌱 Переход на возобновляемые источники энергии — солнечная и ветровая энергетика помогают сократить выбросы. 🌍 Сохранение лесов — восстановление природных зон способствует снижению уровня CO₂. 🚀 Инновационные технологии — развитие экологически чистого транспорта и энергоэффективных решений.	post_images/ice_4_ZxZkKUa.jpg	2025-05-17 19:38:22.057381+00	klimaticheskie-izmeneniia-na-planete-vyzovy-i	1	Климатические изменения на планете: вызовы и перспективы	2025-05-17 19:38:22.057399+00	t	2025-05-17 21:08:37.785969+00
-\.
 
 
 --
@@ -324,7 +109,7 @@ COPY public.posts_comment (id, text, created_at, author_id, post_id) FROM stdin;
 17	Отличная статья	2025-05-17 20:45:57.443827+00	1	36
 18	wfwerf	2025-05-17 20:52:25.42005+00	1	36
 19	нравиться	2025-05-17 23:15:15.104184+00	1	29
-\.
+
 
 
 --
@@ -340,7 +125,7 @@ COPY public.posts_post_dislikes (id, post_id, customuser_id) FROM stdin;
 25	24	2
 81	29	1
 44	29	2
-\.
+
 
 
 --
@@ -360,44 +145,10 @@ COPY public.posts_post_likes (id, post_id, customuser_id) FROM stdin;
 51	2	2
 60	24	2
 68	33	2
-\.
 
 
---
--- Data for Name: socialaccount_socialaccount; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.socialaccount_socialaccount (id, provider, uid, last_login, date_joined, extra_data, user_id) FROM stdin;
-\.
 
 
---
--- Data for Name: socialaccount_socialapp; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.socialaccount_socialapp (id, provider, name, client_id, secret, key, provider_id, settings) FROM stdin;
-\.
-
-
---
--- Data for Name: socialaccount_socialapp_sites; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.socialaccount_socialapp_sites (id, socialapp_id, site_id) FROM stdin;
-\.
-
-
---
--- Data for Name: socialaccount_socialtoken; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.socialaccount_socialtoken (id, token, token_secret, expires_at, account_id, app_id) FROM stdin;
-\.
-
-
---
--- Data for Name: subscriptions_subscription; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
 COPY public.subscriptions_subscription (id, created_at, author_id, subscriber_id) FROM stdin;
 3	2025-05-15 17:34:31.243035+00	20	2
@@ -406,31 +157,9 @@ COPY public.subscriptions_subscription (id, created_at, author_id, subscriber_id
 6	2025-05-18 02:08:25.687799+00	16	20
 7	2025-05-18 02:09:26.072183+00	9	20
 8	2025-05-18 14:32:08.552757+00	15	10
-\.
 
 
---
--- Data for Name: users_customuser_groups; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
-COPY public.users_customuser_groups (id, customuser_id, group_id) FROM stdin;
-\.
-
-
---
--- Data for Name: users_customuser_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.users_customuser_user_permissions (id, customuser_id, permission_id) FROM stdin;
-\.
-
-
---
--- Data for Name: users_profile; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.users_profile (id, user_id) FROM stdin;
-\.
 
 
 --
@@ -458,7 +187,7 @@ COPY public.users_userprofile (id, user_id) FROM stdin;
 20	20
 10	10
 2	2
-\.
+
 
 
 --
