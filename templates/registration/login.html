@@ -23,9 +23,15 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-sm w-100">Войти</button>
-            <!-- Блок для соц. входа -->
-             <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google">
-                 <img src="{% static 'img/google_icon-icons.com_62736.png' %}" alt="Google Icon" style="height:20px; vertical-align: middle; margin-right: 8px;"> Быстрый вход через Google </a>
+
+             <!-- Блок для соц. входа -->
+    <div class="social-login">
+      <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google">
+        <i class="fab fa-google"></i> Быстрый вход через Google
+      </a>
+      <!-- Включите другую ссылку для Telegram, если она вам нужна и функция реализована -->
+      <!-- <a href="{% url 'social:begin' 'telegram' %}" class="btn btn-telegram">Вход через Telegram</a> -->
+    </div>
         </form>
     </div>
 </div>

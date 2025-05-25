@@ -9,12 +9,15 @@
         {{ form.as_p }}
         <button type="submit" class="btn btn-action flex-grow-1">Войти</button>
     </form>
-<!-- кнопка входа через Gmail
-    <hr>
-<h3>Быстрый вход:</h3>
-<a href="{% provider_login_url 'google' %}" class="btn btn-danger">
-    <i class="fa fa-google"></i> Войти через Google
-</a> -->
+
+     <!-- Блок для соц. входа -->
+    <div class="social-login">
+      <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google">
+        <i class="fab fa-google"></i> Быстрая регистрация через Google
+      </a>
+      <!-- Включите другую ссылку для Telegram, если она вам нужна и функция реализована -->
+      <!-- <a href="{% url 'social:begin' 'telegram' %}" class="btn btn-telegram">Вход через Telegram</a> -->
+    </div>
 
     <p class="mt-3">Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
     <p class="mt-3">
