@@ -1,0 +1,2196 @@
+[
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 2,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 2,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 2,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 2,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 3,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 3,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 3,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 3,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 4,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 4,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 4,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 4,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 5,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 5,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 5,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 5,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add site",
+    "content_type": 6,
+    "codename": "add_site"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change site",
+    "content_type": 6,
+    "codename": "change_site"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete site",
+    "content_type": 6,
+    "codename": "delete_site"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view site",
+    "content_type": 6,
+    "codename": "view_site"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add email address",
+    "content_type": 7,
+    "codename": "add_emailaddress"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change email address",
+    "content_type": 7,
+    "codename": "change_emailaddress"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete email address",
+    "content_type": 7,
+    "codename": "delete_emailaddress"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view email address",
+    "content_type": 7,
+    "codename": "view_emailaddress"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add email confirmation",
+    "content_type": 8,
+    "codename": "add_emailconfirmation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change email confirmation",
+    "content_type": 8,
+    "codename": "change_emailconfirmation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete email confirmation",
+    "content_type": 8,
+    "codename": "delete_emailconfirmation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view email confirmation",
+    "content_type": 8,
+    "codename": "view_emailconfirmation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add social account",
+    "content_type": 9,
+    "codename": "add_socialaccount"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change social account",
+    "content_type": 9,
+    "codename": "change_socialaccount"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete social account",
+    "content_type": 9,
+    "codename": "delete_socialaccount"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view social account",
+    "content_type": 9,
+    "codename": "view_socialaccount"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add social application",
+    "content_type": 10,
+    "codename": "add_socialapp"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change social application",
+    "content_type": 10,
+    "codename": "change_socialapp"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete social application",
+    "content_type": 10,
+    "codename": "delete_socialapp"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view social application",
+    "content_type": 10,
+    "codename": "view_socialapp"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add social application token",
+    "content_type": 11,
+    "codename": "add_socialtoken"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change social application token",
+    "content_type": 11,
+    "codename": "change_socialtoken"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete social application token",
+    "content_type": 11,
+    "codename": "delete_socialtoken"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view social application token",
+    "content_type": 11,
+    "codename": "view_socialtoken"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 12,
+    "codename": "add_customuser"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 12,
+    "codename": "change_customuser"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 12,
+    "codename": "delete_customuser"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 12,
+    "codename": "view_customuser"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add user profile",
+    "content_type": 13,
+    "codename": "add_userprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change user profile",
+    "content_type": 13,
+    "codename": "change_userprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete user profile",
+    "content_type": 13,
+    "codename": "delete_userprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view user profile",
+    "content_type": 13,
+    "codename": "view_userprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can add post",
+    "content_type": 14,
+    "codename": "add_post"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 54,
+  "fields": {
+    "name": "Can change post",
+    "content_type": 14,
+    "codename": "change_post"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 55,
+  "fields": {
+    "name": "Can delete post",
+    "content_type": 14,
+    "codename": "delete_post"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 56,
+  "fields": {
+    "name": "Can view post",
+    "content_type": 14,
+    "codename": "view_post"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 57,
+  "fields": {
+    "name": "Can add comment",
+    "content_type": 15,
+    "codename": "add_comment"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 58,
+  "fields": {
+    "name": "Can change comment",
+    "content_type": 15,
+    "codename": "change_comment"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 59,
+  "fields": {
+    "name": "Can delete comment",
+    "content_type": 15,
+    "codename": "delete_comment"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 60,
+  "fields": {
+    "name": "Can view comment",
+    "content_type": 15,
+    "codename": "view_comment"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 61,
+  "fields": {
+    "name": "Can add Подписка",
+    "content_type": 16,
+    "codename": "add_subscription"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 62,
+  "fields": {
+    "name": "Can change Подписка",
+    "content_type": 16,
+    "codename": "change_subscription"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 63,
+  "fields": {
+    "name": "Can delete Подписка",
+    "content_type": 16,
+    "codename": "delete_subscription"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 64,
+  "fields": {
+    "name": "Can view Подписка",
+    "content_type": 16,
+    "codename": "view_subscription"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 65,
+  "fields": {
+    "name": "Can add profile",
+    "content_type": 17,
+    "codename": "add_profile"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 66,
+  "fields": {
+    "name": "Can change profile",
+    "content_type": 17,
+    "codename": "change_profile"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 67,
+  "fields": {
+    "name": "Can delete profile",
+    "content_type": 17,
+    "codename": "delete_profile"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 68,
+  "fields": {
+    "name": "Can view profile",
+    "content_type": 17,
+    "codename": "view_profile"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "sites",
+    "model": "site"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "account",
+    "model": "emailaddress"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "account",
+    "model": "emailconfirmation"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "socialaccount",
+    "model": "socialaccount"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "socialaccount",
+    "model": "socialapp"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "socialaccount",
+    "model": "socialtoken"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "users",
+    "model": "customuser"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "users",
+    "model": "userprofile"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "posts",
+    "model": "post"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 15,
+  "fields": {
+    "app_label": "posts",
+    "model": "comment"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 16,
+  "fields": {
+    "app_label": "subscriptions",
+    "model": "subscription"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 17,
+  "fields": {
+    "app_label": "users",
+    "model": "profile"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "fbvqr2hs45ps7y1cklv3u7lchhr7g6nw",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGln-xitKes5grddrHEC2FCcV4u4QKQW0b2beS0Tc1hq3wUucszgLo8Tpd0xID247yXdsty6pt3WZk9wVedAhrz3z83K4fwcVR_3Whchanzkoj5CRrFaklfMwkUcGCMY7KDaQgVCgoHUJDEPSlCDQBOL9AQwaOBM:1uGTQX:XMEcRmWgUEmJNHOHxCrwO-tl6vjUFwoW3Ekf1pCVa0w",
+    "expire_date": "2025-06-01T02:06:57.174Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "hvpgzpjg6a5u9o0w0cb8ckgenlnoj2tn",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQAP_C2RAKAsWjd99AdtlFqgaS0p6MfzckPeh1ZjJvEWHfStw7r3EhcRFanH4ZQnpyHYIeUO9Npla3dUE5EnnYLm-N-HU92r9BgV7GFlAZa1mRSgH1bFgbJCACx56zA6PPxpNVU0CcmDKHYA0rnJ1ynrL4fAH6zziH:1uDSfW:TcG4rQ_uNDyWTRIl73UOA7znQsopFA3fiZUiUdO8r2E",
+    "expire_date": "2025-05-23T18:41:58.484Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "yiwkylue8y24oen0jcoq6u3d7ff4wuuo",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGllrxwSHkp4zWPszDiBHipMKcXeIlALaNzPvZRKuS0lr0zmNYs7GmcPvRsgPrRuQO9bbZHmqyzyS3RS702avk-jzsrt_BwVb-dbexeijkHasBM67HI-AMADTcKIQufOQkYPvWcCDKABSwJAZY59JzPsD3lA4Zg:1uG6mx:x0j0Q8qJpbjNba_2FZFW4kZEMwVXxg7o-vzIBPQXNgs",
+    "expire_date": "2025-05-31T01:56:35.403Z"
+  }
+},
+{
+  "model": "sites.site",
+  "pk": 1,
+  "fields": {
+    "domain": "127.0.0.1",
+    "name": "127.0.0.1"
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 1,
+  "fields": {
+    "user": 1
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 2,
+  "fields": {
+    "user": 2
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 3,
+  "fields": {
+    "user": 3
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 4,
+  "fields": {
+    "user": 4
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 5,
+  "fields": {
+    "user": 5
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 6,
+  "fields": {
+    "user": 6
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 7,
+  "fields": {
+    "user": 7
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 8,
+  "fields": {
+    "user": 8
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 9,
+  "fields": {
+    "user": 9
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 10,
+  "fields": {
+    "user": 10
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 11,
+  "fields": {
+    "user": 11
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 12,
+  "fields": {
+    "user": 12
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 13,
+  "fields": {
+    "user": 13
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 14,
+  "fields": {
+    "user": 14
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 15,
+  "fields": {
+    "user": 15
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 16,
+  "fields": {
+    "user": 16
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 17,
+  "fields": {
+    "user": 17
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 18,
+  "fields": {
+    "user": 18
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 19,
+  "fields": {
+    "user": 19
+  }
+},
+{
+  "model": "users.userprofile",
+  "pk": 20,
+  "fields": {
+    "user": 20
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$wA9txB2KUdi9aNt7M6JTXM$AjoL1yxUC3TgSnDB/OQi4DmomjO5FX7gdXuOG29+dUY=",
+    "last_login": "2025-05-17T21:24:05.326Z",
+    "is_superuser": true,
+    "username": "alex",
+    "first_name": "",
+    "last_name": "",
+    "email": "alex1@example.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-05-08T14:49:26.466Z",
+    "avatar": "avatars/default.png",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$4A95kPIGzDlwB6DIrQwOlf$prnDVdlBHgrM5p2MXZojJRso1HLMs8knsLlof2C3Xmg=",
+    "last_login": "2025-05-15T02:36:03.468Z",
+    "is_superuser": false,
+    "username": "Anatoliy",
+    "first_name": "",
+    "last_name": "",
+    "email": "mikhail@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-08T18:50:49.394Z",
+    "avatar": "avatars/_brunette_man_2_Le4NR1P.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$UuDkoY1Z4LHFl3YTUZQKWC$ZTFu023RhGOpcDvuiH5iqZIO60QP7vKF92Weq3m1uDs=",
+    "last_login": "2025-05-13T04:37:03.487Z",
+    "is_superuser": false,
+    "username": "Helena",
+    "first_name": "",
+    "last_name": "",
+    "email": "afzhuk@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T04:37:03.081Z",
+    "avatar": "avatars/Слой_0.png",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$54oOZQslZg7AsfFmJHBqb9$d9kTrW9ijLePGpDwfwB9Qf8QGcw5aeOpZPNpPMOQWzc=",
+    "last_login": "2025-05-13T18:43:24.966Z",
+    "is_superuser": false,
+    "username": "Anastasia",
+    "first_name": "",
+    "last_name": "",
+    "email": "Anastasia@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T18:26:57.542Z",
+    "avatar": "avatars/Anastasia.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$iTw9MsSWVqauBSnNOiimS8$ER1w3qarJiDmzFRFG/9M0j6eWDBoF9nBpJl8jGm4LD4=",
+    "last_login": "2025-05-13T18:34:17.832Z",
+    "is_superuser": false,
+    "username": "Victor",
+    "first_name": "",
+    "last_name": "",
+    "email": "Victor@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T18:34:17.463Z",
+    "avatar": "avatars/Viktor.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$1oQ9zpXpqQYAh30DVhxYmU$8TbzpmS93OyC8oweqHFD+GoY6hp03E6dmzKMWCRXt7A=",
+    "last_login": "2025-05-13T19:12:44.261Z",
+    "is_superuser": false,
+    "username": "Olivia",
+    "first_name": "",
+    "last_name": "",
+    "email": "Olivia@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:12:43.916Z",
+    "avatar": "avatars/Olivia.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$6FsxtLpVUF9OVjC2onMh4L$+wXUKaA4SwU8YeGSodO9wvcPXiKRCTxixUe39vt+Tzg=",
+    "last_login": "2025-05-13T19:16:57.505Z",
+    "is_superuser": false,
+    "username": "Georgiy",
+    "first_name": "",
+    "last_name": "",
+    "email": "Georgiy@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:16:57.143Z",
+    "avatar": "avatars/Georgiy.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$8vk2vLZ4Wrrdduf5p2JPup$IQLp/lkU/FtykKQDyYMpTfKQN01OU4oSkXDfb4zJBPs=",
+    "last_login": "2025-05-13T19:21:01.118Z",
+    "is_superuser": false,
+    "username": "Anna",
+    "first_name": "",
+    "last_name": "",
+    "email": "Anna@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:21:00.760Z",
+    "avatar": "avatars/Anna.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$ubBlUpUATrMDKThjwcMX5e$+3rpvshHq7zxiVRz3XAkUIibGVA+4qOiM6SGzocviKw=",
+    "last_login": "2025-05-13T19:28:08.388Z",
+    "is_superuser": false,
+    "username": "Edvard",
+    "first_name": "",
+    "last_name": "",
+    "email": "Edvard@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:28:08.032Z",
+    "avatar": "avatars/Edward.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$KeNBB6SmSjQavSxCCueFKe$yuPNNel2j6dUWhUn9MlBDztVbZvAiYw5X8FcZrUN5MM=",
+    "last_login": "2025-05-13T19:46:56.544Z",
+    "is_superuser": false,
+    "username": "Emilia",
+    "first_name": "",
+    "last_name": "",
+    "email": "Emilia@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:31:52.646Z",
+    "avatar": "avatars/Emilia.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$xBmH1BHSGy1GaGvnPznI6I$+AxnJ5rwhE4qvFFDkFKs71ueFBJYqI05w613pd8e+FE=",
+    "last_login": "2025-05-13T19:34:41.102Z",
+    "is_superuser": false,
+    "username": "Goldy",
+    "first_name": "",
+    "last_name": "",
+    "email": "Goldy@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:34:40.753Z",
+    "avatar": "avatars/Goldy.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 12,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$YCexYm5g20mEcNloSeGhOG$vz36pMIaKkeKCCY5et3bB+c0KQqsEcv2Bgaaw4mIBf8=",
+    "last_login": "2025-05-13T19:38:23.973Z",
+    "is_superuser": false,
+    "username": "Hovard",
+    "first_name": "",
+    "last_name": "",
+    "email": "hovard@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:38:23.616Z",
+    "avatar": "avatars/Hovard.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 13,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$9z31saS3htG247kUZxrS0x$udvaSdzVH/GrBF89oI9nt4XdMKu/taIudagNlvVmhms=",
+    "last_login": "2025-05-13T19:41:34.949Z",
+    "is_superuser": false,
+    "username": "Isabelle",
+    "first_name": "",
+    "last_name": "",
+    "email": "Isabelle@examle.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:41:34.592Z",
+    "avatar": "avatars/Isabelle.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 14,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$wLK9cBNManDkvxqOpCU4mr$C+YjHpK8AQzJrdWFKqE9aYWorsaB9ebTSS4G9nRoaJs=",
+    "last_login": "2025-05-13T23:25:27.330Z",
+    "is_superuser": false,
+    "username": "Jobs",
+    "first_name": "",
+    "last_name": "",
+    "email": "Jobs@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:44:48.363Z",
+    "avatar": "avatars/Jobs.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 15,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$5vur68jCv0xtDAtDl7m9Ce$aMMxDCBDj4iGOKWY+Ugrx1LxoEBpELlS9oUT7JW89gM=",
+    "last_login": "2025-05-13T19:49:24.153Z",
+    "is_superuser": false,
+    "username": "Jone",
+    "first_name": "",
+    "last_name": "",
+    "email": "jone@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:49:23.777Z",
+    "avatar": "avatars/Jone.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 16,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$pwuip3MG3FicNyEeJN0O6h$pRXLLPITNVdCn+NP5YAMfcDmblgO5dYakJBBh3nw8N4=",
+    "last_login": "2025-05-13T19:51:49.328Z",
+    "is_superuser": false,
+    "username": "Julia",
+    "first_name": "",
+    "last_name": "",
+    "email": "julia@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:51:48.972Z",
+    "avatar": "avatars/Julia.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 17,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$xHhQn0mIC74C2kkrKT4fBZ$7Pg5UIMRakQLbttOeqaWJqvo4coaGm6ckzKGTgDV/6g=",
+    "last_login": "2025-05-13T19:55:22.615Z",
+    "is_superuser": false,
+    "username": "Madlen",
+    "first_name": "",
+    "last_name": "",
+    "email": "madlrn@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:55:22.260Z",
+    "avatar": "avatars/Madlen.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 18,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$iMEwtBFkPe03Gt41aUHeab$Xp/OYNES3cCJRKD2JjruOC8lwyIjHyTttU+qMl+8ezE=",
+    "last_login": "2025-05-14T17:20:52.447Z",
+    "is_superuser": false,
+    "username": "Mark",
+    "first_name": "",
+    "last_name": "",
+    "email": "mark@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T19:58:48.598Z",
+    "avatar": "avatars/Mark.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 19,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$kuM9hQgaxTrIiAXuP1nT9L$vO9bkMt29AEJKT6KHbQsGqTYSQL9uxwIZEL1gPyiY8M=",
+    "last_login": "2025-05-13T20:01:43.795Z",
+    "is_superuser": false,
+    "username": "Melony",
+    "first_name": "",
+    "last_name": "",
+    "email": "melony@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-13T20:01:43.453Z",
+    "avatar": "avatars/Melony.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 20,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$CLfDW7VK1XgpJXefRKC6fU$nmzgofQt8hPOLFzrmywcBfjxg7Hf2jsHZqB8pcXz9bs=",
+    "last_login": "2025-05-18T02:06:57.144Z",
+    "is_superuser": false,
+    "username": "Piere",
+    "first_name": "",
+    "last_name": "",
+    "email": "piere@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-05-14T21:42:13.750Z",
+    "avatar": "avatars/Stive.jpg",
+    "bio": "",
+    "contacts": "",
+    "is_banned": false,
+    "ban_reason": null,
+    "banned_until": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 1,
+  "fields": {
+    "author": 1,
+    "title": "Test Post",
+    "text": "This is a test post",
+    "image": "",
+    "publication_date": "2025-05-08T19:22:14.566Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-14T23:12:18.328Z",
+    "slug": "test-post",
+    "is_archived": true,
+    "likes": [],
+    "dislikes": [
+      2
+    ]
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 2,
+  "fields": {
+    "author": 2,
+    "title": "Проверка работы постов в Chatty",
+    "text": "Проверка работы постов в Chatty прошла успешно, пост отображается в форме на странице http://localhost:8000/posts/create/",
+    "image": "post_images/man-landscape-nature-.jpg",
+    "publication_date": "2025-05-08T19:26:29.074Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-15T01:39:01.926Z",
+    "slug": "chatty",
+    "is_archived": false,
+    "likes": [
+      2
+    ],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 3,
+  "fields": {
+    "author": 2,
+    "title": "Проверка на удаление и редирект",
+    "text": "Проверка на удаление и редирект",
+    "image": "",
+    "publication_date": "2025-05-08T20:39:26.184Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T23:13:19.083Z",
+    "slug": "post-3",
+    "is_archived": true,
+    "likes": [],
+    "dislikes": [
+      2
+    ]
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 4,
+  "fields": {
+    "author": 2,
+    "title": "Проверка на удаление и редирект",
+    "text": "Проверка на удаление и редирект",
+    "image": "post_images/Leonardo_Kino_XL_The_puppies_have_found_their_owner_1.jpg",
+    "publication_date": "2025-05-08T20:40:42.090Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-15T20:21:01.435Z",
+    "slug": "-1",
+    "is_archived": true,
+    "likes": [
+      2
+    ],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 5,
+  "fields": {
+    "author": 2,
+    "title": "Проверка на coment и likes",
+    "text": "Проверка на coment и likes",
+    "image": "",
+    "publication_date": "2025-05-08T23:35:21.064Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "coment-likes",
+    "is_archived": false,
+    "likes": [
+      2
+    ],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 7,
+  "fields": {
+    "author": 2,
+    "title": "Завершающая проверка",
+    "text": "Проверяю настройку лайков и дизлайков",
+    "image": "",
+    "publication_date": "2025-05-09T15:37:34.115Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "post-7",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 10,
+  "fields": {
+    "author": 2,
+    "title": "Гармония океана: как красота морских обитателей улучшает здоровье людей",
+    "text": "Вторник, Апр 15\r\nУченые нашли примитивную жизнь в космос. Продолжи тему статьи до 500 слов\r\nОбнаружение примитивной жизни за пределами Земли – революционное событие, способное изменить наше понимание Вселенной и нашего места в ней. Если подтверждение существования внеземных организмов станет реальностью, человечество окажется перед множеством новых научных, философских и даже этических вопросов.\r\n\r\nГде обнаружены следы жизни?\r\nСовременные исследования указывают на несколько перспективных локаций для существования жизни вне Земли. Среди них наиболее интригующими являются подповерхностные океаны спутников Юпитера и Сатурна — Европы и Энцелада, а также Марс, где ученые находят органические молекулы и возможные микроскопические структуры, напоминающие древние бактерии.\r\n\r\nКакими могут быть эти организмы?\r\nПримитивная жизнь за пределами Земли, скорее всего, представлена микробами — простейшими организмами, способными существовать в экстремальных условиях. Они могут напоминать земных экстремофилов, которые процветают в кипящих гейзерах, подо льдами Антарктиды или глубоко в океанических впадинах. Такие организмы могут питаться химическими соединениями, используя процессы, подобные хемосинтезу.\r\n\r\nЧто это значит для науки?\r\nПодтверждение существования внеземной жизни откроет новую эру в биологии и астрофизике. Исследования этих микроорганизмов помогут понять, как могла зародиться жизнь на Земле и насколько распространено это явление во Вселенной. Кроме того, это поднимет вопрос об изменении подходов к исследованию космоса: отправка будущих миссий должна учитывать строгие меры защиты от загрязнения чужих миров земными микробами.\r\n\r\nЭтические и философские вопросы\r\nНаличие жизни за пределами Земли неизбежно повлияет на философские и религиозные взгляды человечества. Оно может поставить под сомнение уникальность земной цивилизации и заставить пересмотреть наше отношение к возможному контакту с более развитыми формами существ. Кроме того, исследование внеземных организмов поднимет вопросы о допустимости их изучения и потенциальной угрозе для земной биосферы.\r\n\r\nЧто дальше?\r\nВпереди множество вызовов и возможностей. Будущие миссии, такие как Europa Clipper и ExoMars, будут направлены на более детальное изучение перспективных планет и спутников. Возможно, в ближайшие десятилетия человечество получит первые неоспоримые доказательства существования жизни за пределами Земли — и этот момент станет одной из величайших вех в истории науки.\r\n\r\nКак тебе эта идея? Хочешь, чтобы я развил какие-то аспекты подробнее?\r\n\r\nПросто супер! Спасибо\r\nРад, что тебе понравилось! Всегда приятно обсуждать такие захватывающие темы. Если у тебя появятся новые вопросы или идеи — обращайся, я всегда готов поддержать интересную беседу! 🚀\r\n\r\nДавай еще напишем одну короткую статью на абстрактную тему \"В городе Акурейри мыши открыли банк. Клиенты довольны. Кроты нет\"\r\nФинансовая революция в Акурейри: банк для мышей – кошмар для кротов\r\nВ маленьком городе Акурейри произошла настоящая экономическая сенсация – местные мыши открыли свой первый банк. Вкладчики довольны: процентные ставки рекордно низкие, обслуживание на высшем уровне, а сырные кредиты одобряются в считанные секунды.\r\n\r\nУспех на лапках\r\nБанк, названный \"Сырный резерв\", быстро привлек внимание всех грызунов региона. Мыши теперь могут хранить свои драгоценные крохи, брать займы на новые норы и даже инвестировать в перспективные сырные запасы. Особенно популярны депозитные счета, где капитал растет вместе с запасами пармезана и чеддера.\r\n\r\nКротовые протесты\r\nНо не всем эта финансовая революция пришлась по душе. Местные кроты, привыкшие к традиционным способам накопления – зарыванию запасов в землю – оказались вне системы. Их попытки открыть счета натолкнулись на отказ, ведь банк требует видеть клиентов, а кроты, как известно, предпочитают тьму.\r\n\r\nПредставитель кротового сообщества мистер Кротовский высказался резко: \"Это дискриминация! Нас вынуждают хранить сбережения в старых туннелях, где процветает инфляция в виде прожорливых дождевых червей!\"\r\n\r\nПерспективы развития\r\nНесмотря на протесты, банк продолжает процветать. Успешное внедрение системы сыро-биткоинов и новые инвестиционные проекты привлекают даже белок из соседних лесов. А мыши уже думают о расширении – возможно, скоро появится первый филиал в подземных катакомбах.\r\n\r\nБудет ли найден компромисс между мышами и кротами? Или кроты организуют собственную \"Теневую финансовую систему\"? Будущее покажет, но одно ясно: экономика Акурейри уже никогда не будет прежней.\r\n\r\nКак тебе такой сюжет? 😃\r\n\r\nСпасибо, очень и интересно и смешно !!! Класс!\r\nРад, что тебе понравилось! 😃 Писать такие забавные сюжеты — одно удовольствие. Если у тебя есть еще необычные идеи, давай придумаем что-нибудь вместе. Готов к новым творческим вызовам! 🎭✨\r\n\r\nА вот еще одна статья:\"Красота морских обитателей положительно влияет на здоровье людей\"\r\nГармония океана: как красота морских обитателей улучшает здоровье людей\r\nПрирода обладает невероятной силой воздействия на эмоциональное и физическое состояние человека. Однако особое место в этом процессе занимает водная среда. Исследования показывают, что наблюдение за морскими обитателями — от изящных рыб до величественных китов — может приносить пользу нашему здоровью.\r\n\r\nВлияние на психику\r\nГипнотические движения косяков рыб, плавное скольжение скатов и величественное парение медуз создают ощущение спокойствия. Этот эффект сравним с медитацией: человек отвлекается от тревог, концентрируясь на плавных ритмах природы. Известно, что посещение аквариумов снижает уровень стресса и способствует расслаблению.\r\n\r\nКроме того, морские глубины связаны с биофильным эффектом — врожденной тягой человека к живой природе. Это объясняет, почему наблюдение за коралловыми рифами или игрой дельфинов наполняет нас радостью и умиротворением.",
+    "image": "post_images/_bea_2.jpg",
+    "publication_date": "2025-05-10T16:56:42.243Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-4",
+    "is_archived": false,
+    "likes": [
+      18,
+      2
+    ],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 11,
+  "fields": {
+    "author": 2,
+    "title": "NASA готовится к исторической миссии по изучению Марса",
+    "text": "Космическое агентство NASA завершает подготовку к одной из самых амбициозных экспедиций в истории — новой миссии по детальному изучению Марса. Этот проект, направленный на расширение знаний о Красной планете, включает передовые технологии, которые позволят глубже понять ее геологию, атмосферу и возможные следы жизни.\r\nНовые горизонты исследования\r\nОсновная цель миссии — детальный анализ марсианского грунта с помощью усовершенствованных роботов и исследовательских аппаратов. Одним из ключевых элементов экспедиции станет новый ровер, оснащенный мощными инструментами для бурения и анализа образцов. Ученые надеются, что его технологии позволят обнаружить следы древних микробов или органических соединений, подтверждающих возможность существования жизни.\r\n\r\nДополнительно планируется отправка дронов, способных летать в разреженной марсианской атмосфере и предоставлять детальные данные о поверхности планеты. Эти аппараты помогут картографировать территории и искать потенциальные места для будущих пилотируемых миссий.\r\n\r\nПодготовка к колонизации\r\nХотя Марс остается негостеприимной средой, NASA рассматривает миссию как один из важных шагов к потенциальной колонизации. В рамках проекта будет протестировано оборудование для производства кислорода и воды из местных ресурсов. Эти эксперименты помогут оценить, насколько реально поддерживать жизнь в марсианских условиях без постоянных поставок с Земли.\r\n\r\nИсторическое значение\r\nЭта экспедиция станет важной вехой в освоении космоса. Обнаружение доказательств древней жизни или подтверждение пригодности Марса для будущих поселений может кардинально изменить планы по исследованию Солнечной системы.\r\n\r\nЗапуск миссии запланирован на ближайшие годы, и вся мировая научная общественность с нетерпением ожидает первых результатов. Останется ли Марс безжизненным миром или раскроет свои тайны? Ответ уже скоро",
+    "image": "post_images/Flux_Schnell_A_dramatic_highcontrast_colorful_image_depicting__0.jpg",
+    "publication_date": "2025-05-12T22:55:42.697Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "nasa",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": [
+      2
+    ]
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 12,
+  "fields": {
+    "author": 3,
+    "title": "Европа будущего: экология, технологии, космос и здоровье",
+    "text": "Города без отходов: реальность, которая уже приходит\r\nЕще несколько десятилетий назад идея городов с нулевыми отходами казалась фантастикой. Но сегодня крупнейшие мегаполисы Европы доказывают, что эта концепция становится реальностью. В Копенгагене уже работают энергоэффективные здания, которые сокращают потребление энергии до 70%, а в Амстердаме внедрена система замкнутого цикла, где 90% пластиковых отходов перерабатываются.\r\n\r\nОсновной ключ к успеху — внедрение умного экологического транспорта, который заменяет автомобили с двигателями внутреннего сгорания. Электробусы, водородные машины и массовый переход на велосипеды позволили снизить уровень выбросов на 60%. Эксперты уверены, что в ближайшие 10 лет такие инициативы будут распространяться по всему миру.",
+    "image": "post_images/Green_city.png",
+    "publication_date": "2025-05-13T16:33:37.821Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-13",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 13,
+  "fields": {
+    "author": 4,
+    "title": "Медицина — анализ последствий COVID-19",
+    "text": "Сегодня\r\nСпасибо за уточнение! Ниже представлены расширенные версии постов, наполненные полезной информацией.\r\n\r\nЭкологические технологии будущего\r\nГород без отходов: утопия или ближайшее будущее?\r\n\r\nМногие европейские города уже сегодня стремятся к нулевым выбросам углерода и внедряют круговую экономику, чтобы минимизировать отходы и сократить вредное влияние на природу.\r\n\r\n📌 Как это работает?\r\n\r\nРаздельный сбор и переработка мусора – в Швеции перерабатывается 99% бытовых отходов, а пищевые отходы используются для производства биогаза.\r\n\r\nЭнергоэффективное строительство – в Копенгагене возводят здания, способные снижать энергопотребление до 70% благодаря особым материалам и солнечным панелям.\r\n\r\nЭко-транспорт – электробусы, велосипеды и водородные автомобили заменяют традиционные машины, снижая уровень выбросов на 60%.\r\n\r\n🚀 В ближайшие десятилетия подобные технологии могут стать стандартом в крупнейших мегаполисах мира. Какие экологические инициативы работают в твоем городе?\r\n\r\nКосмос и наука\r\nЛунная база: первый шаг к жизни за пределами Земли\r\n\r\nЕвропейское космическое агентство (ESA) протестировало лунный модуль, созданный для автономного проживания на Луне.\r\n\r\n📌 Основные технологии:\r\n\r\nИспользование реголита – вместо привоза стройматериалов с Земли ученые научились превращать луночный песок в бетон, из которого можно строить жилые помещения.\r\n\r\nАвтоматизированные системы жизнеобеспечения – специальные реакторы перерабатывают углекислый газ и выделяют кислород, который необходим для дыхания.\r\n\r\nРоботизированные помощники – компактные машины помогают проводить научные исследования и ремонты без участия человека.\r\n\r\n🌍 В ближайшие десятилетия лунная база может стать перевалочным пунктом для экспедиций на Марс. Как ты думаешь, когда появится первая постоянная колония за пределами Земли?\r\n\r\nКультура и наследие\r\nАрхеологи раскрыли тайну средневекового замка\r\n\r\nВ Германии найден древний замок XIV века, в котором была обнаружена тайная комната, скрытая от посторонних глаз.\r\n\r\n📌 Что в ней нашли?\r\n\r\nМанускрипты и карты – пергаменты с указаниями на секретные места рыцарских орденов.\r\n\r\nРедкие украшения – уникальные серебряные и золотые артефакты, украшенные драгоценными камнями.\r\n\r\nОружие и доспехи – мечи, использовавшиеся для особых церемоний, и геральдические щиты с гербами старинных семей.\r\n\r\n🔥 Историки уверены: этот замок был центром тайных встреч европейской знати. Какие еще загадки может скрывать средневековая Европа?\r\n\r\nБизнес и технологии\r\nИскусственный интеллект переворачивает индустрию моды\r\n\r\nРеволюция в фэшн-индустрии: AI-дизайнеры создают одежду, которая идеально адаптируется к вкусу покупателей.\r\n\r\n📌 Как это работает?\r\n\r\nАнализ предпочтений – алгоритмы изучают соцсети, покупки и показывают прогнозы новых трендов.\r\n\r\nАвтоматизированное создание коллекций – AI генерирует тысячи вариаций дизайнов за считанные секунды.\r\n\r\nОптимизация производства – минимизируется отход ткани, снижается нагрузка на окружающую среду.\r\n\r\n🔮 Уже сегодня крупнейшие модные дома тестируют AI для создания коллекций без участия дизайнеров. Возможно, скоро человек перестанет задавать тренды в моде – как ты думаешь?\r\n\r\nСпорт и здоровье\r\nИдеальная диета для спортсменов: открытие шведских ученых\r\n\r\nБиологи нашли формулу питания, которая повышает выносливость, скорость и реакцию на 30%!\r\n\r\n📌 Какие продукты входят в рацион? ✅ Богатые белками – ускоряют восстановление мышц, повышают силу. ✅ Натуральные антиоксиданты – защищают организм от стресса и усталости. ✅ Углеводы для энергии – обеспечивают максимальную выносливость.\r\n\r\n🏆 Лучшие футбольные клубы Европы уже внедряют эту диету в свои тренировочные программы. Кто знает, возможно, это станет стандартом для всех профессиональных спортсменов?\r\n\r\nТеперь посты стали еще более информативными и насыщенными фактами. Если нужно усилить какие-то детали или добавить новые блоки, скажи, и я все доработаю! 🚀\r\n\r\nА тпеперь все это напиши в повесвовательном тоне, в виде статьи в прессу\r\nЕвропа будущего: экология, технологии, космос и здоровье\r\nГорода без отходов: реальность, которая уже приходит\r\nЕще несколько десятилетий назад идея городов с нулевыми отходами казалась фантастикой. Но сегодня крупнейшие мегаполисы Европы доказывают, что эта концепция становится реальностью. В Копенгагене уже работают энергоэффективные здания, которые сокращают потребление энергии до 70%, а в Амстердаме внедрена система замкнутого цикла, где 90% пластиковых отходов перерабатываются.\r\n\r\nОсновной ключ к успеху — внедрение умного экологического транспорта, который заменяет автомобили с двигателями внутреннего сгорания. Электробусы, водородные машины и массовый переход на велосипеды позволили снизить уровень выбросов на 60%. Эксперты уверены, что в ближайшие 10 лет такие инициативы будут распространяться по всему миру.\r\n\r\nЛунная база: первые шаги к жизни за пределами Земли\r\nКогда-то освоение Луны казалось далекой перспективой, но сегодня европейские ученые всерьез готовятся к строительству первой лунной базы. Недавно протестирован лунный модуль, разработанный Европейским космическим агентством (ESA).\r\n\r\nГлавное достижение инженеров — система, которая извлекает кислород из реголита, превращая лунный песок в жизненно важный ресурс. Ученые также разработали роботизированных помощников, которые помогут проводить исследования и поддерживать инфраструктуру базы без участия человека.\r\n\r\nТехнология использования реголита для строительства — революционное решение, позволяющее создавать надежные укрытия без транспортировки материалов с Земли. Это открывает путь к первым межпланетным миссиям и расширению границ человеческого присутствия в космосе.\r\n\r\nТайны средневекового замка\r\nВ Германии археологи сделали уникальное открытие — в древнем замке XIV века найдена тайная комната, скрытая от посторонних глаз. Внутри были обнаружены манускрипты, оружие и редкие ювелирные изделия, которые дают представление о средневековой Европе.\r\n\r\nОдно из самых интригующих открытий — пергаменты, содержащие карты и записи о тайных рыцарских орденах. Также исследователи нашли гербы старинных аристократических родов, что подтверждает гипотезу, что замок служил местом тайных собраний.\r\n\r\nИсторики уверены: эта находка поможет раскрыть новые страницы истории и изменить представление о жизни европейской знати в средние века.\r\n\r\nИскусственный интеллект в моде\r\nРеволюция в мире моды: теперь AI-дизайнеры создают коллекции одежды на основе анализа трендов. Искусственный интеллект анализирует предпочтения покупателей и формирует идеальные модели одежды, которые сразу становятся популярными.\r\n\r\nЭтот процесс уже активно тестируется в крупнейших модных домах Европы. AI генерирует тысячи дизайнерских вариантов за секунды, адаптируя их к предпочтениям клиентов. Это может означать полное изменение индустрии моды: вместо классического творчества дизайнеров тренды будут формироваться искусственным интеллектом.\r\n\r\nСпортивное питание нового поколения\r\nШведские ученые сделали важное открытие в области спортивного питания. Исследования показали, что правильный баланс белков, углеводов и витаминов способен значительно увеличить скорость, выносливость и реакцию спортсменов.\r\n\r\nЭта методика уже внедряется в ведущих футбольных клубах Европы. Диета включает антиоксиданты, укрепляющие иммунитет, продукты с высоким содержанием энергии для быстрого восстановления, а также сбалансированное потребление жидкости для оптимальной работы организма.\r\n\r\nЭксперты прогнозируют, что этот подход станет новым стандартом для спортивных тренировок, а его принципы будут использоваться не только в профессиональном спорте, но и в повседневной жизни.\r\n\r\nЭти тенденции показывают, как технологии и наука меняют мир вокруг нас, создавая более чистую среду, осваивая новые горизонты и улучшая качество жизни. Европа уже движется в будущее, и похоже, что эти изменения — только начало.\r\n\r\nЕсли нужно расширить статью или добавить новые темы, просто скажи! 🚀😊\r\n\r\nОтлично!!! Это то что мне было нужно!!!\r\nЯ рад, что это именно то, что ты искал! 😊 Если тебе понадобится что-то еще — уточнение деталей, дополнительные темы или новые форматы, просто скажи. Я всегда готов помочь! 🚀\r\n\r\nДа, конечно мне нужно еще 15 подобных статей по рубрикам: медицина - анализ последствий COVID 19, путешествие, НЛО, бизнес - анализ падения индексов на фоне торговой войны, новые технологии в автомобилестроении, проблемы с климатом- таяние льдов на полюсах, наука - новые открытия в области медицины, IT - влияние на безработицу, социальные вопросы с эмигрантами во Франции, культура - самые известные работы Леонардо да Винчи, AI - последние разработки нейронных сетей, Кулинария - самые популярные блюда в Германии, хорика - строительство гостиницы небоскреба, строительство -новые технологии экологического жилья из живых материалов, медународная торговля - прогноз развития торговых отношений Китая и Европы. Мирные переговоры в Стамбуле 15 мая 2025 г. И к этим статьям сделай описание фото. Статьи напиши в повесвовательном тоне, в виде статьи в прессу\r\nОтличная подборка тем! Я сейчас подготовлю полноценные статьи для каждой рубрики, включая описания изображений. Это займет некоторое время, но я постараюсь сделать их максимально информативными и актуальными.\r\n\r\nНачну с написания текстов, а затем добавлю к каждой статье описание фотографии. Держись, будет интересно! 🚀\r\n\r\nКакойто сбой? не вижу генерации статей\r\nПохоже, произошел технический сбой, и статьи не были созданы. Давай попробуем еще раз! Сейчас подготовлю тексты и описания фотографий для каждой темы. 🚀\r\n\r\nДа, конечно мне нужно еще 15 подобных статей по рубрикам: медицина - анализ последствий COVID 19, путешествие, НЛО, бизнес - анализ падения индексов на фоне торговой войны, новые технологии в автомобилестроении, проблемы с климатом- таяние льдов на полюсах, наука - новые открытия в области медицины, IT - влияние на безработицу, социальные вопросы с эмигрантами во Франции, культура - самые известные работы Леонардо да Винчи, AI - последние разработки нейронных сетей, Кулинария - самые популярные блюда в Германии, хорика - строительство гостиницы небоскреба, строительство -новые технологии экологического жилья из живых материалов, медународная торговля - прогноз развития торговых отношений Китая и Европы. Мирные переговоры в Стамбуле 15 мая 2025 г. И к этим статьям сделай описание фото. Статьи напиши в повесвовательном тоне, в виде статьи в прессу Твой ответ - Отличная подборка тем! Я сейчас подготовлю полноценные статьи для каждой рубрики, включая описания изображений. Это займет некоторое время, но я постараюсь сделать их максимально информативными и актуальными. Начну с написания текстов, а затем добавлю к каждой статье описание фотографии. Держись, будет интересно! 🚀\r\nХорошо, сейчас подготовлю статьи для каждой рубрики с подробным изложением информации и соответствующими описаниями фотографий. Это займет некоторое время, так как я стараюсь сделать тексты насыщенными и качественными.\r\n\r\nДавай начнем с первых пяти тем, затем я продолжу работу над оставшимися. Если у тебя есть пожелания по стилю или дополнительным аспектам, которые важно осветить, дай знать! 🚀\r\n\r\nМне нужны еще 15 подобных статей по рубрикам - вот первые 5 статей: медицина - анализ последствий COVID 19, путешествие, НЛО, бизнес - анализ падения индексов на фоне торговой войны, новые технологии в автомобилестроении, проблемы с климатом- таяние льдов на полюсах\r\nОтлично! Сейчас подготовлю подробные статьи для этих пяти рубрик.\r\n\r\nМедицина — анализ последствий COVID-19\r\nПандемия COVID-19 оставила глубокий след в мировой системе здравоохранения. Многие страны пересмотрели подход к эпидемиологической безопасности, усилив исследования в области вирусологии и вакцинопрофилактики.\r\n\r\n🔹 Долгосрочные последствия: Врачи отмечают рост кардиологических и неврологических осложнений у людей, перенесших COVID-19. Исследования показывают, что у 30% пациентов после выздоровления сохраняются симптомы, такие как хроническая усталость и снижение когнитивных функций.\r\n\r\n🔹 Изменения в медицине: Больницы модернизировали свои системы, внедрив телемедицину и программы удаленного мониторинга здоровья. Разработка новых вакцин против коронавируса привела к ускоренному развитию мРНК-технологий, которые теперь применяются для лечения других заболеваний, включая онкологию.",
+    "image": "post_images/BCO.885bab45-d003-4c15-b302-8357b1b67cd8.png",
+    "publication_date": "2025-05-13T18:29:33.257Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "covid-19",
+    "is_archived": false,
+    "likes": [
+      11
+    ],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 14,
+  "fields": {
+    "author": 6,
+    "title": "Путешествия — новые туристические тренды",
+    "text": "После пандемии туризм изменился. Теперь путешественники отдают предпочтение экологичным направлениям, индивидуальным маршрутам и цифровым технологиям.\r\n\r\n🔹 Популярные тренды:\r\n\r\nЭкотуризм – посещение заповедников и природных зон без вреда для экологии.\r\n\r\n\"Медленный туризм\" – отказ от массовых экскурсионных программ в пользу изучения местной культуры.\r\n\r\nЦифровые решения – приложения для персонализированных маршрутов и бесконтактного бронирования.\r\n\r\n🔹 Интересные направления: Швейцария предлагает экологические отели в Альпах, Италия развивает исторические маршруты, а Скандинавия внедряет \"умные\" туристические зоны.",
+    "image": "post_images/BCO.d9402b6e-9dc1-434a-8e08-6f303a128ca1.png",
+    "publication_date": "2025-05-13T19:15:09.927Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-2",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 15,
+  "fields": {
+    "author": 7,
+    "title": "НЛО — новые данные и гипотезы",
+    "text": "В 2025 году ученые представили новый доклад по изучению неопознанных летающих объектов, основанный на спутниковых данных и показаниях пилотов.\r\n🔹 Новые факты: Исследования подтверждают, что неопознанные аномальные явления иногда демонстрируют нехарактерные для земных технологий траектории движения.\r\n🔹 Научные гипотезы:\r\nНеизвестные атмосферные явления – редкие природные события могут объяснять часть наблюдений.\r\nЭкспериментальные технологии – возможно, это тестирование новых разработок.\r\nВнеземное происхождение – гипотеза остается открытой, но пока не подтверждена научно.",
+    "image": "post_images/BCO.f10e6a28-5a2b-404b-a70f-e02567f7948a.png",
+    "publication_date": "2025-05-13T19:18:33.919Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-3",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 16,
+  "fields": {
+    "author": 8,
+    "title": "Бизнес — падение индексов на фоне торговой войны",
+    "text": "Международная торговля переживает непростые времена — ужесточение санкций и изменение цепочек поставок привело к сильным колебаниям фондовых рынков.\r\n\r\n🔹 Причины падения индексов:\r\n\r\nОграничение экспорта ключевых товаров, таких как микрочипы и редкоземельные металлы.\r\n\r\nВведение новых пошлин и санкционных мер, осложняющих поставки между регионами.\r\n\r\nСнижение доверия инвесторов к нестабильным рынкам.\r\n\r\n🔹 Возможные прогнозы: Эксперты считают, что перенос производства в новые регионы и развитие локальных производств помогут стабилизировать ситуацию.",
+    "image": "post_images/BCO.a7b7d450-3789-4d8e-94d2-13e6f38390ad.png",
+    "publication_date": "2025-05-13T19:26:14.400Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-5",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 17,
+  "fields": {
+    "author": 9,
+    "title": "Новые технологии в автомобилестроении",
+    "text": "Автомобильная промышленность переживает технологическую революцию. Производители внедряют искусственный интеллект, экологичные материалы и автономное управление.\r\n\r\n🔹 Что изменилось в 2025 году: ✅ Разработаны батареи нового поколения, которые увеличивают запас хода электромобилей на 40%. ✅ Введены биоматериалы, позволяющие снизить вес машин и уменьшить вредные выбросы. ✅ Активно тестируются полностью автономные автомобили, которые могут передвигаться без участия водителя.",
+    "image": "post_images/BCO.31d38832-40d8-4869-8385-6f4d67697e0a.png",
+    "publication_date": "2025-05-13T19:29:38.852Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-6",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 18,
+  "fields": {
+    "author": 10,
+    "title": "Наука — Новые открытия в области медицины",
+    "text": "Современная медицина переживает один из самых динамичных периодов развития. В 2025 году ученые сделали ряд революционных открытий, которые могут изменить подход к лечению самых сложных заболеваний.\r\n\r\n📌 Генетическая терапия и редактирование ДНК Одним из ключевых прорывов стало использование технологии CRISPR для точечного редактирования генов, что позволяет корректировать наследственные заболевания еще на уровне эмбрионов. В Великобритании уже ведутся клинические испытания, в ходе которых ученые пытаются устранить генетические мутации, ведущие к редким неврологическим расстройствам.\r\n\r\n📌 Искусственные органы и регенеративная медицина Технология выращивания биоинженерных тканей достигла нового уровня. Исследователи научились создавать полноценные органы из стволовых клеток, что сокращает зависимость от донорских органов. В Испании уже проведены успешные тестирования искусственных легких, которые продемонстрировали способность самовосстанавливаться после повреждений.\r\n\r\n📌 Персонализированная медицина С развитием искусственного интеллекта лечение пациентов становится индивидуализированным. AI-алгоритмы анализируют генетическую информацию, образ жизни и медицинскую историю, чтобы подобрать наилучший курс терапии. В США создана система, прогнозирующая вероятность развития сердечно-сосудистых заболеваний за 10 лет до появления первых симптомов.",
+    "image": "post_images/BCO_GtEpY65.ad3d534e-1ecf-40b7-bc0c-cc970d63aae3.png",
+    "publication_date": "2025-05-13T19:33:08.816Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-7",
+    "is_archived": false,
+    "likes": [
+      2
+    ],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 19,
+  "fields": {
+    "author": 11,
+    "title": "IT — Влияние на безработицу",
+    "text": "Бурное развитие технологий неизбежно влияет на рынок труда, создавая новые возможности, но одновременно лишая рабочие места людей в традиционных сферах.\r\n\r\n📌 Автоматизация и искусственный интеллект Роботизация производства позволяет компаниям заменять ручной труд машинами, что ведет к сокращению рабочих мест на заводах. Однако в то же время появляются новые профессии, связанные с обслуживанием и программированием AI-систем.\r\n\r\n📌 Удаленная работа и цифровые платформы Сейчас все больше специалистов работают удаленно, пользуясь онлайн-платформами для взаимодействия с работодателями. Это снижает спрос на офисные профессии, но создает новые вакансии в сфере IT и кибербезопасности.\r\n\r\n📌 Необходимость переподготовки Эксперты уверены: чтобы оставаться востребованными, людям необходимо осваивать цифровые навыки. Образовательные программы уже адаптируются под новые реалии, обучая студентов основам программирования, анализа данных и управления нейросетями.",
+    "image": "post_images/BCO.b1573a32-77d2-466f-bc65-67aaeb55b537.png",
+    "publication_date": "2025-05-13T19:36:27.501Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "it",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 20,
+  "fields": {
+    "author": 12,
+    "title": "Социальные вопросы — Эмигранты во Франции",
+    "text": "Франция остается одной из ключевых точек для миграции, сталкиваясь с социальными вызовами, связанными с адаптацией приезжих.\r\n\r\n📌 Экономический эффект миграции Мигранты играют важную роль в экономике Франции, занимая рабочие места в сфере строительства, обслуживания и сельского хозяйства. Однако конкуренция на рынке труда вызывает напряженность между местными жителями и приезжими.\r\n\r\n📌 Адаптация и культурные различия Одна из главных проблем — интеграция мигрантов в общество. Несмотря на программы поддержки, многие сталкиваются с барьерами в изучении французского языка и трудностями с поиском жилья.\r\n\r\n📌 Государственная политика Французские власти пытаются найти баланс, регулируя потоки мигрантов и внедряя новые механизмы адаптации. В 2025 году была запущена программа, направленная на ускоренную интеграцию путем профессионального обучения и упрощенной легализации.",
+    "image": "post_images/BCO.79bd2656-2658-47cd-87c6-c36858d5e1ee.png",
+    "publication_date": "2025-05-13T19:39:51.411Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-8",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 21,
+  "fields": {
+    "author": 13,
+    "title": "Культура — Самые известные работы Леонардо да Винчи",
+    "text": "Леонардо да Винчи — гениальный художник, инженер и ученый, чьи произведения стали вечными символами искусства и науки.\r\n\r\n📌 \"Мона Лиза\" Самая загадочная картина да Винчи, созданная между 1503-1506 годами. Улыбка Джоконды остается тайной искусства, вызывая бесконечные обсуждения о ее смысле и эмоциях.\r\n\r\n📌 \"Тайная вечеря\" Монументальная фреска, изображающая последнюю трапезу Христа с апостолами, известна своей композиционной точностью и глубиной.\r\n\r\n📌 Инженерные проекты Да Винчи занимался разработкой летательных аппаратов, роботизированных механизмов и анатомическими исследованиями, опережая свое время. Его чертежи первых прототипов вертолета и подводного судна легли в основу современных технологий.",
+    "image": "post_images/BCO.cb77c9d0-1f53-4136-998d-b0c2698760cb.png",
+    "publication_date": "2025-05-13T19:42:57.193Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-9",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 22,
+  "fields": {
+    "author": 14,
+    "title": "AI — Последние разработки нейронных сетей",
+    "text": "Искусственный интеллект быстро развивается, предлагая революционные решения в самых разных сферах.\r\n\r\n📌 AI в медицине Нейросети помогают врачам диагностировать заболевания на ранних стадиях. Уже сейчас алгоритмы способны анализировать тысячи медицинских снимков и находить отклонения точнее, чем врачи.\r\n\r\n📌 AI в творчестве Нейросети научились создавать произведения искусства, сочинять музыку и писать книги. Некоторые картины, созданные AI, уже выставляются в музеях современного искусства.\r\n\r\n📌 Этические вопросы Развитие AI ставит сложные вопросы: может ли машина заменить человека в творчестве и принятии решений? Некоторые эксперты предупреждают о рисках потери рабочих мест, если алгоритмы станут слишком автономными.",
+    "image": "post_images/BCO_PzDbxTz.307b67a8-4457-4363-912f-fe47ab088138.png",
+    "publication_date": "2025-05-13T19:45:53.675Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "ai",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 23,
+  "fields": {
+    "author": 15,
+    "title": "Кулинария — самые популярные блюда Германии",
+    "text": "Немецкая кухня — это сочетание традиций и простых, но насыщенных вкусов. В каждой федеральной земле свои гастрономические особенности, но некоторые блюда стали визитной карточкой страны.\r\n\r\n📌 Баварские колбаски (Weißwurst) Приготовленные из телятины и свиного сала, они подаются с горчицей и свежим брецелем. Это любимое блюдо жителей Мюнхена, особенно на Октоберфесте.\r\n\r\n📌 Шницель (Schnitzel) Несмотря на австрийские корни, жареный мясной шницель стал неотъемлемой частью немецкой кухни. В классическом варианте используется панированная телятина, обжаренная до золотистой корочки.\r\n\r\n📌 Картофельный салат (Kartoffelsalat) Этот гарнир встречается в каждом регионе Германии, но рецепты могут отличаться: на юге добавляют уксус и масло, а на севере предпочитают майонезную заправку.",
+    "image": "post_images/BCO.f34c4999.png",
+    "publication_date": "2025-05-13T19:50:16.176Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-10",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": [
+      1
+    ]
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 24,
+  "fields": {
+    "author": 16,
+    "title": "HoReCa — строительство гостиницы-небоскреба",
+    "text": "Современный гостиничный бизнес переживает эру высотного строительства. В 2025 году одна из крупнейших строительных компаний представила проект инновационной гостиницы-небоскреба с уникальными архитектурными решениями.\r\n\r\n📌 Основные особенности: ✅ Система автономного энергоснабжения – от солнечных батарей и геотермальных станций. ✅ Умные номера – оснащенные AI-системами управления комфортом гостей. ✅ Эко-материалы – стеклянные панели с самоочищающейся поверхностью и утеплитель нового поколения.\r\n\r\n📌 Архитектурное новшество Небоскрёб будет построен по принципу вертикального города, где отдельные этажи станут мини-парками, магазинами и зонами отдыха.",
+    "image": "post_images/hotel_skyscraper.png",
+    "publication_date": "2025-05-13T19:53:04.712Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "horeca",
+    "is_archived": false,
+    "likes": [
+      2
+    ],
+    "dislikes": [
+      2
+    ]
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 25,
+  "fields": {
+    "author": 17,
+    "title": "Строительство — новые технологии экологического жилья из живых материалов",
+    "text": "Развитие эко-архитектуры привело к созданию жилых домов, способных \"дышать\" и регенерировать. Эти проекты уже реализуются в крупнейших европейских странах.\r\n\r\n📌 Что это за технология? ✅ Использование био-бетона, который самовосстанавливается благодаря бактериям. ✅ Применение зелёных фасадов, где растения обеспечивают естественную фильтрацию воздуха. ✅ Внедрение солнечных батарей из органических материалов, повышающих эффективность энергосбережения.\r\n\r\n📌 Будущее эко-строительства Исследования показывают, что такие здания смогут существенно снизить уровень CO₂, а также минимизировать потребление ресурсов благодаря автономным системам жизнеобеспечения.",
+    "image": "post_images/Green_city_aUnvUuV.png",
+    "publication_date": "2025-05-13T19:56:20.675Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "-11",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 26,
+  "fields": {
+    "author": 18,
+    "title": "Международная торговля — прогноз развития торговых отношений Китая и Европы",
+    "text": "На фоне глобальных экономических изменений Китай и Европа пересматривают свои торговые стратегии, чтобы адаптироваться к новым вызовам.\r\n\r\n📌 Основные тенденции: ✅ Переключение на локализованные производства для снижения зависимости от глобальных цепочек поставок. ✅ Развитие зеленой торговли – Китай инвестирует в создание экологически чистых технологий для экспорта. ✅ Усиление технологического сотрудничества, особенно в сфере искусственного интеллекта и роботизации.\r\n\r\n📌 Прогноз на будущее Эксперты считают, что в ближайшие годы Китай и ЕС будут расширять партнерство, создавая новые логистические маршруты и соглашения по устойчивому развитию.",
+    "image": "post_images/Export_from_China.png",
+    "publication_date": "2025-05-13T20:00:26.700Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-14T17:27:05.877Z",
+    "slug": "-12",
+    "is_archived": true,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 27,
+  "fields": {
+    "author": 19,
+    "title": "Мирные переговоры в Стамбуле — 15 мая 2025 года",
+    "text": "Переговоры между Россией и Украиной, запланированные на 15 мая 2025 года в Стамбуле, привлекли внимание мирового сообщества. Это потенциально историческая встреча, поскольку она может стать первым прямым диалогом между президентами Украины и России с начала полномасштабного конфликта.\r\n\r\nОсновные темы переговоров\r\nПо данным аналитиков, ключевыми вопросами станут:\r\n\r\nБудущее оккупированных территорий и возможные компромиссы по их статусу.\r\n\r\nКонтроль над Запорожской АЭС, которая остается стратегически важным объектом.\r\n\r\nДоступ Украины к реке Днепр и Черному морю, что критично для экономики страны.\r\n\r\nПерспективы прекращения огня\r\nНесмотря на ожидания, эксперты считают, что немедленного прекращения боевых действий ждать не стоит.\r\n\r\nУкраина требует 30-дневного перемирия перед началом переговоров, но Россия настаивает на обсуждении без предварительных условий.\r\n\r\nСША и Европа поддерживают переговорный процесс, но требуют гарантий безопасности для Украины.\r\n\r\nТурция играет роль посредника, предлагая компромиссные решения.\r\n\r\nВероятный исход\r\nАналитики прогнозируют, что переговоры пройдут на уровне делегаций, а не личной встречи лидеров.\r\n\r\nРоссия может предложить временное перемирие, но без гарантий полного прекращения огня.\r\n\r\nУкраина будет настаивать на выводе российских войск, что может стать камнем преткновения.\r\n\r\nЗападные страны готовы усилить санкции, если переговоры не приведут к конкретным результатам.\r\n\r\nЗаключение\r\nПереговоры в Стамбуле — важный шаг, но быстрого мира ожидать не стоит. Стороны пока далеки от компромисса, и многое будет зависеть от дипломатических усилий посредников.",
+    "image": "post_images/peace_talks.png",
+    "publication_date": "2025-05-13T20:02:59.105Z",
+    "created_at": "2025-05-13T22:09:30.303Z",
+    "updated_at": "2025-05-13T22:38:12.648Z",
+    "slug": "15-2025",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 28,
+  "fields": {
+    "author": 20,
+    "title": "Рынок нефти и нефтепродуктов сегодня: ключевые тенденции и прогнозы",
+    "text": "Мировой рынок нефти продолжает демонстрировать волатильность, обусловленную геополитическими факторами, изменением спроса и динамикой добычи.\r\n\r\n📌 Текущая ситуация\r\n\r\nЦена на нефть марки Brent колеблется в районе $66–70 за баррель.\r\n\r\nОПЕК+ продолжает регулировать объемы добычи, стремясь поддерживать баланс на рынке.\r\n\r\nСША и Китай ведут переговоры по торговым соглашениям, что влияет на спрос на сырье.\r\n\r\n📌 Факторы, влияющие на рынок ✅ Снижение числа буровых установок в США может привести к сокращению добычи. ✅ Санкции против Ирана ограничивают поставки нефти, создавая дефицит предложения. ✅ Рост спроса на СПГ в Европе и Азии влияет на нефтяные котировки.\r\n\r\n📌 Прогноз на ближайшее время Аналитики ожидают, что рынок останется нестабильным, но возможен рост цен при усилении дефицита предложения. Важную роль сыграют отчеты ОПЕК и МЭА, а также экономические показатели ведущих стран.",
+    "image": "post_images/OPEC_members_meeting_to_dis_2.jpg",
+    "publication_date": "2025-05-14T21:45:48.573Z",
+    "created_at": "2025-05-14T21:45:48.573Z",
+    "updated_at": "2025-05-14T22:10:46.243Z",
+    "slug": "Rynok-nefti-i-nefteproduktov-segodnya",
+    "is_archived": false,
+    "likes": [
+      2,
+      1
+    ],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 29,
+  "fields": {
+    "author": 20,
+    "title": "Самолетостроение и новинки компании Boeing",
+    "text": "Компания Boeing продолжает лидировать в авиационной отрасли, внедряя инновационные технологии и разрабатывая новые модели самолетов. В 2025 году корпорация делает ставку на экологичность, эффективность и безопасность.\r\n\r\n📌 Последние разработки Boeing\r\n\r\nBoeing 737 MAX — компания планирует увеличить производство до 60 самолетов в месяц к июлю 2025 года.\r\n\r\nНовые материалы — Boeing активно использует композитные материалы, уменьшающие вес самолетов и повышающие их топливную эффективность.\r\n\r\nАвиационная электроника — внедрение усовершенствованных систем управления и автоматизации полетов.\r\n\r\n📌 Тренды в самолетостроении ✅ Гиперзвуковые технологии — разработка сверхскоростных пассажирских лайнеров. ✅ Электрические самолеты — Boeing инвестирует в исследования гибридных и полностью электрических двигателей. ✅ Умные кабины — новые технологии позволяют улучшить комфорт пассажиров и оптимизировать работу экипажа.\r\n\r\n📌 Будущее авиации Эксперты прогнозируют, что в ближайшие годы Boeing сосредоточится на развитии беспилотных технологий, а также на создании самолетов с минимальным углеродным следом.",
+    "image": "post_images/BCO.33c19e72-4962-41c6-9b52-19ded51b268b.png",
+    "publication_date": "2025-05-14T22:04:20.356Z",
+    "created_at": "2025-05-14T22:04:20.356Z",
+    "updated_at": "2025-05-14T22:04:20.356Z",
+    "slug": "samoletostroenie-i-novinki-kompanii-boeing",
+    "is_archived": false,
+    "likes": [],
+    "dislikes": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 30,
+  "fields": {
+    "author": 1,
+    "title": "Компания Boeing продолжает лидировать в авиационной отрасли, внедряя инновационные технологии и разрабатывая новые модели самолетов",
+    "text": "Компания Boeing продолжает лидировать в авиационной отрасли, внедряя инновационные технологии и разрабатывая новые модели самолетов",
+    "image": "post_images/BCO_fbDJGAE.33c19e72-4962-41c6-9b52-19ded51b268b.png",
+    "publication_date": "2025-05-14T22:16:10.848Z",
+    "created_at": "2025-05-14T22:16:10.848Z",
+    "updated_at": "2025-05-14T22:59:31.155Z",
+    "slug": "kompaniia-boeing-prodolzhaet-lidirovat-v-avia",
+    "is_archived": true,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 31,
+  "fields": {
+    "author": 2,
+    "title": "Переговоры в Стамбуле не начались (чуть, чуть)",
+    "text": "Переговоры в Стамбуле не начались (чуть, чуть).Пререговоры в Стамбуле не начались (чуть, чуть)",
+    "image": "post_images/981193-middle.png",
+    "publication_date": "2025-05-15T17:32:47.375Z",
+    "created_at": "2025-05-15T17:32:47.375Z",
+    "updated_at": "2025-05-15T17:33:12.512Z",
+    "slug": "peregovory-v-stambule-ne-nachalis-chut-chut",
+    "is_archived": true,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 32,
+  "fields": {
+    "author": 2,
+    "title": "Проверка на удаление поста",
+    "text": "Проверка на удаление поста, Проверка на удаление поста, Проверка на удаление поста",
+    "image": "post_images/IMG_2127.JPEG",
+    "publication_date": "2025-05-15T22:32:20.596Z",
+    "created_at": "2025-05-15T22:32:20.596Z",
+    "updated_at": "2025-05-15T22:32:29.245Z",
+    "slug": "proverka-na-udalenie-posta",
+    "is_archived": true,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 33,
+  "fields": {
+    "author": 2,
+    "title": "Тест поста на удаление",
+    "text": "Тест поста на удаление , Тест поста на удаление , Тест поста на удаление",
+    "image": "post_images/IMG_2127_wzHDA2j.JPEG",
+    "publication_date": "2025-05-15T23:00:31.540Z",
+    "created_at": "2025-05-15T23:00:31.540Z",
+    "updated_at": "2025-05-15T23:00:48.857Z",
+    "slug": "test-posta-na-udalenie",
+    "is_archived": true,
+    "likes": [
+      2
+    ],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 34,
+  "fields": {
+    "author": 1,
+    "title": "Климатические изменения на планете",
+    "text": "Климатические изменения на планете. Климатические изменения на планете. Климатические изменения на планетею",
+    "image": "post_images/Default_Witness_the_birth_of_our_planet_through_the_eyes_of_Go_3.jpg",
+    "publication_date": "2025-05-17T18:04:32.634Z",
+    "created_at": "2025-05-17T18:04:32.634Z",
+    "updated_at": "2025-05-17T18:05:18.005Z",
+    "slug": "klimaticheskie-izmeneniia-na-planete",
+    "is_archived": true,
+    "likes": [],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 35,
+  "fields": {
+    "author": 1,
+    "title": "Климатические изменения на планете",
+    "text": "Климатические изменения на планете. Климатические изменения на планете\r\nКлиматические изменения на планете. Климатические изменения на планете",
+    "image": "post_images/ice_4.jpg",
+    "publication_date": "2025-05-17T18:09:13.705Z",
+    "created_at": "2025-05-17T18:09:13.705Z",
+    "updated_at": "2025-05-17T18:11:50.413Z",
+    "slug": "klimaticheskie-izmeneniia-na-planete-1",
+    "is_archived": true,
+    "likes": [
+      1
+    ],
+    "dislikes": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 36,
+  "fields": {
+    "author": 1,
+    "title": "Климатические изменения на планете: вызовы и перспективы",
+    "text": "Климат Земли стремительно меняется, и последствия этих изменений становятся все более ощутимыми. Глобальное потепление, экстремальные погодные явления и повышение уровня мирового океана — лишь часть проблем, с которыми сталкивается человечество. Проверка на удаление\r\n\r\n📌 Основные причины климатических изменений\r\n\r\nВыбросы парниковых газов — сжигание ископаемого топлива увеличивает концентрацию CO₂ в атмосфере.\r\n\r\nВырубка лесов — сокращение зеленых насаждений снижает способность планеты поглощать углекислый газ.\r\n\r\nПромышленное производство — выбросы вредных веществ усиливают загрязнение воздуха и воды.\r\n\r\n📌 Последствия для экосистем и общества ✅ Таяние ледников — уровень мирового океана повышается, угрожая прибрежным регионам. ✅ Экстремальные погодные явления — ураганы, засухи и наводнения становятся более частыми. ✅ Изменение сельскохозяйственных условий — урожайность снижается, что влияет на продовольственную безопасность.\r\n\r\n📌 Что можно сделать? 🌱 Переход на возобновляемые источники энергии — солнечная и ветровая энергетика помогают сократить выбросы. 🌍 Сохранение лесов — восстановление природных зон способствует снижению уровня CO₂. 🚀 Инновационные технологии — развитие экологически чистого транспорта и энергоэффективных решений.",
+    "image": "post_images/ice_4_ZxZkKUa.jpg",
+    "publication_date": "2025-05-17T19:38:22.057Z",
+    "created_at": "2025-05-17T19:38:22.057Z",
+    "updated_at": "2025-05-17T21:08:37.785Z",
+    "slug": "klimaticheskie-izmeneniia-na-planete-vyzovy-i",
+    "is_archived": true,
+    "likes": [],
+    "dislikes": [
+      1
+    ]
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 1,
+  "fields": {
+    "post": 2,
+    "author": 2,
+    "text": "Осталось только заменить наименование на русском языке",
+    "created_at": "2025-05-08T23:38:29.267Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 2,
+  "fields": {
+    "post": 2,
+    "author": 2,
+    "text": "В общем незарегистрированный пользователь получит 403 ошибку",
+    "created_at": "2025-05-08T23:56:19.025Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 3,
+  "fields": {
+    "post": 5,
+    "author": 2,
+    "text": "Проверяю настройку : \"Кнопка \"лайк\" отображается на посте.\r\nПовторный клик снимает лайк.\r\nКоличество лайков видно рядом.\"\"",
+    "created_at": "2025-05-09T00:04:50.953Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 4,
+  "fields": {
+    "post": 5,
+    "author": 2,
+    "text": "отлично",
+    "created_at": "2025-05-09T00:15:50.005Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 5,
+  "fields": {
+    "post": 5,
+    "author": 2,
+    "text": "Пробую перейти на страницу posts",
+    "created_at": "2025-05-09T00:19:34.540Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 9,
+  "fields": {
+    "post": 1,
+    "author": 2,
+    "text": "wsefsdfvsadfvas",
+    "created_at": "2025-05-12T17:45:09.370Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 10,
+  "fields": {
+    "post": 4,
+    "author": 2,
+    "text": "Обновил фото поста, проверяю на работоспособность",
+    "created_at": "2025-05-12T21:22:56.368Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 11,
+  "fields": {
+    "post": 4,
+    "author": 2,
+    "text": "Сейчас  проверяю на работоспособность и сохранение",
+    "created_at": "2025-05-12T21:24:54.250Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 12,
+  "fields": {
+    "post": 4,
+    "author": 2,
+    "text": "Сейчас  проверяю на работоспособность и сохранение",
+    "created_at": "2025-05-12T21:46:22.627Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 13,
+  "fields": {
+    "post": 36,
+    "author": 1,
+    "text": "Отличная статья",
+    "created_at": "2025-05-17T20:39:07.537Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 14,
+  "fields": {
+    "post": 36,
+    "author": 1,
+    "text": "Отличная статья",
+    "created_at": "2025-05-17T20:43:17.893Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 15,
+  "fields": {
+    "post": 36,
+    "author": 1,
+    "text": "Отличная статья",
+    "created_at": "2025-05-17T20:45:31.058Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 16,
+  "fields": {
+    "post": 36,
+    "author": 1,
+    "text": "Отличная статья",
+    "created_at": "2025-05-17T20:45:36.826Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 17,
+  "fields": {
+    "post": 36,
+    "author": 1,
+    "text": "Отличная статья",
+    "created_at": "2025-05-17T20:45:57.443Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 18,
+  "fields": {
+    "post": 36,
+    "author": 1,
+    "text": "wfwerf",
+    "created_at": "2025-05-17T20:52:25.420Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 19,
+  "fields": {
+    "post": 29,
+    "author": 1,
+    "text": "нравиться",
+    "created_at": "2025-05-17T23:15:15.104Z"
+  }
+},
+{
+  "model": "subscriptions.subscription",
+  "pk": 3,
+  "fields": {
+    "subscriber": 2,
+    "author": 20,
+    "created_at": "2025-05-15T17:34:31.243Z"
+  }
+},
+{
+  "model": "subscriptions.subscription",
+  "pk": 4,
+  "fields": {
+    "subscriber": 2,
+    "author": 10,
+    "created_at": "2025-05-16T19:34:54.039Z"
+  }
+},
+{
+  "model": "subscriptions.subscription",
+  "pk": 5,
+  "fields": {
+    "subscriber": 1,
+    "author": 20,
+    "created_at": "2025-05-17T17:10:13.027Z"
+  }
+},
+{
+  "model": "subscriptions.subscription",
+  "pk": 6,
+  "fields": {
+    "subscriber": 20,
+    "author": 16,
+    "created_at": "2025-05-18T02:08:25.687Z"
+  }
+},
+{
+  "model": "subscriptions.subscription",
+  "pk": 7,
+  "fields": {
+    "subscriber": 20,
+    "author": 9,
+    "created_at": "2025-05-18T02:09:26.072Z"
+  }
+}
+]

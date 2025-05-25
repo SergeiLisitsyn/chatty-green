@@ -31,7 +31,7 @@ if not env_path.exists():
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n=s5kr%x^h$7ur^*wwt6skj&pn$wm49##$9a)prz8_nv4nd09t'
+SECRET_KEY =  os.getenv('SECRET_KEY')  # Обязательно через переменные окружения!
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
