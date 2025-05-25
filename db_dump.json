@@ -1,27 +1,4 @@
-pk_url_kwarg = pk
 [
-{
-  "model": "admin.logentry",
-  "pk": 1,
-  "fields": {
-    "action_time": "2025-05-14T22:10:46.247Z",
-    "user": 1,
-    "content_type": 14,
-    "object_id": "28",
-    "object_repr": "Рынок нефти и нефтепродуктов сегодня: ключевые тенденции и прогнозы",
-    "action_flag": 2,
-    "change_message": "[{\"changed\": {\"fields\": [\"Slug\"]}}]"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 1,
-  "fields": {
-    "name": "Can add log entry",
-    "content_type": 1,
-    "codename": "add_logentry"
-  }
-},
 {
   "model": "auth.permission",
   "pk": 2,
