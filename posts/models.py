@@ -5,7 +5,9 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
 
+
 from ads.models import Advertisement
+
 from posts.templatetags import time_filters
 from django.contrib.auth import get_user_model
 from unidecode import unidecode
@@ -14,7 +16,6 @@ from django.utils.timezone import now
 
 
 User = get_user_model()
-
 
 class Post(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
@@ -28,6 +29,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
     dislikes = models.ManyToManyField(User, related_name='disliked_posts', blank=True)
     is_archived = models.BooleanField(default=False)
+
     advertisement = models.ForeignKey(Advertisement, on_delete=models.SET_NULL, null=True, blank=True)  # Рекламный блок
 
     def save(self, *args, **kwargs):

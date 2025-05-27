@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+
     'social_django',
+
     'django.contrib.sites',
 
     # Аутентификация
@@ -109,7 +111,9 @@ DATABASES = {
     }
 }
 
+
 # PASSWORD VALIDATORS
+
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -121,6 +125,9 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'UTC'
 USE_I18N = True
+
+USE_L10N = True  # включить локализацию чисел и дат
+
 USE_TZ = True
 
 # STATIC & MEDIA
@@ -276,6 +283,16 @@ if not os.getenv('EMAIL_HOST_USER') or not os.getenv('EMAIL_HOST_PASSWORD'):
 
 
 
+# Проверка загрузки переменных окружения
+print("\n=== Email Configuration ===")
+print(f"EMAIL_HOST: {EMAIL_HOST}")
+print(f"EMAIL_PORT: {EMAIL_PORT}")
+print(f"EMAIL_USE_TLS: {EMAIL_USE_TLS}")
+print(f"EMAIL_HOST_USER: {EMAIL_HOST_USER or 'не установлен'}")
+print(f"EMAIL_HOST_PASSWORD: {'установлен' if EMAIL_HOST_PASSWORD else 'не установлен'}")
+print(f"DEFAULT_FROM_EMAIL: {DEFAULT_FROM_EMAIL}")
+print("=========================\n")
 
-
+print(repr(os.getenv("PG_NAME")))
+print(repr(os.getenv("PG_PASSWORD")))
 

@@ -588,13 +588,16 @@ DATABASES = {
 # Важные команды для работы с Docker:
 1. Запуск контейнеров:
 ``` 
+
+docker-compose up
+docker restart web /перезапуск контенера - web/
+
 - docker-compose down /остановка контейнера/
 - docker-compose build /запуск сборки контейнера/
 - docker-compose up -d /запуск контенера/
 - docker restart web /перезапуск контенера - web/
 или все вместе  
 - docker-compose down && docker-compose build && docker-compose up -d 
-
 
 ``` 
 2. Выполнение миграций:

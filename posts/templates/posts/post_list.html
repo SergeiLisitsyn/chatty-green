@@ -1,4 +1,8 @@
+
+{#--post_list.html--#}
+
 {# posts/templates/posts/post_list.html #}
+
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
@@ -13,10 +17,12 @@
   <!-- Заголовок страницы -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0">Список постов</h2>
+
   </div>
 
   <!-- Кнопка создания поста (только для авторизованных пользователей) -->
   <div class="d-flex justify-content-between align-items-center mb-4">
+
     {% if user.is_authenticated %}
 
        {% if request.user.is_banned %}
@@ -35,8 +41,10 @@
 
     <div class="list-group">
       {% for post in posts %}
+
         <div id="post-{{ post.id }}" class="list-group-item py-3 d-flex gap-3 post-card">
           <!-- Превью изображения -->
+
           <div class="flex-shrink-0">
             {% if post.image %}
               <img src="{{ post.image.url }}" alt="Миниатюра" class="rounded" width="100" height="100" style="object-fit: cover;">
@@ -47,6 +55,7 @@
 
           <div class="w-100">
             <!-- Заголовок поста -->
+
             {% if post.slug %}
               <a href="{% url 'posts:post_detail' post.slug %}" class="h5 fw-bold text-decoration-none text-dark d-block">
                 {{ post.title|default:"(Без заголовка)" }}
@@ -56,9 +65,11 @@
             {% endif %}
 
             <!-- Превью текста -->
+
             <p class="mb-2 text-muted small">
               {{ post.text|truncatewords:50 }}
             </p>
+
 
          <!-- Блок кнопок действия -->
             <div class="d-flex justify-content-between text-muted small mt-2">
@@ -95,6 +106,7 @@
               </div>
             </div>
           {% endfor %}
+
     </div>
 
     {% include "include/paginator.html" with page=page_obj %}
@@ -106,8 +118,10 @@
 {% endblock %}
 
 {% block extra_js %}
+
   {% if user.is_authenticated %}
     <script src="{% static 'js/likes.js' %}"></script>
   {% endif %}
 {% include 'posts/share.html' %}
+
 {% endblock %}

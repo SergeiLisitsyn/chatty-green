@@ -17,6 +17,7 @@ from django.db.models import Q
 from django.shortcuts import render
 from posts.models import Post
 
+
 # Классы для работы с Post
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -161,7 +162,6 @@ class PostDetailViewId(DetailView):
     pk_url_kwarg = 'pk'  # Явное указание параметра URL
 
 
-
 class FeedView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'posts/feed.html'
@@ -207,7 +207,4 @@ def search_results(request):
     posts = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query), is_archived=False)
 
     return render(request, "posts/search_results.html", {"posts": posts, "query": query})
-
-
-
 

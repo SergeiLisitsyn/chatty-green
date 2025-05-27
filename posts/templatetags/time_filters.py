@@ -1,4 +1,6 @@
+
 # posts/templatetags/time_filters.py
+
 
 from django import template
 from django.utils import timezone
@@ -36,3 +38,4 @@ def ru_timesince(value):
         return f'{hours} {pluralize(hours, "час", "часа", "часов")} назад'
     else:
         return value.strftime('%d.%m.%Y %H:%M')
+
