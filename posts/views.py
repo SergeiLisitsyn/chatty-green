@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
-from .models import Post, Comment
+from .models import Post, Comment, Advertisement
 from .forms import CommentForm, PostForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
@@ -14,6 +14,9 @@ from subscriptions.models import Subscription
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from posts.templatetags import time_filters
 from django.db.models import Q
+from django.shortcuts import render
+from posts.models import Post
+
 
 
 # Классы для работы с Post
@@ -158,7 +161,19 @@ class PostDetailViewId(DetailView):
     context_object_name = 'post'
     pk_field = 'pk'
     pk_url_kwarg = 'pk'  # Явное указание параметра URL
-    print(f'pk_url_kwarg = {pk_url_kwarg}')
+
+
+class FeedView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'posts/feed.html'
+    context_object_name = 'posts'
+    paginate_by = 10 # Количество постов на одной странице
+
+    def get_queryset(self):
+        # Получаем список авторов, на которых подписан текущий пользователь
+        subscribed_authors = Subscription.objects.filter(subscriber=self.request.user).values_list('author', flat=True)
+        # Фильтруем посты только от этих авторов
+        return Post.objects.filter(author__in=subscribed_authors).order_by('-publication_date')
 
 
 class FeedView(LoginRequiredMixin, ListView):
@@ -185,8 +200,9 @@ def archive_post(request, slug):
 
 
 def home(request):
-    latest_posts = Post.objects.filter(is_archived=False).order_by('-created_at')[:5]  # 5 свежих постов
-    return render(request, 'home.html', {'latest_posts': latest_posts})
+    # Выбираем 5 последних неархивированных постов, отсортированных по дате создания (от новых к старым)
+    latest_posts = Post.objects.filter(is_archived=False).order_by('-created_at')[:12]
+    return render(request, 'home.html', {'latest_posts':  latest_posts})
 
 
 def delete_post(request, slug):
@@ -205,3 +221,4 @@ def search_results(request):
     posts = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query), is_archived=False)
 
     return render(request, "posts/search_results.html", {"posts": posts, "query": query})
+

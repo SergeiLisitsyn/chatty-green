@@ -1,0 +1,271 @@
+/* === Стили главной страницы (home.html) === */
+
+body {
+  opacity: 0;
+  transition: opacity 2s ease-in;
+  font-family: "Tilda Sans", sans-serif;
+  font-size: 12px;
+}
+
+body.fade-in {
+  opacity: 1;
+}
+
+.welcome-message {
+  font-size: 32px;
+  font-weight: bold;
+  color: #323333;
+  text-align: center;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 10px rgba(67, 67, 67, 0.3);
+}
+
+.news-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007BFF;
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* Дублирующийся стиль — возможно перенести в base.css */
+.post-card {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.chat-description {
+  font-family: 'Tilda Sans', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  color: #333;
+}
+/* Заголовки */
+h1, h2, h3 {
+    font-family: "Tilda Sans Bold", sans-serif;
+    font-size: 14px;
+}
+
+.read-more {
+    display: block; /* Принудительный перенос на новую строку */
+    white-space: normal; /* Позволяет перенос слов */
+    word-wrap: break-word; /* Перенос длинных слов */
+}
+
+.time-info {
+    font-family: "Open Sans", sans-serif;
+    font-size: 10px;
+    color: #323333; /* Можно поменять цвет */
+}
+
+.scrollable-news {
+    max-height: 500px; /* Ограничиваем высоту блока */
+    overflow-y: auto; /* Включаем вертикальную прокрутку */
+    padding-right: 10px; /* Отступ для удобства прокрутки */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+}
+
+/* Стилизация скроллбара */
+.scrollable-news::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollable-news::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.scrollable-news::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.scrollable-news::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 📦 Основной блок рекламы сбоку */
+.ad-sidebar {
+  position: fixed;
+  top: 150px;
+  right: 20px;
+  width: 300px;
+  max-width: 20vw;
+  z-index: 1000;
+}
+
+/* 🔃 Прокрутка для блока рекламы*/
+.scrollable-ad {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* 🧱 Карточка рекламы */
+.ad-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fefefe;
+  transition: box-shadow 0.3s ease;
+}
+
+.ad-card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🖼 Изображения и видео */
+.ad-media {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* 📝 Текст внутри рекламы */
+.ad-title {
+  font-family: "Tilda Sans", sans-serif;
+  font-size: 1.0rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.ad-description {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.6rem;
+}
+
+/* 🔧 Контейнер для блока "Свежие новости", подгоняем под ширину приветствия */
+.scrollable-news-container {
+  max-width: 900px;       /* ✳️ Подстройка под визуальную ширину блока приветствия */
+  margin: 0 auto;         /* Центрирование */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+
+/* Обновлённый внутренний блок .scrollable-news */
+.scrollable-news {
+  max-height: 500px;
+  overflow-y: auto;       /* Только вертикальная прокрутка */
+  overflow-x: hidden;     /* ⛔ Убираем горизонтальную прокрутку */
+  padding-right: 10px;
+  border: none;           /* Убираем рамку, если она мешает */
+  background: transparent;
+}
+
+.section-title {
+  font-family: "Tilda Sans Bold", sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.05);
+}
+
+/* Родительский контейнер для новостей и рекламы */
+.main-content {
+  display: flex;
+  align-items: flex-start; /* Выровнять по верхнему краю */
+  gap: 2mm; /* Расстояние между блоками — 2 мм */
+  max-width: 1200px; /* Можно подстроить под ширину */
+  margin: 0 auto; /* Центрирование */
+}
+
+/* Блок новостей */
+.scrollable-news-container {
+  flex: 1 1 auto; /* Растягиваемый блок */
+  max-width: 900px;
+  /* остальные стили по твоему коду */
+}
+
+/* Блок рекламы */
+.ad-sidebar {
+  position: fixed;           /* Фиксированное положение */
+  top: 105px;                /* Отступ сверху — подгони под блок приветствия */
+  right: calc((67vw - 900px) / 2 + 2mm); /* Смещение от блока "Свежие новости" */
+  width: 300px;
+  max-width: 20vw;
+  z-index: 500;             /* Поверх других элементов */
+}
+
+/* Скрываем все карточки по умолчанию */
+.ad-card {
+  display: none;
+  background-color: #fefefe;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  transition: box-shadow 0.3s ease;
+}
+
+.ad-card.active {
+  display: block;            /* Показываем активную карточку */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.ad-card:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.ad-media {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 8px;
+}
+
+.ad-title {
+  font-family: "Tilda Sans", sans-serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.ad-description {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.6rem;
+}
+
+/* Кнопка "Подробнее" */
+.ad-read-more {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.ad-read-more:hover {
+  background-color: #0056b3;
+}
+
+/* 🔵 Первый блок рекламы */
+#ad-sidebar-1 {
+  position: fixed;
+  top: 105px; /* Отступ под приветствие */
+  right: calc((67vw - 900px) / 2 + 2mm); /* Смещение от новостей */
+  width: 300px;
+  max-width: 20vw;
+  z-index: 500;
+}

@@ -29,8 +29,8 @@ def welcome_view(request):
 def home_view(request):
     return render(request, 'home.html')  # Загружаем основную страницу (base.html)
 
-def home(request):
-    return render(request, 'home.html')
+#def home(request):
+    #return render(request, 'home.html')
 
 
 def register(request):

@@ -1,4 +1,5 @@
 {# posts/templates/posts/post_list.html #}
+
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
@@ -7,17 +8,28 @@
 {% block title %}Посты{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/posts.css' %}">
+
 <div class="container mt-5">
   <!-- Заголовок страницы -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0">Список постов</h2>
+
   </div>
 
   <!-- Кнопка создания поста (только для авторизованных пользователей) -->
   <div class="d-flex justify-content-between align-items-center mb-4">
+
     {% if user.is_authenticated %}
+
+       {% if request.user.is_banned %}
+                  <p><strong>Ваш профиль заблокирован!</strong></p>
+                  <p><strong>Причина банна:</strong> {{request.user.ban_reason}}</p>
+                  <p><strong>Срок банна до:</strong> {{request.user.banned_until}}</p>
+
+       {% else %}
       <a href="{% url 'posts:post_create' %}" class="btn btn-success">➕ Новый пост</a>
-    {% endif %}
+    {% endif %} {% endif %}
   </div>
 
   <!-- Список постов -->
@@ -47,9 +59,11 @@
             {% endif %}
 
             <!-- Превью текста -->
+
             <p class="mb-2 text-muted small">
               {{ post.text|truncatewords:50 }}
             </p>
+
 
          <!-- Блок кнопок действия -->
             <div class="d-flex justify-content-between text-muted small mt-2">
@@ -79,13 +93,14 @@
                   </div>
                <!-- Дата и автор -->
               <div class="post-meta text-muted small" style="font-size: 0.75rem; font-family: 'Tilda Sans', sans-serif;">
-                {{ post.created_at|date:"d.m.Y H:i" }} • {{ post.author.username }}
+                {{ post.created_at|ru_timesince }} • {{ post.author.username|capfirst }}
               </div>
                 </div>
 
               </div>
             </div>
           {% endfor %}
+
     </div>
 
     {% include "include/paginator.html" with page=page_obj %}
@@ -97,8 +112,10 @@
 {% endblock %}
 
 {% block extra_js %}
+
   {% if user.is_authenticated %}
     <script src="{% static 'js/likes.js' %}"></script>
   {% endif %}
 {% include 'posts/share.html' %}
+
 {% endblock %}

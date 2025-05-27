@@ -1,0 +1,76 @@
+/* Контейнер поиска */
+.search-container {
+    position: relative;             /* Чтобы дочерний абсолютный элемент позиционировался внутри этого контейнера */
+    display: flex;                  /* Используем flex для удобного центрирования и выравнивания */
+    justify-content: center;        /* Горизонтальное центрирование содержимого */
+    align-items: center;            /* Вертикальное выравнивание по центру */
+    width: auto;                    /* Контейнер занимает всю доступную ширину */
+    height: 40px;                   /* Фиксированная высота — примерно высота navbar */
+}
+
+/* Поле ввода */
+.search-input {
+    width: 900px;                  /* Фиксированная ширина поля поиска */
+    height: 36px;                  /* Немного меньше контейнера */
+    padding: 0 10px;               /* Внутренние отступы для комфорта ввода */
+    font-size: 16px;               /* Размер шрифта */
+    border: 2px solid #ccc;        /* Светло-серая рамка вокруг поля */
+    border-radius: 8px;            /* Скругленные углы */
+    transition: all 0.3s ease;     /* Плавное изменение стилей при взаимодействии */
+    box-sizing: border-box;        /* чтобы padding учитывался внутри height */
+}
+
+/* Обводка при фокусе */
+.search-input:focus {
+    outline: none;                 /* Убираем стандартную обводку браузера */
+    border-color: #007bff;         /* Смена цвета рамки на синий при фокусе */
+    background-color: #f8f9fa;     /* Светлый фон для подсветки */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* Легкая синяя тень вокруг поля */
+}
+
+/* Список подсказок */
+#suggestions-list {
+    position: absolute;            /* Абсолютное позиционирование относительно .search-container */
+    top: 100%;                    /* Позиционируем сразу под полем ввода */
+    left: 0;                      /* Прижимаем к левому краю контейнера */
+    width: 100%;                  /* Ширина совпадает с шириной контейнера */
+    max-height: 200px;            /* Максимальная высота списка, чтобы не занимал слишком много места */
+    overflow-y: auto;             /* Добавляем вертикальную прокрутку при переполнении */
+    background-color: white;      /* Белый фон для читаемости */
+    border: 1px solid #ccc;       /* Тонкая светлая рамка вокруг списка */
+    border-radius: 0 0 8px 8px;   /* Скругляем только нижние углы */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для отделения от остального контента */
+    margin: 0;                    /* Убираем внешние отступы */
+    padding: 0;                   /* Убираем внутренние отступы */
+    list-style-type: none;        /* Убираем маркеры списка */
+    z-index: 1000;                /* Чтобы подсказки были поверх других элементов */
+}
+
+.custom-gray {
+    background-color: #323333 !important;
+}
+
+/* Выпадающее меню под гамбургером */
+.custom-dropdown {
+  background-color: rgba(255, 255, 255, 0.5) !important; /* Белый фон с 50% прозрачностью */
+  border: none;
+  padding: 0;
+  min-width: auto;
+  white-space: normal; /* Перенос текста, если он длинный */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+}
+
+/* Стили для ссылок в dropdown‑меню */
+.custom-dropdown .dropdown-item {
+  color: #333333;         /* Темно-серый цвет */
+  padding: 8px 12px;
+  font-weight: bold;     /* Делаем текст жирнее */
+}
+
+/* При наведении ссылки: белый текст и затемнённый фон */
+.custom-dropdown .dropdown-item:hover,
+.custom-dropdown .dropdown-item:focus {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.2);
+}

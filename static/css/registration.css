@@ -1,0 +1,49 @@
+/* static/css/registration.css */
+
+.register-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 20px; /* добавьте отступы для внутреннего содержимого */
+}
+
+textarea {
+    width: 100%;
+    height: 80px; /* Уменьшенная высота */
+    border: 1px solid #ccc; /* Добавьте рамку */
+    border-radius: 8px;
+    padding: 10px; /* Отступ для текста */
+    resize: none; /* Запретить изменение размера */
+}
+
+.btn-primary {
+    width: 100%; /* Если вы хотите, чтобы кнопка занимала всю ширину */
+    border-radius: 5px; /* Добавим немного закругления */
+}
+
+/* Делаем кнопку Google */
+.social-login {
+    margin-top: 20px;
+}
+
+.btn-google {
+    display: inline-flex; /* Используем flex для выравнивания иконки и текста */
+    align-items: center; /* Вертикальное выравнивание */
+    background-color: #4285F4; /* Цвет фона Google */
+    color: white; /* Цвет текста */
+    padding: 10px 15px; /* Отступы для кнопки */
+    border-radius: 5px; /* Закругление углов */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+.btn-google i {
+    margin-right: 8px; /* Отступ между иконкой и текстом */
+}
+
+/* Подсветка при наведении */
+.btn-google:hover {
+    background-color: #357AE8; /* Цвет при наведении */
+}

@@ -1,0 +1,46 @@
+# Исключаем каталоги и файлы Python
+__pycache__
+*.py[cod]
+*$py.class
+
+# Исключаем виртуальное окружение
+venv
+.env
+*.env
+
+# Логи, базы данных и временные файлы
+*.log
+*.sqlite3
+db.sqlite3
+
+# Скрипты сборки, кэш и тестовые каталоги
+/build
+/dist
+.eggs
+.eggs/*
+*.egg-info
+.cache
+nosetests.xml
+coverage.xml
+.tox
+.pytest_cache
+htmlcov
+
+# Игнорируем файлы Git
+.git
+.gitignore
+
+# Исключаем файлы настроек IDE и редакторов
+.idea
+.vscode
+
+# Docker файлы (если не нужны в образе)
+Dockerfile*
+.dockerignore
+
+# Другие ненужные для сборки каталоги
+node_modules
+api-key
+S1.md
+S2.md
+structure.txt
