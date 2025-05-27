@@ -1,8 +1,8 @@
 #posts/views.py
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse, HttpResponseForbidden
-from .models import Post, Comment
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
+from .models import Post, Comment, Advertisement
 from .forms import CommentForm, PostForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
@@ -10,7 +10,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-
+from subscriptions.models import Subscription
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from posts.templatetags import time_filters
+from django.db.models import Q
+from django.shortcuts import render
+from posts.models import Post
 
 # Классы для работы с Post
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -23,25 +28,36 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+
 class PostListView(ListView):
     model = Post
     template_name = 'posts/post_list.html'
     context_object_name = 'posts'
     paginate_by = 5
 
+    def get_queryset(self):
+        return Post.objects.filter(is_archived=False).order_by('-created_at')  # ✅ Самые свежие посты сверху
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        for post in context['posts']:
-            post.likes_count = post.likes.count()
-            post.dislikes_count = post.dislikes.count()
-            post.likes_users = post.likes.all()
-            post.dislikes_users = post.dislikes.all()
+        paginator = context["paginator"]
+        page = self.request.GET.get("page")
+
+        try:
+            page = int(page) if page else 1  # ✅ Преобразуем `page` в `int`
+            if page > paginator.num_pages:  # ✅ Если запрашиваемая страница больше доступных
+                context["invalid_page"] = True  # ⚠ Передаём флаг ошибки в шаблон
+                context["last_page"] = paginator.num_pages  # ✅ Передаём последнюю доступную страницу
+        except (ValueError, PageNotAnInteger, EmptyPage):
+            context["invalid_page"] = True
+            context["last_page"] = 1  # ✅ Если ошибка, перенаправляем на первую страницу
+
         return context
+
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
-    #fields = ['text', 'image']
     template_name = 'posts/post_form.html'
 
     def test_func(self):
@@ -51,6 +67,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('posts:post_detail', kwargs={'slug': self.object.slug})  # ✅ Добавляем namespace
 
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = reverse_lazy('post_list')
@@ -59,6 +76,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+
 
 # Детали поста с формой комментариев (CBV)
 class PostDetailView(DetailView):
@@ -80,7 +98,7 @@ class PostDetailView(DetailView):
             comment.post = self.object
             comment.author = request.user
             comment.save()
-            return redirect('post_list')
+            return redirect('posts:post_list')
 
         context = self.get_context_data()
         context['form'] = form
@@ -89,30 +107,27 @@ class PostDetailView(DetailView):
 
 @login_required
 @require_POST
-def like_post(request, slug):
-    if not request.user.is_authenticated:
-        return HttpResponseForbidden("You must be logged in to like a post.")
+def toggle_like(request, slug):
+    try:
+        post = get_object_or_404(Post, slug=slug)
+    except Post.DoesNotExist:
+        return JsonResponse({'error': 'Пост не найден'}, status=404)
 
-    post = get_object_or_404(Post, slug=slug)
-    user = request.user
-
-    if user in post.likes.all():
-        post.likes.remove(user)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
         liked = False
     else:
-        post.likes.add(user)
+        post.likes.add(request.user)
         liked = True
 
     return JsonResponse({
+        'success': True,
         'liked': liked,
-        'likes_count': post.likes.count()
+        'likes_count': post.likes.count(),
     })
 
 @require_POST
 def dislike_post(request, slug):
-    if not request.user.is_authenticated:
-        return HttpResponseForbidden("You must be logged in to dislike a post.")
-
     post = get_object_or_404(Post, slug=slug)
     user = request.user
 
@@ -122,12 +137,13 @@ def dislike_post(request, slug):
     else:
         post.dislikes.add(user)
         disliked = True
-        post.likes.remove(user)  # ❗ убираем лайк, если ставится дизлайк
 
     return JsonResponse({
+        'success': True,  # ✅ Добавляем статус success
         'disliked': disliked,
-        'dislikes_count': post.dislikes.count()
+        'dislikes_count': post.dislikes.count(),
     })
+
 
 class PostDetailViewSlug(DetailView):
     model = Post
@@ -136,10 +152,62 @@ class PostDetailViewSlug(DetailView):
     slug_field = 'slug'  # Поле модели для поиска по слагу
     slug_url_kwarg = 'slug'  # Название параметра в URL
 
+
 class PostDetailViewId(DetailView):
     model = Post
     template_name = 'post_detail.html'  # Можно использовать тот же шаблон
     context_object_name = 'post'
     pk_field = 'pk'
     pk_url_kwarg = 'pk'  # Явное указание параметра URL
-    print(f'pk_url_kwarg = {pk_url_kwarg}')
+
+
+
+class FeedView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'posts/feed.html'
+    context_object_name = 'posts'
+    paginate_by = 10 # Количество постов на одной странице
+
+    def get_queryset(self):
+        # Получаем список авторов, на которых подписан текущий пользователь
+        subscribed_authors = Subscription.objects.filter(subscriber=self.request.user).values_list('author', flat=True)
+        # Фильтруем посты только от этих авторов
+        return Post.objects.filter(author__in=subscribed_authors).order_by('-publication_date')
+
+
+def archive_post(request, slug):
+    if request.method == "POST":
+        post = get_object_or_404(Post, slug=slug)
+        if request.user == post.author:
+            post.is_archived = True  # Должно быть поле `is_archived`
+            post.save()
+            return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
+
+def home(request):
+    # Выбираем 5 последних неархивированных постов, отсортированных по дате создания (от новых к старым)
+    latest_posts = Post.objects.filter(is_archived=False).order_by('-created_at')[:12]
+    return render(request, 'home.html', {'latest_posts':  latest_posts})
+
+
+def delete_post(request, slug):
+    if request.method == "POST":
+        post = get_object_or_404(Post, slug=slug)
+        if request.user == post.author:
+            post.is_archived = True
+            post.save()
+            return JsonResponse({"success": True, "post_id": post.id, "message": "✅ Ваш пост успешно удалён!"})
+
+    return JsonResponse({"success": False, "error": "❌ Ошибка удаления поста"})
+
+
+def search_results(request):
+    query = request.GET.get("q", "").strip()
+    posts = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query), is_archived=False)
+
+    return render(request, "posts/search_results.html", {"posts": posts, "query": query})
+
+
+
+

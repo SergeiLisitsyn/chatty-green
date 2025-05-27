@@ -1,0 +1,187 @@
+<! --subscriptions/templates/subscriptions/feed.html-- >
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load time_filters %}
+{% block title %}Лента подписок - Chatty{% endblock %}
+
+{% block content %}
+<div class="bg-light py-4">
+  <div class="container">
+    <div class="row">
+
+      <!-- Основной контент -->
+      <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="fw-bold">Лента подписок</h2>
+          {% if user.is_authenticated %}
+            <a href="{% url 'posts:post_create' %}" class="btn btn-success">
+              <i class="fa-solid fa-plus me-1"></i> Новый пост
+            </a>
+          {% endif %}
+        </div>
+
+        {% if posts %}
+          {% for post in posts %}
+            <div class="card mb-4 shadow-sm rounded border-1">
+              <div class="card-body">
+
+                <!-- Автор и дата -->
+                <div class="d-flex align-items-center mb-3">
+                  {% if post.author.avatar %}
+                    <img src="{{ post.author.avatar.url }}" class="rounded-circle me-3" width="48" height="48" alt="{{ post.author.username }}">
+                  {% else %}
+                    <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width:48px; height:48px;">
+                      {{ post.author.username|first|upper }}
+                    </div>
+                  {% endif %}
+                  <div>
+                    <a href="{% url 'profile' post.author.username %}" class="fw-semibold text-dark">{{ post.author.username }}</a><br>
+                    <small class="text-muted">{{ post.pub_date|date:"d.m.Y в H:i" }}</small>
+                  </div>
+                </div>
+
+                <!-- Заголовок -->
+                <h4>
+                  <a href="{% url 'posts:post_detail' post.slug %}" class="text-decoration-none text-dark">{{ post.title }}</a>
+                </h4>
+
+                <!-- Текст -->
+                <p class="text-muted">{{ post.text|safe|truncatewords_html:30 }}</p>
+
+                {% if post.image %}
+                  <a href="{% url 'posts:post_detail' post.slug %}">
+                    <img src="{{ post.image.url }}" alt="Post image" class="img-fluid rounded mb-2">
+                  </a>
+                {% endif %}
+
+                <!-- Действия (обновлённый блок) -->
+                <div class="d-flex justify-content-between text-muted small mt-2">
+                  <div class="d-flex gap-3 align-items-center">
+                    {% if post.slug %}
+
+                  <!-- Лайк с подсказкой -->
+                  <span class="like-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Нравится">
+                    👍 <span class="like-count">{{ post.likes.count }}</span>
+                  </span>
+
+                  <!-- Дизлайк с подсказкой -->
+                  <span class="dislike-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Не нравится">
+                    👎 <span class="dislike-count">{{ post.dislikes.count }}</span>
+                  </span>
+
+                    <!-- Иконка "Комментарии" с ссылкой на страницу поста -->
+                    <a href="{% url 'posts:post_detail' post.slug %}#comments" class="share-button" title="Комментарии">
+                      <img src="{% static 'images/chat_18866235.png' %}" alt="Комментарии" width="16" height="16">
+                    </a>
+
+                      <!-- Иконка "Поделиться" в Base64 -->
+                    <span class="share-button" data-slug="{{ post.slug }}" data-bs-toggle="modal" data-bs-target="#shareModal" style="cursor: pointer;" title="Поделиться">
+                      <img src="{% static 'images/share_8358780.png' %}" alt="Поделиться" width="16" height="16">
+                    </span>
+
+                    {% endif %}
+                  </div>
+
+                  <!-- Дата и автор -->
+              <div class="post-meta text-muted small" style="font-size: 0.75rem; font-family: 'Tilda Sans', sans-serif;">
+                {{ post.created_at|date:"d.m.Y H:i" }} • {{ post.author.username|capfirst }}
+              </div>
+
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+          <!-- Пагинация -->
+          {% if is_paginated %}
+            <nav class="mt-4">
+              <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                  </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                  {% if page_obj.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                  {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+          {% endif %}
+
+        {% else %}
+          <!-- Пустая лента -->
+          <div class="alert alert-warning text-center mt-4">
+            <i class="fa-solid fa-rss fa-2x mb-2"></i>
+            <h5>Ваша лента пуста</h5>
+            <p>Вы пока не подписаны или в вашей ленте нет новых постов.</p>
+            <a href="{% url 'posts:post_list' %}" class="btn btn-primary mt-2">Перейти к общей ленте</a>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Боковая панель -->
+      <div class="col-lg-4">
+        <div class="sticky-top" style="top: 90px;">
+
+          <!-- Мои подписки -->
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header fw-semibold">Мои подписки</div>
+            <div class="card-body">
+              {% if user.subscriptions.count > 0 %}
+                {% for subscription in user.subscriptions.all|slice:":5" %}
+                  <div class="d-flex align-items-center mb-3">
+                    {% if subscription.author.avatar %}
+                      <img src="{{ subscription.author.avatar.url }}" class="rounded-circle me-2" width="40" height="45">
+                    {% else %}
+                      <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width:40px; height:40px;">
+                        {{ subscription.author.username|first|upper }}
+                      </div>
+                    {% endif %}
+                    <div>
+                      <a href="{% url 'profile' subscription.author.username %}" class="text-dark fw-medium">{{ subscription.author.username }}</a><br>
+                      <small class="text-muted">@{{ subscription.author.username }}</small>
+                    </div>
+                  </div>
+                {% endfor %}
+                {% if user.subscriptions.count > 5 %}
+                  <a href="{% url 'subscriptions:following' user.username %}" class="d-block text-center mt-2">Показать все</a>
+                {% endif %}
+              {% else %}
+                <p class="text-muted text-center">Вы пока ни на кого не подписаны</p>
+                <a href="{% url 'posts:post_list' %}" class="btn btn-outline-primary w-100">Найти авторов</a>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Популярные авторы -->
+          <div class="card shadow-sm">
+            <div class="card-header fw-semibold">Популярные авторы</div>
+            <div class="card-body text-muted">
+              <p>Скоро здесь появятся рекомендации.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+  {% if user.is_authenticated %}
+    <script src="{% static 'js/likes.js' %}"></script>
+  {% endif %}
+{% include 'posts/share.html' %}
+{% endblock %}

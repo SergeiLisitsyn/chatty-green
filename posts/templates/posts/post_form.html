@@ -1,3 +1,4 @@
+<!-- posts/templates/posts/post_form.html -->
 {% extends 'base.html' %}
 
 {% block title %}
@@ -49,8 +50,9 @@
       </div>
 
       <!-- Кнопка отправки формы -->
-      <button type="submit" class="btn btn-primary">💾 Сохранить</button>
-      <a href="{% url 'posts:post_list' %}" class="btn btn-secondary ms-2">Отмена</a>
+      <div class="d-flex justify-content-start mt-3">
+      <button type="submit" class="btn btn-primary me-2">💾 Сохранить</button>
+      <a href="{% url 'posts:post_list' %}" class="btn btn-secondary">Отмена</a>
     </form>
   </div>
 {% endblock %}

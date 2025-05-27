@@ -1,14 +1,17 @@
 Chatty_green/
 ├── Dockerfile
 ├── Print_three_project.py
-├── chat/
+├── add_ad_block.py
+├── ads/
 │   ├── __init__.py
 │   ├── admin.py
-│   ├── apps.py
+│   ├── forms.py
 │   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_alter_advertisement_options_advertisement_video_and_more.py
 │   │   └── __init__.py
 │   ├── models.py
-│   ├── tests.py
+│   ├── urls.py
 │   └── views.py
 ├── chatty/
 │   ├── __init__.py
@@ -17,30 +20,19 @@ Chatty_green/
 │   ├── urls.py
 │   ├── views.py
 │   └── wsgi.py
-├── core/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── migrations/
-│   │   └── __init__.py
-│   ├── models.py
-│   ├── tests.py
-│   └── views.py
 ├── create_admin.py
 ├── db/
 │   └── Dockerfile
+├── db_dump.json
 ├── docker-compose.yml
 ├── entrypoint.sh
 ├── manage.py
 ├── media/
+│   ├── ads/
+│   │   └── videos/
+│   ├── ads_images/
 │   ├── avatars/
-│   │   ├── _brunette_man_2.jpg
-│   │   ├── _brunette_man_2_O3wICJm.jpg
-│   │   ├── boy_w_1.jpg
-│   │   ├── boy_w_1_4c6yQT7.jpg
-│   │   ├── boy_w_1_JdhL1R3.jpg
-│   │   ├── default.png
-│   │   └── wom_2.jpg
+│   ├── post_images/
 │   └── test.txt
 ├── nginx/
 │   ├── Dockerfile
@@ -53,23 +45,46 @@ Chatty_green/
 │   ├── migrations/
 │   │   ├── 0001_initial.py
 │   │   ├── 0002_post_title.py
+│   │   ├── 0003_comment.py
+│   │   ├── 0004_alter_comment_options_post_likes.py
+│   │   ├── 0005_post_dislikes.py
+│   │   ├── 0006_post_created_at.py
+│   │   ├── 0007_post_is_archived_post_updated_at.py
+│   │   ├── 0008_advertisement_post_advertisement.py
+│   │   ├── 0008_alter_post_slug.py
+│   │   ├── 0009_merge_20250523_1947.py
+│   │   ├── 0010_alter_post_slug.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── templates/
-│   │   ├── post_list.html
+│   │   ├── include/
+│   │   │   ├── paginator.html
+│   │   │   └── post_preview.html
 │   │   └── posts/
 │   │       ├── post_confirm_delete.html
 │   │       ├── post_detail.html
 │   │       ├── post_edit.html
-│   │       └── post_form.html
+│   │       ├── post_form.html
+│   │       ├── post_list.html
+│   │       ├── search_results.html
+│   │       └── share.html
+│   ├── templatetags/
+│   │   ├── __init__.py
+│   │   └── time_filters.py
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
 ├── requirements.txt
 ├── static/
+│   ├── css/
+│   │   ├── ads.css
+│   │   ├── base.css
+│   │   ├── home.css
+│   │   ├── interaction-buttons.css
+│   │   ├── navbar.css
+│   │   └── posts.css
 │   ├── images/
-│   │   ├── backgraunt.jpg
-│   │   └── backgraunt_2.jpg
+│   ├── js/
 │   └── test.txt
 ├── structure.txt
 ├── subscriptions/
@@ -77,21 +92,37 @@ Chatty_green/
 │   ├── admin.py
 │   ├── apps.py
 │   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_remove_subscription_temp_field.py
+│   │   ├── 0003_alter_subscription_options_and_more.py
 │   │   └── __init__.py
 │   ├── models.py
+│   ├── templates/
+│   │   └── subscriptions/
+│   │       ├── feed.html
+│   │       ├── followers.html
+│   │       └── following.html
 │   ├── tests.py
+│   ├── urls.py
 │   └── views.py
 ├── templates/
+│   ├── ads/
+│   │   ├── ads_list.html
+│   │   └── advertisement_form.html
 │   ├── base.html
 │   ├── home.html
 │   ├── include/
 │   │   ├── footer.html
-│   │   └── navbar.html
-│   ├── register.html
+│   │   ├── navbar.html
+│   │   └── search_results.html
+│   ├── login.html
 │   ├── registration/
 │   │   └── login.html
-│   ├── welcome.html
-│   └── {% static 'images/
+│   └── welcome.html
+├── tests/
+│   ├── test_post_create.py
+│   ├── test_post_update.py
+│   └── test_user_flow.py
 ├── users/
 │   ├── __init__.py
 │   ├── admin.py
@@ -99,6 +130,7 @@ Chatty_green/
 │   ├── forms.py
 │   ├── migrations/
 │   │   ├── 0001_initial.py
+│   │   ├── 0002_customuser_ban_reason_customuser_banned_until_and_more.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── signals.py

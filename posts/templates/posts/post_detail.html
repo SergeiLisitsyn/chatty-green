@@ -1,12 +1,16 @@
+<! --posts/templates/posts/post_detail.html -->
+
 {% extends 'base.html' %}
-
+{% load time_filters %}
 {% block title %}{{ post.title }}{% endblock %}
-
 {% block content %}
+
   <div class="container mt-4">
     <h2>{{ post.title|default:"(Без заголовка)" }}</h2>
-    <p><strong>Автор:</strong> {{ post.author.username }}</p>
+    <p>Автор: <a href="{% url 'profile' username=post.author.username %}">{{ post.author.username|capfirst }}</a></p>
+
     <p><strong>Дата публикации:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
+    <p><strong>Создан:</strong> {{ post.created_at|ru_timesince }}</p>
 
     <!-- Проверяем, загружено ли изображение -->
     {% if post.image %}
@@ -18,71 +22,106 @@
     <hr>
 
     <!-- Кнопка редактирования (только для автора поста) -->
-    {% if user == post.author %}
-      <a href="{% url 'posts:post_update' post.slug %}" class="btn btn-warning mt-3">✏️ Редактировать</a>
-    {% endif %}
+
+   {% if user == post.author %}
+       <div class="d-flex gap-2 mt-3">
+        <a href="{% url 'posts:post_update' post.slug %}" class="btn btn-sm btn-warning">✏️ Редактировать</a>
+        <button class="btn btn-sm btn-danger" onclick="confirmDelete('{{ post.slug }}')">🗑️ Удалить</button>
+  </div>
+{% endif %}
 
     <h3>Комментарии</h3>
     <ul>
       {% for comment in post.comments.all %}
-        <li><strong>{{ comment.author.username }}</strong>: {{ comment.text }}</li>
+        <li><strong>{{ comment.author.username|capfirst }}</strong>: {{ comment.text }}</li>
       {% empty %}
         <li>Комментариев пока нет.</li>
       {% endfor %}
     </ul>
 
-    <!-- Форма для добавления нового комментария -->
-    <h4>Оставить комментарий:</h4>
-    {% if user.is_authenticated %}
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary mt-2">Добавить</button>
+ <h4>Оставить комментарий:</h4>
+{% if user.is_authenticated %}
+      {% if user.is_banned %}
+            <h2><strong>Ваш профиль забаннен!</strong></h2>
+            <p><strong>Причина банна:</strong> {{request.user.ban_reason}}</p>
+            <p><strong>Срок банна:</strong> {{request.user.banned_until}}</p>
+
+      {% else %}
+<div class="comment-box p-3">
+    <form method="post" class="d-flex flex-column gap-2">
+        {% csrf_token %}
+        <textarea name="text" class="form-control comment-input" placeholder="Напишите комментарий..." rows="3"></textarea>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-action flex-grow-1">Добавить</button>
+            <a href="{% url 'posts:post_list' %}" class="btn btn-action flex-grow-1">Назад</a>
+        </div>
     </form>
-    {% else %}
-  <p class="text-danger">Пожалуйста, нажмите кнопку <a href="{% url 'login' %}">войти</a>, чтобы оставить комментарий.</p>
-    {% endif %}
-    <a href="{% url 'posts:post_list' %}" class="btn btn-secondary mt-3">Назад</a>
+</div>
+      {% endif %}
+{% else %}
+    <p class="text-danger">Пожалуйста, <a href="{% url 'login' %}">войдите</a>, чтобы оставить комментарий.</p>
+    <a href="{% url 'posts:post_list' %}" class="btn btn-action mt-3">Назад</a>
+{% endif %}
+
 
   </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-  document.getElementById('like-button').addEventListener('click', function () {
-    fetch("{% url 'posts:like_post' post.slug %}", {
-      method: "POST",
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data) {
-        document.getElementById('like-count').textContent = data.likes_count;
-        document.getElementById('like-icon').innerHTML = data.liked ? '👍' : '<span style="color: white;">👍</span>';
-        document.getElementById('dislike-icon').innerHTML = '<span style="color: white;">👎</span>';
+  async function confirmDelete(slug) {
+    const isConfirmed = confirm("Вы уверены, что хотите удалить этот пост?");
+    if (!isConfirmed) return;
+
+    try {
+      const response = await fetch(`/posts/${slug}/archive/`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCSRFToken(),
+          "X-Requested-With": "XMLHttpRequest",
+        },
+      });
+
+      const data = await response.json();
+      console.log("✅ Ответ сервера:", data);
+
+      if (data.success) {
+        alert("✅ Ваш пост успешно удалён!");
+
+        // Удаляем пост из DOM
+        const postElement = document.getElementById(`post-${slug}`);
+        if (postElement) postElement.remove();
+
+        // Перенаправляем на список постов
+        window.location.href = "/posts/";
+      } else {
+        alert("❌ Ошибка удаления поста.");
+      }
+    } catch (error) {
+      console.error("❌ Ошибка при удалении:", error);
+      alert("❌ Ошибка при удалении поста.");
+    }
+  }
+
+  function getCSRFToken() {
+    let cookieValue = null;
+    document.cookie.split(";").forEach(cookie => {
+      const trimmed = cookie.trim();
+      if (trimmed.startsWith("csrftoken=")) {
+        cookieValue = decodeURIComponent(trimmed.split("=")[1]);
       }
     });
-  });
+    return cookieValue;
+  }
 
-  document.getElementById('dislike-button').addEventListener('click', function () {
-    fetch("{% url 'posts:dislike_post' post.slug %}", {
-      method: "POST",
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data) {
-        document.getElementById('dislike-count').textContent = data.dislikes_count;
-        document.getElementById('dislike-icon').innerHTML = data.disliked ? '👎' : '<span style="color: white;">👎</span>';
-        document.getElementById('like-icon').innerHTML = '<span style="color: white;">👍</span>';
-      }
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".delete-btn").forEach(button => {
+      if (!button.dataset.slug) return;
+      button.addEventListener("click", () => confirmDelete(button.dataset.slug));
     });
   });
 </script>
+
+
+
 {% endblock %}
