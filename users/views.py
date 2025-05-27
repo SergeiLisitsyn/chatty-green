@@ -1,3 +1,5 @@
+# users/views.py
+from django.db.models import Count
 from django.shortcuts import render
 
 # Create your views here.
@@ -5,6 +7,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+
+from posts.models import Post
+from subscriptions.models import Subscription
 from .models import CustomUser  # если переопределялась модель
 from .forms import CustomUserCreationForm, CustomPasswordChangeForm  # если форма расширялась
 from django.contrib.auth.forms import AuthenticationForm
@@ -24,8 +29,8 @@ def welcome_view(request):
 def home_view(request):
     return render(request, 'home.html')  # Загружаем основную страницу (base.html)
 
-def home(request):
-    return render(request, 'home.html')
+#def home(request):
+    #return render(request, 'home.html')
 
 
 def register(request):
@@ -41,8 +46,37 @@ def register(request):
 
 
 def profile(request, username):
-    user = get_object_or_404(CustomUser, username=username)
-    return render(request, 'users/profile.html', {'user': user})
+    # Получаем объект пользователя, чей профиль хотим показать
+    profile_user = get_object_or_404(CustomUser, username=username)
+
+    # Вычисляем статус подписки: если залогиненный пользователь подписан на профиль profile_user
+    is_subscribed = False
+    if request.user.is_authenticated and request.user != profile_user:
+        is_subscribed = Subscription.objects.filter(
+            subscriber=request.user,
+            author=profile_user
+        ).exists()
+
+    # Получаем последние посты profile_user с аннотациями подсчётов лайков и комментариев
+    posts_query = Post.objects.filter(author=profile_user)
+    user_posts = posts_query.annotate(
+        likes_count=Count('likes', distinct=True),
+        comments_count=Count('comments', distinct=True)
+    ).order_by('-publication_date')[:4]
+
+    # Определяем ID постов, которые лайкнул текущий пользователь
+    user_liked_posts = []
+    if request.user.is_authenticated:
+        liked_post_ids = posts_query.filter(likes=request.user).values_list('id', flat=True)
+        user_liked_posts = list(liked_post_ids)
+
+    context = {
+        'profile_user': profile_user,
+        'is_subscribed': is_subscribed,
+        'user_posts': user_posts,
+        'user_liked_posts': user_liked_posts
+    }
+    return render(request, 'users/profile.html', context)
 
 
 def login_view(request):
@@ -95,17 +129,6 @@ def change_password(request):
     else:
         form = CustomPasswordChangeForm(user=request.user)
     return render(request, 'users/change_password.html', {'form': form})
-
-
-#class CustomLoginView(LoginView):
-    #template_name = 'users/login.html'  # Твой шаблон входа
-
-    #def get_success_url(self):
-        #return reverse('profile', kwargs={'username': self.request.user.username})
-
-
-from django.contrib.auth.views import PasswordResetConfirmView
-from django.urls import reverse_lazy
 
 
 class LoggingPasswordResetConfirmView(PasswordResetConfirmView):

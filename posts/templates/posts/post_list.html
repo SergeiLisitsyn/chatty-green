@@ -1,4 +1,8 @@
+
 {#--post_list.html--#}
+
+{# posts/templates/posts/post_list.html #}
+
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
@@ -7,22 +11,40 @@
 {% block title %}Посты{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/posts.css' %}">
+
 <div class="container mt-5">
+  <!-- Заголовок страницы -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0">Список постов</h2>
-    {% if user.is_authenticated %}
-      <a href="{% url 'posts:post_create' %}" class="btn btn-success">➕ Новый пост</a>
-    {% endif %}
+
   </div>
 
+  <!-- Кнопка создания поста (только для авторизованных пользователей) -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    {% if user.is_authenticated %}
+
+       {% if request.user.is_banned %}
+                  <p><strong>Ваш профиль заблокирован!</strong></p>
+                  <p><strong>Причина банна:</strong> {{request.user.ban_reason}}</p>
+                  <p><strong>Срок банна до:</strong> {{request.user.banned_until}}</p>
+
+       {% else %}
+      <a href="{% url 'posts:post_create' %}" class="btn btn-success">➕ Новый пост</a>
+    {% endif %} {% endif %}
+  </div>
+
+  <!-- Список постов -->
   {% if posts %}
     {% include "include/paginator.html" with page=page_obj %}
 
     <div class="list-group">
       {% for post in posts %}
-        <div class="list-group-item py-3 d-flex gap-3 post-card"> <!-- Добавлен класс post-card -->
 
-          <!-- Миниатюра поста -->
+        <div id="post-{{ post.id }}" class="list-group-item py-3 d-flex gap-3 post-card">
+          <!-- Превью изображения -->
+
           <div class="flex-shrink-0">
             {% if post.image %}
               <img src="{{ post.image.url }}" alt="Миниатюра" class="rounded" width="100" height="100" style="object-fit: cover;">
@@ -31,8 +53,9 @@
             {% endif %}
           </div>
 
-          <!-- Контент поста -->
           <div class="w-100">
+            <!-- Заголовок поста -->
+
             {% if post.slug %}
               <a href="{% url 'posts:post_detail' post.slug %}" class="h5 fw-bold text-decoration-none text-dark d-block">
                 {{ post.title|default:"(Без заголовка)" }}
@@ -41,74 +64,64 @@
               <span class="text-danger">Пост без slug: {{ post.title|default:"(Без заголовка)" }}</span>
             {% endif %}
 
+            <!-- Превью текста -->
+
             <p class="mb-2 text-muted small">
               {{ post.text|truncatewords:50 }}
             </p>
 
-            <!-- Дата публикации и время создания -->
+
+         <!-- Блок кнопок действия -->
             <div class="d-flex justify-content-between text-muted small mt-2">
               <div class="d-flex gap-3 align-items-center">
-                <span class="like-button" data-slug="{{ post.slug }}" style="cursor: pointer;">
-                  👍 <span class="like-count">{{ post.likes.count }}</span>
-                </span>
-                <span class="dislike-button" data-slug="{{ post.slug }}" style="cursor: pointer;">
-                  👎 <span class="dislike-count">{{ post.dislikes.count }}</span>
-                </span>
-                <a href="{% url 'posts:post_detail' post.slug %}" class="text-decoration-none text-muted">
-                  💬 {{ post.comments.count }}
-                </a>
+                {% if post.slug %}
+                  <!-- Лайк с подсказкой -->
+                  <span class="like-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Нравится">
+                    👍 <span class="like-count">{{ post.likes.count }}</span>
+                  </span>
+
+                  <!-- Дизлайк с подсказкой -->
+                  <span class="dislike-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Не нравится">
+                    👎 <span class="dislike-count">{{ post.dislikes.count }}</span>
+                  </span>
+
+                    <!-- Иконка "Комментарии" с ссылкой на страницу поста -->
+                    <a href="{% url 'posts:post_detail' post.slug %}#comments" class="share-button" title="Комментарии">
+                      <img src="{% static 'images/chat_18866235.png' %}" alt="Комментарии" width="16" height="16">
+                    </a>
+
+                      <!-- Иконка "Поделиться" в Base64 -->
+                    <span class="share-button" data-slug="{{ post.slug }}" data-bs-toggle="modal" data-bs-target="#shareModal" style="cursor: pointer;" title="Поделиться">
+                      <img src="{% static 'images/share_8358780.png' %}" alt="Поделиться" width="16" height="16">
+                    </span>
+
+                    {% endif %}
+                  </div>
+               <!-- Дата и автор -->
+              <div class="post-meta text-muted small" style="font-size: 0.75rem; font-family: 'Tilda Sans', sans-serif;">
+                {{ post.created_at|ru_timesince }} • {{ post.author.username|capfirst }}
               </div>
-              <div>
-                {{ post.publication_date|date:"d M Y H:i" }} • {{ post.created_at|ru_timesince }} • {{ post.author.username }}
+                </div>
+
               </div>
             </div>
-          </div>
-        </div>
-      {% endfor %}
+          {% endfor %}
+
     </div>
 
     {% include "include/paginator.html" with page=page_obj %}
 
   {% else %}
-    <div class="alert alert-info mt-4" role="alert">
-      Пока нет опубликованных постов. Будьте первым!
-    </div>
+    <div class="alert alert-info mt-4" role="alert">Пока нет опубликованных постов. Будьте первым!</div>
   {% endif %}
 </div>
 {% endblock %}
 
 {% block extra_js %}
-{% if user.is_authenticated %}
-<script>
-  function sendReaction(slug, action, callback) {
-    fetch(`/posts/${slug}/${action}/`, {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}',
-        'X-Requested-With': 'XMLHttpRequest',
-      }
-    })
-    .then(response => response.json())
-    .then(data => callback(data));
-  }
 
-  document.querySelectorAll('.like-button').forEach(el => {
-    el.addEventListener('click', () => {
-      const slug = el.dataset.slug;
-      sendReaction(slug, 'like', data => {
-        el.querySelector('.like-count').textContent = data.likes_count;
-      });
-    });
-  });
+  {% if user.is_authenticated %}
+    <script src="{% static 'js/likes.js' %}"></script>
+  {% endif %}
+{% include 'posts/share.html' %}
 
-  document.querySelectorAll('.dislike-button').forEach(el => {
-    el.addEventListener('click', () => {
-      const slug = el.dataset.slug;
-      sendReaction(slug, 'dislike', data => {
-        el.querySelector('.dislike-count').textContent = data.dislikes_count;
-      });
-    });
-  });
-</script>
-{% endif %}
 {% endblock %}

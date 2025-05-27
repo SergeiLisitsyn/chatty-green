@@ -41,6 +41,12 @@ class CustomUser(AbstractUser):
     bio = models.TextField(blank=True, verbose_name="О себе")
     contacts = models.CharField(max_length=255, blank=True, verbose_name="Контакты")
 
+    # Новые поля для бана
+    is_banned = models.BooleanField(default=False, verbose_name="Забанен")
+    ban_reason = models.TextField(blank=True, null=True, verbose_name="Причина бана")
+    banned_until = models.DateTimeField(blank=True, null=True, verbose_name="Забанен до")
+
+
     def __str__(self):
         return self.username
 

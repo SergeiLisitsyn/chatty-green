@@ -15,9 +15,9 @@ COPY entrypoint.sh wait-for-db.sh ./
 RUN chmod +x entrypoint.sh wait-for-db.sh
 
 # --- переменная окружения для этапа build ---
-ENV DOCKERIZED=1 \
-    PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1
+ENV RUN_MIGRATIONS="false" \
+    DOCKERIZED=1 \
+    PYTHONUNBUFFERED=1
 
 # Код проекта
 COPY . .

@@ -1,0 +1,1901 @@
+docker-compose exec -T db psql -U ${PG_USER} -d ${PG_NAME} < backup.sql--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.12 (Debian 15.12-1.pgdg120+1)
+-- Dumped by pg_dump version 15.12 (Debian 15.12-1.pgdg120+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: account_emailaddress; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id integer NOT NULL,
+    email character varying(254) NOT NULL,
+    verified boolean NOT NULL,
+    "primary" boolean NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+
+--
+-- Name: account_emailaddress_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.account_emailaddress_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: account_emailconfirmation; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id integer NOT NULL,
+    created timestamp with time zone NOT NULL,
+    sent timestamp with time zone,
+    key character varying(64) NOT NULL,
+    email_address_id integer NOT NULL
+);
+
+
+
+--
+-- Name: account_emailconfirmation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.account_emailconfirmation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id bigint NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+
+--
+-- Name: django_site; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id integer NOT NULL,
+    domain character varying(100) NOT NULL,
+    name character varying(50) NOT NULL
+);
+
+
+
+--
+-- Name: django_site_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.django_site_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: posts_comment; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    text text NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    author_id bigint NOT NULL,
+    post_id bigint NOT NULL
+);
+
+
+
+--
+-- Name: posts_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.posts_comment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: posts_post; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    text text NOT NULL,
+    image character varying(100),
+    publication_date timestamp with time zone NOT NULL,
+    slug character varying(50) NOT NULL,
+    author_id bigint NOT NULL,
+    title character varying(255) NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    is_archived boolean NOT NULL,
+    updated_at timestamp with time zone NOT NULL
+);
+
+
+
+--
+-- Name: posts_post_dislikes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    post_id bigint NOT NULL,
+    customuser_id bigint NOT NULL
+);
+
+
+
+--
+-- Name: posts_post_dislikes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.posts_post_dislikes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: posts_post_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.posts_post_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: posts_post_likes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    post_id bigint NOT NULL,
+    customuser_id bigint NOT NULL
+);
+
+
+
+--
+-- Name: posts_post_likes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.posts_post_likes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: socialaccount_socialaccount; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id integer NOT NULL,
+    provider character varying(200) NOT NULL,
+    uid character varying(191) NOT NULL,
+    last_login timestamp with time zone NOT NULL,
+    date_joined timestamp with time zone NOT NULL,
+    extra_data jsonb NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+
+--
+-- Name: socialaccount_socialaccount_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.socialaccount_socialaccount_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: socialaccount_socialapp; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id integer NOT NULL,
+    provider character varying(30) NOT NULL,
+    name character varying(40) NOT NULL,
+    client_id character varying(191) NOT NULL,
+    secret character varying(191) NOT NULL,
+    key character varying(191) NOT NULL,
+    provider_id character varying(200) NOT NULL,
+    settings jsonb NOT NULL
+);
+
+
+
+--
+-- Name: socialaccount_socialapp_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.socialaccount_socialapp_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: socialaccount_socialapp_sites; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    socialapp_id integer NOT NULL,
+    site_id integer NOT NULL
+);
+
+
+
+--
+-- Name: socialaccount_socialapp_sites_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.socialaccount_socialapp_sites_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: socialaccount_socialtoken; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id integer NOT NULL,
+    token text NOT NULL,
+    token_secret text NOT NULL,
+    expires_at timestamp with time zone,
+    account_id integer NOT NULL,
+    app_id integer
+);
+
+
+
+--
+-- Name: socialaccount_socialtoken_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.socialaccount_socialtoken_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: subscriptions_subscription; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    author_id bigint NOT NULL,
+    subscriber_id bigint NOT NULL
+);
+
+
+
+--
+-- Name: subscriptions_subscription_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.subscriptions_subscription_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: users_customuser; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(150) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL,
+    avatar character varying(100) NOT NULL,
+    bio text NOT NULL,
+    contacts character varying(255) NOT NULL
+);
+
+
+
+--
+-- Name: users_customuser_groups; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    customuser_id bigint NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+
+--
+-- Name: users_customuser_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.users_customuser_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: users_customuser_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.users_customuser_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: users_customuser_user_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    customuser_id bigint NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+
+--
+-- Name: users_customuser_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.users_customuser_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: users_profile; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+
+--
+-- Name: users_profile_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.users_profile_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: users_userprofile; Type: TABLE; Schema: public; Owner: postgres
+--
+
+    id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+
+--
+-- Name: users_userprofile_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+    SEQUENCE NAME public.users_userprofile_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Data for Name: account_emailaddress; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.account_emailaddress (id, email, verified, "primary", user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: account_emailconfirmation; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.account_emailconfirmation (id, created, sent, key, email_address_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add content type	4	add_contenttype
+14	Can change content type	4	change_contenttype
+15	Can delete content type	4	delete_contenttype
+16	Can view content type	4	view_contenttype
+17	Can add session	5	add_session
+18	Can change session	5	change_session
+19	Can delete session	5	delete_session
+20	Can view session	5	view_session
+21	Can add site	6	add_site
+22	Can change site	6	change_site
+23	Can delete site	6	delete_site
+24	Can view site	6	view_site
+25	Can add email address	7	add_emailaddress
+26	Can change email address	7	change_emailaddress
+27	Can delete email address	7	delete_emailaddress
+28	Can view email address	7	view_emailaddress
+29	Can add email confirmation	8	add_emailconfirmation
+30	Can change email confirmation	8	change_emailconfirmation
+31	Can delete email confirmation	8	delete_emailconfirmation
+32	Can view email confirmation	8	view_emailconfirmation
+33	Can add social account	9	add_socialaccount
+34	Can change social account	9	change_socialaccount
+35	Can delete social account	9	delete_socialaccount
+36	Can view social account	9	view_socialaccount
+37	Can add social application	10	add_socialapp
+38	Can change social application	10	change_socialapp
+39	Can delete social application	10	delete_socialapp
+40	Can view social application	10	view_socialapp
+41	Can add social application token	11	add_socialtoken
+42	Can change social application token	11	change_socialtoken
+43	Can delete social application token	11	delete_socialtoken
+44	Can view social application token	11	view_socialtoken
+45	Can add user	12	add_customuser
+46	Can change user	12	change_customuser
+47	Can delete user	12	delete_customuser
+48	Can view user	12	view_customuser
+49	Can add user profile	13	add_userprofile
+50	Can change user profile	13	change_userprofile
+51	Can delete user profile	13	delete_userprofile
+52	Can view user profile	13	view_userprofile
+53	Can add post	14	add_post
+54	Can change post	14	change_post
+55	Can delete post	14	delete_post
+56	Can view post	14	view_post
+57	Can add comment	15	add_comment
+58	Can change comment	15	change_comment
+59	Can delete comment	15	delete_comment
+60	Can view comment	15	view_comment
+61	Can add Подписка	16	add_subscription
+62	Can change Подписка	16	change_subscription
+63	Can delete Подписка	16	delete_subscription
+64	Can view Подписка	16	view_subscription
+65	Can add profile	17	add_profile
+66	Can change profile	17	change_profile
+67	Can delete profile	17	delete_profile
+68	Can view profile	17	view_profile
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	contenttypes	contenttype
+5	sessions	session
+6	sites	site
+7	account	emailaddress
+8	account	emailconfirmation
+9	socialaccount	socialaccount
+10	socialaccount	socialapp
+11	socialaccount	socialtoken
+12	users	customuser
+13	users	userprofile
+14	posts	post
+15	posts	comment
+16	subscriptions	subscription
+17	users	profile
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2025-05-08 14:49:24.765356+00
+2	contenttypes	0002_remove_content_type_name	2025-05-08 14:49:24.772891+00
+3	auth	0001_initial	2025-05-08 14:49:24.833689+00
+4	auth	0002_alter_permission_name_max_length	2025-05-08 14:49:24.839885+00
+5	auth	0003_alter_user_email_max_length	2025-05-08 14:49:24.845625+00
+6	auth	0004_alter_user_username_opts	2025-05-08 14:49:24.851632+00
+7	auth	0005_alter_user_last_login_null	2025-05-08 14:49:24.859399+00
+8	auth	0006_require_contenttypes_0002	2025-05-08 14:49:24.862126+00
+9	auth	0007_alter_validators_add_error_messages	2025-05-08 14:49:24.868259+00
+10	auth	0008_alter_user_username_max_length	2025-05-08 14:49:24.873947+00
+11	auth	0009_alter_user_last_name_max_length	2025-05-08 14:49:24.881469+00
+12	auth	0010_alter_group_name_max_length	2025-05-08 14:49:24.888313+00
+13	auth	0011_update_proxy_permissions	2025-05-08 14:49:24.899674+00
+14	auth	0012_alter_user_first_name_max_length	2025-05-08 14:49:24.909313+00
+15	users	0001_initial	2025-05-08 14:49:25.003476+00
+16	account	0001_initial	2025-05-08 14:49:25.05964+00
+17	account	0002_email_max_length	2025-05-08 14:49:25.072051+00
+18	account	0003_alter_emailaddress_create_unique_verified_email	2025-05-08 14:49:25.095291+00
+19	account	0004_alter_emailaddress_drop_unique_email	2025-05-08 14:49:25.111073+00
+20	account	0005_emailaddress_idx_upper_email	2025-05-08 14:49:25.12589+00
+21	account	0006_emailaddress_lower	2025-05-08 14:49:25.136663+00
+22	account	0007_emailaddress_idx_email	2025-05-08 14:49:25.159199+00
+23	account	0008_emailaddress_unique_primary_email_fixup	2025-05-08 14:49:25.17056+00
+24	account	0009_emailaddress_unique_primary_email	2025-05-08 14:49:25.182544+00
+25	admin	0001_initial	2025-05-08 14:49:25.212392+00
+26	admin	0002_logentry_remove_auto_add	2025-05-08 14:49:25.222776+00
+27	admin	0003_logentry_add_action_flag_choices	2025-05-08 14:49:25.230934+00
+28	posts	0001_initial	2025-05-08 14:49:25.263487+00
+29	posts	0002_post_title	2025-05-08 14:49:25.273177+00
+30	sessions	0001_initial	2025-05-08 14:49:25.295126+00
+31	sites	0001_initial	2025-05-08 14:49:25.304275+00
+32	sites	0002_alter_domain_unique	2025-05-08 14:49:25.316247+00
+33	socialaccount	0001_initial	2025-05-08 14:49:25.433568+00
+34	socialaccount	0002_token_max_lengths	2025-05-08 14:49:25.457578+00
+35	socialaccount	0003_extra_data_default_dict	2025-05-08 14:49:25.468037+00
+36	socialaccount	0004_app_provider_id_settings	2025-05-08 14:49:25.487179+00
+37	socialaccount	0005_socialtoken_nullable_app	2025-05-08 14:49:25.506519+00
+38	socialaccount	0006_alter_socialaccount_extra_data	2025-05-08 14:49:25.53221+00
+39	posts	0003_comment	2025-05-08 20:58:56.082986+00
+40	posts	0004_alter_comment_options_post_likes	2025-05-08 21:53:27.513799+00
+41	posts	0005_post_dislikes	2025-05-09 15:39:46.630762+00
+42	subscriptions	0001_initial	2025-05-12 20:23:06.633267+00
+43	users	0002_alter_userprofile_user_profile	2025-05-12 21:19:51.483639+00
+44	posts	0006_post_created_at	2025-05-13 22:09:30.314882+00
+45	subscriptions	0002_remove_subscription_temp_field	2025-05-13 22:09:30.331313+00
+46	posts	0007_post_is_archived_post_updated_at	2025-05-13 22:38:12.649564+00
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+hvpgzpjg6a5u9o0w0cb8ckgenlnoj2tn	.eJxVjEEOwiAQAP_C2RAKAsWjd99AdtlFqgaS0p6MfzckPeh1ZjJvEWHfStw7r3EhcRFanH4ZQnpyHYIeUO9Npla3dUE5EnnYLm-N-HU92r9BgV7GFlAZa1mRSgH1bFgbJCACx56zA6PPxpNVU0CcmDKHYA0rnJ1ynrL4fAH6zziH:1uDSfW:TcG4rQ_uNDyWTRIl73UOA7znQsopFA3fiZUiUdO8r2E	2025-05-23 18:41:58.484659+00
+6jt13mm2a6n631vu4xkvpxaehlentgvl	.eJxVjMsOwiAQRf-FtSEUWsq4dO83kGFmkKqBpI-V8d-1SRe6veec-1IRt7XEbZE5TqzOquvV6XdMSA-pO-E71lvT1Oo6T0nvij7ooq-N5Xk53L-Dgkv51gO4ABKYwPghWectOwMmeB8yWaQMmXAwI6IRSZzGrncQiBN6gYCs3h__qTip:1uEz03:IXRSZEriGNSa3TRtRodf2cjNLxZYzjml2lfEa1TRLL4	2025-05-27 23:25:27.369007+00
+\.
+
+
+--
+-- Data for Name: django_site; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_site (id, domain, name) FROM stdin;
+1	127.0.0.1	127.0.0.1
+\.
+
+
+--
+-- Data for Name: posts_comment; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.posts_comment (id, text, created_at, author_id, post_id) FROM stdin;
+1	Осталось только заменить наименование на русском языке	2025-05-08 23:38:29.267314+00	2	2
+2	В общем незарегистрированный пользователь получит 403 ошибку	2025-05-08 23:56:19.025415+00	2	2
+3	Проверяю настройку : "Кнопка "лайк" отображается на посте.\r\nПовторный клик снимает лайк.\r\nКоличество лайков видно рядом.""	2025-05-09 00:04:50.953614+00	2	5
+4	отлично	2025-05-09 00:15:50.005933+00	2	5
+5	Пробую перейти на страницу posts	2025-05-09 00:19:34.540031+00	2	5
+9	wsefsdfvsadfvas	2025-05-12 17:45:09.37098+00	2	1
+10	Обновил фото поста, проверяю на работоспособность	2025-05-12 21:22:56.368446+00	2	4
+11	Сейчас  проверяю на работоспособность и сохранение	2025-05-12 21:24:54.250377+00	2	4
+12	Сейчас  проверяю на работоспособность и сохранение	2025-05-12 21:46:22.627393+00	2	4
+\.
+
+
+--
+-- Data for Name: posts_post; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.posts_post (id, text, image, publication_date, slug, author_id, title, created_at, is_archived, updated_at) FROM stdin;
+1	This is a test post		2025-05-08 19:22:14.56616+00	test-post	1	Test Post	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+10	Вторник, Апр 15\r\nУченые нашли примитивную жизнь в космос. Продолжи тему статьи до 500 слов\r\nОбнаружение примитивной жизни за пределами Земли – революционное событие, способное изменить наше понимание Вселенной и нашего места в ней. Если подтверждение существования внеземных организмов станет реальностью, человечество окажется перед множеством новых научных, философских и даже этических вопросов.\r\n\r\nГде обнаружены следы жизни?\r\nСовременные исследования указывают на несколько перспективных локаций для существования жизни вне Земли. Среди них наиболее интригующими являются подповерхностные океаны спутников Юпитера и Сатурна — Европы и Энцелада, а также Марс, где ученые находят органические молекулы и возможные микроскопические структуры, напоминающие древние бактерии.\r\n\r\nКакими могут быть эти организмы?\r\nПримитивная жизнь за пределами Земли, скорее всего, представлена микробами — простейшими организмами, способными существовать в экстремальных условиях. Они могут напоминать земных экстремофилов, которые процветают в кипящих гейзерах, подо льдами Антарктиды или глубоко в океанических впадинах. Такие организмы могут питаться химическими соединениями, используя процессы, подобные хемосинтезу.\r\n\r\nЧто это значит для науки?\r\nПодтверждение существования внеземной жизни откроет новую эру в биологии и астрофизике. Исследования этих микроорганизмов помогут понять, как могла зародиться жизнь на Земле и насколько распространено это явление во Вселенной. Кроме того, это поднимет вопрос об изменении подходов к исследованию космоса: отправка будущих миссий должна учитывать строгие меры защиты от загрязнения чужих миров земными микробами.\r\n\r\nЭтические и философские вопросы\r\nНаличие жизни за пределами Земли неизбежно повлияет на философские и религиозные взгляды человечества. Оно может поставить под сомнение уникальность земной цивилизации и заставить пересмотреть наше отношение к возможному контакту с более развитыми формами существ. Кроме того, исследование внеземных организмов поднимет вопросы о допустимости их изучения и потенциальной угрозе для земной биосферы.\r\n\r\nЧто дальше?\r\nВпереди множество вызовов и возможностей. Будущие миссии, такие как Europa Clipper и ExoMars, будут направлены на более детальное изучение перспективных планет и спутников. Возможно, в ближайшие десятилетия человечество получит первые неоспоримые доказательства существования жизни за пределами Земли — и этот момент станет одной из величайших вех в истории науки.\r\n\r\nКак тебе эта идея? Хочешь, чтобы я развил какие-то аспекты подробнее?\r\n\r\nПросто супер! Спасибо\r\nРад, что тебе понравилось! Всегда приятно обсуждать такие захватывающие темы. Если у тебя появятся новые вопросы или идеи — обращайся, я всегда готов поддержать интересную беседу! 🚀\r\n\r\nДавай еще напишем одну короткую статью на абстрактную тему "В городе Акурейри мыши открыли банк. Клиенты довольны. Кроты нет"\r\nФинансовая революция в Акурейри: банк для мышей – кошмар для кротов\r\nВ маленьком городе Акурейри произошла настоящая экономическая сенсация – местные мыши открыли свой первый банк. Вкладчики довольны: процентные ставки рекордно низкие, обслуживание на высшем уровне, а сырные кредиты одобряются в считанные секунды.\r\n\r\nУспех на лапках\r\nБанк, названный "Сырный резерв", быстро привлек внимание всех грызунов региона. Мыши теперь могут хранить свои драгоценные крохи, брать займы на новые норы и даже инвестировать в перспективные сырные запасы. Особенно популярны депозитные счета, где капитал растет вместе с запасами пармезана и чеддера.\r\n\r\nКротовые протесты\r\nНо не всем эта финансовая революция пришлась по душе. Местные кроты, привыкшие к традиционным способам накопления – зарыванию запасов в землю – оказались вне системы. Их попытки открыть счета натолкнулись на отказ, ведь банк требует видеть клиентов, а кроты, как известно, предпочитают тьму.\r\n\r\nПредставитель кротового сообщества мистер Кротовский высказался резко: "Это дискриминация! Нас вынуждают хранить сбережения в старых туннелях, где процветает инфляция в виде прожорливых дождевых червей!"\r\n\r\nПерспективы развития\r\nНесмотря на протесты, банк продолжает процветать. Успешное внедрение системы сыро-биткоинов и новые инвестиционные проекты привлекают даже белок из соседних лесов. А мыши уже думают о расширении – возможно, скоро появится первый филиал в подземных катакомбах.\r\n\r\nБудет ли найден компромисс между мышами и кротами? Или кроты организуют собственную "Теневую финансовую систему"? Будущее покажет, но одно ясно: экономика Акурейри уже никогда не будет прежней.\r\n\r\nКак тебе такой сюжет? 😃\r\n\r\nСпасибо, очень и интересно и смешно !!! Класс!\r\nРад, что тебе понравилось! 😃 Писать такие забавные сюжеты — одно удовольствие. Если у тебя есть еще необычные идеи, давай придумаем что-нибудь вместе. Готов к новым творческим вызовам! 🎭✨\r\n\r\nА вот еще одна статья:"Красота морских обитателей положительно влияет на здоровье людей"\r\nГармония океана: как красота морских обитателей улучшает здоровье людей\r\nПрирода обладает невероятной силой воздействия на эмоциональное и физическое состояние человека. Однако особое место в этом процессе занимает водная среда. Исследования показывают, что наблюдение за морскими обитателями — от изящных рыб до величественных китов — может приносить пользу нашему здоровью.\r\n\r\nВлияние на психику\r\nГипнотические движения косяков рыб, плавное скольжение скатов и величественное парение медуз создают ощущение спокойствия. Этот эффект сравним с медитацией: человек отвлекается от тревог, концентрируясь на плавных ритмах природы. Известно, что посещение аквариумов снижает уровень стресса и способствует расслаблению.\r\n\r\nКроме того, морские глубины связаны с биофильным эффектом — врожденной тягой человека к живой природе. Это объясняет, почему наблюдение за коралловыми рифами или игрой дельфинов наполняет нас радостью и умиротворением.	post_images/_bea_2.jpg	2025-05-10 16:56:42.243973+00	-4	2	Гармония океана: как красота морских обитателей улучшает здоровье людей	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+5	Проверка на coment и likes		2025-05-08 23:35:21.064982+00	coment-likes	2	Проверка на coment и likes	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+2	Проверка работы постов в Chatty прошла успешно, пост отображается в форме на странице http://localhost:8000/posts/create/	post_images/Leonardo_Kino_XL_Create_a_stunning_photorealistic_picture_of_s_2.jpg	2025-05-08 19:26:29.07422+00	chatty	2	Проверка работы постов в Chatty	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+23	Немецкая кухня — это сочетание традиций и простых, но насыщенных вкусов. В каждой федеральной земле свои гастрономические особенности, но некоторые блюда стали визитной карточкой страны.\r\n\r\n📌 Баварские колбаски (Weißwurst) Приготовленные из телятины и свиного сала, они подаются с горчицей и свежим брецелем. Это любимое блюдо жителей Мюнхена, особенно на Октоберфесте.\r\n\r\n📌 Шницель (Schnitzel) Несмотря на австрийские корни, жареный мясной шницель стал неотъемлемой частью немецкой кухни. В классическом варианте используется панированная телятина, обжаренная до золотистой корочки.\r\n\r\n📌 Картофельный салат (Kartoffelsalat) Этот гарнир встречается в каждом регионе Германии, но рецепты могут отличаться: на юге добавляют уксус и масло, а на севере предпочитают майонезную заправку.	post_images/BCO.f34c4999.png	2025-05-13 19:50:16.176496+00	-10	15	Кулинария — самые популярные блюда Германии	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+4	Проверка на удаление и редирект	post_images/Leonardo_Kino_XL_The_puppies_have_found_their_owner_1.jpg	2025-05-08 20:40:42.090527+00	-1	2	Проверка на удаление и редирект	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+17	Автомобильная промышленность переживает технологическую революцию. Производители внедряют искусственный интеллект, экологичные материалы и автономное управление.\r\n\r\n🔹 Что изменилось в 2025 году: ✅ Разработаны батареи нового поколения, которые увеличивают запас хода электромобилей на 40%. ✅ Введены биоматериалы, позволяющие снизить вес машин и уменьшить вредные выбросы. ✅ Активно тестируются полностью автономные автомобили, которые могут передвигаться без участия водителя.	post_images/BCO.31d38832-40d8-4869-8385-6f4d67697e0a.png	2025-05-13 19:29:38.852555+00	-6	9	Новые технологии в автомобилестроении	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+24	Современный гостиничный бизнес переживает эру высотного строительства. В 2025 году одна из крупнейших строительных компаний представила проект инновационной гостиницы-небоскреба с уникальными архитектурными решениями.\r\n\r\n📌 Основные особенности: ✅ Система автономного энергоснабжения – от солнечных батарей и геотермальных станций. ✅ Умные номера – оснащенные AI-системами управления комфортом гостей. ✅ Эко-материалы – стеклянные панели с самоочищающейся поверхностью и утеплитель нового поколения.\r\n\r\n📌 Архитектурное новшество Небоскрёб будет построен по принципу вертикального города, где отдельные этажи станут мини-парками, магазинами и зонами отдыха.	post_images/hotel_skyscraper.png	2025-05-13 19:53:04.712192+00	horeca	16	HoReCa — строительство гостиницы-небоскреба	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+7	Проверяю настройку лайков и дизлайков		2025-05-09 15:37:34.115107+00	post-7	2	Завершающая проверка	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+3	Проверка на удаление и редирект		2025-05-08 20:39:26.184571+00	post-3	2	Проверка на удаление и редирект	2025-05-13 22:09:30.303493+00	t	2025-05-13 23:13:19.083441+00
+18	Современная медицина переживает один из самых динамичных периодов развития. В 2025 году ученые сделали ряд революционных открытий, которые могут изменить подход к лечению самых сложных заболеваний.\r\n\r\n📌 Генетическая терапия и редактирование ДНК Одним из ключевых прорывов стало использование технологии CRISPR для точечного редактирования генов, что позволяет корректировать наследственные заболевания еще на уровне эмбрионов. В Великобритании уже ведутся клинические испытания, в ходе которых ученые пытаются устранить генетические мутации, ведущие к редким неврологическим расстройствам.\r\n\r\n📌 Искусственные органы и регенеративная медицина Технология выращивания биоинженерных тканей достигла нового уровня. Исследователи научились создавать полноценные органы из стволовых клеток, что сокращает зависимость от донорских органов. В Испании уже проведены успешные тестирования искусственных легких, которые продемонстрировали способность самовосстанавливаться после повреждений.\r\n\r\n📌 Персонализированная медицина С развитием искусственного интеллекта лечение пациентов становится индивидуализированным. AI-алгоритмы анализируют генетическую информацию, образ жизни и медицинскую историю, чтобы подобрать наилучший курс терапии. В США создана система, прогнозирующая вероятность развития сердечно-сосудистых заболеваний за 10 лет до появления первых симптомов.	post_images/BCO_GtEpY65.ad3d534e-1ecf-40b7-bc0c-cc970d63aae3.png	2025-05-13 19:33:08.816484+00	-7	10	Наука — Новые открытия в области медицины	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+11	Космическое агентство NASA завершает подготовку к одной из самых амбициозных экспедиций в истории — новой миссии по детальному изучению Марса. Этот проект, направленный на расширение знаний о Красной планете, включает передовые технологии, которые позволят глубже понять ее геологию, атмосферу и возможные следы жизни.\r\nНовые горизонты исследования\r\nОсновная цель миссии — детальный анализ марсианского грунта с помощью усовершенствованных роботов и исследовательских аппаратов. Одним из ключевых элементов экспедиции станет новый ровер, оснащенный мощными инструментами для бурения и анализа образцов. Ученые надеются, что его технологии позволят обнаружить следы древних микробов или органических соединений, подтверждающих возможность существования жизни.\r\n\r\nДополнительно планируется отправка дронов, способных летать в разреженной марсианской атмосфере и предоставлять детальные данные о поверхности планеты. Эти аппараты помогут картографировать территории и искать потенциальные места для будущих пилотируемых миссий.\r\n\r\nПодготовка к колонизации\r\nХотя Марс остается негостеприимной средой, NASA рассматривает миссию как один из важных шагов к потенциальной колонизации. В рамках проекта будет протестировано оборудование для производства кислорода и воды из местных ресурсов. Эти эксперименты помогут оценить, насколько реально поддерживать жизнь в марсианских условиях без постоянных поставок с Земли.\r\n\r\nИсторическое значение\r\nЭта экспедиция станет важной вехой в освоении космоса. Обнаружение доказательств древней жизни или подтверждение пригодности Марса для будущих поселений может кардинально изменить планы по исследованию Солнечной системы.\r\n\r\nЗапуск миссии запланирован на ближайшие годы, и вся мировая научная общественность с нетерпением ожидает первых результатов. Останется ли Марс безжизненным миром или раскроет свои тайны? Ответ уже скоро	post_images/Flux_Schnell_A_dramatic_highcontrast_colorful_image_depicting__0.jpg	2025-05-12 22:55:42.697871+00	nasa	2	NASA готовится к исторической миссии по изучению Марса	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+13	Сегодня\r\nСпасибо за уточнение! Ниже представлены расширенные версии постов, наполненные полезной информацией.\r\n\r\nЭкологические технологии будущего\r\nГород без отходов: утопия или ближайшее будущее?\r\n\r\nМногие европейские города уже сегодня стремятся к нулевым выбросам углерода и внедряют круговую экономику, чтобы минимизировать отходы и сократить вредное влияние на природу.\r\n\r\n📌 Как это работает?\r\n\r\nРаздельный сбор и переработка мусора – в Швеции перерабатывается 99% бытовых отходов, а пищевые отходы используются для производства биогаза.\r\n\r\nЭнергоэффективное строительство – в Копенгагене возводят здания, способные снижать энергопотребление до 70% благодаря особым материалам и солнечным панелям.\r\n\r\nЭко-транспорт – электробусы, велосипеды и водородные автомобили заменяют традиционные машины, снижая уровень выбросов на 60%.\r\n\r\n🚀 В ближайшие десятилетия подобные технологии могут стать стандартом в крупнейших мегаполисах мира. Какие экологические инициативы работают в твоем городе?\r\n\r\nКосмос и наука\r\nЛунная база: первый шаг к жизни за пределами Земли\r\n\r\nЕвропейское космическое агентство (ESA) протестировало лунный модуль, созданный для автономного проживания на Луне.\r\n\r\n📌 Основные технологии:\r\n\r\nИспользование реголита – вместо привоза стройматериалов с Земли ученые научились превращать луночный песок в бетон, из которого можно строить жилые помещения.\r\n\r\nАвтоматизированные системы жизнеобеспечения – специальные реакторы перерабатывают углекислый газ и выделяют кислород, который необходим для дыхания.\r\n\r\nРоботизированные помощники – компактные машины помогают проводить научные исследования и ремонты без участия человека.\r\n\r\n🌍 В ближайшие десятилетия лунная база может стать перевалочным пунктом для экспедиций на Марс. Как ты думаешь, когда появится первая постоянная колония за пределами Земли?\r\n\r\nКультура и наследие\r\nАрхеологи раскрыли тайну средневекового замка\r\n\r\nВ Германии найден древний замок XIV века, в котором была обнаружена тайная комната, скрытая от посторонних глаз.\r\n\r\n📌 Что в ней нашли?\r\n\r\nМанускрипты и карты – пергаменты с указаниями на секретные места рыцарских орденов.\r\n\r\nРедкие украшения – уникальные серебряные и золотые артефакты, украшенные драгоценными камнями.\r\n\r\nОружие и доспехи – мечи, использовавшиеся для особых церемоний, и геральдические щиты с гербами старинных семей.\r\n\r\n🔥 Историки уверены: этот замок был центром тайных встреч европейской знати. Какие еще загадки может скрывать средневековая Европа?\r\n\r\nБизнес и технологии\r\nИскусственный интеллект переворачивает индустрию моды\r\n\r\nРеволюция в фэшн-индустрии: AI-дизайнеры создают одежду, которая идеально адаптируется к вкусу покупателей.\r\n\r\n📌 Как это работает?\r\n\r\nАнализ предпочтений – алгоритмы изучают соцсети, покупки и показывают прогнозы новых трендов.\r\n\r\nАвтоматизированное создание коллекций – AI генерирует тысячи вариаций дизайнов за считанные секунды.\r\n\r\nОптимизация производства – минимизируется отход ткани, снижается нагрузка на окружающую среду.\r\n\r\n🔮 Уже сегодня крупнейшие модные дома тестируют AI для создания коллекций без участия дизайнеров. Возможно, скоро человек перестанет задавать тренды в моде – как ты думаешь?\r\n\r\nСпорт и здоровье\r\nИдеальная диета для спортсменов: открытие шведских ученых\r\n\r\nБиологи нашли формулу питания, которая повышает выносливость, скорость и реакцию на 30%!\r\n\r\n📌 Какие продукты входят в рацион? ✅ Богатые белками – ускоряют восстановление мышц, повышают силу. ✅ Натуральные антиоксиданты – защищают организм от стресса и усталости. ✅ Углеводы для энергии – обеспечивают максимальную выносливость.\r\n\r\n🏆 Лучшие футбольные клубы Европы уже внедряют эту диету в свои тренировочные программы. Кто знает, возможно, это станет стандартом для всех профессиональных спортсменов?\r\n\r\nТеперь посты стали еще более информативными и насыщенными фактами. Если нужно усилить какие-то детали или добавить новые блоки, скажи, и я все доработаю! 🚀\r\n\r\nА тпеперь все это напиши в повесвовательном тоне, в виде статьи в прессу\r\nЕвропа будущего: экология, технологии, космос и здоровье\r\nГорода без отходов: реальность, которая уже приходит\r\nЕще несколько десятилетий назад идея городов с нулевыми отходами казалась фантастикой. Но сегодня крупнейшие мегаполисы Европы доказывают, что эта концепция становится реальностью. В Копенгагене уже работают энергоэффективные здания, которые сокращают потребление энергии до 70%, а в Амстердаме внедрена система замкнутого цикла, где 90% пластиковых отходов перерабатываются.\r\n\r\nОсновной ключ к успеху — внедрение умного экологического транспорта, который заменяет автомобили с двигателями внутреннего сгорания. Электробусы, водородные машины и массовый переход на велосипеды позволили снизить уровень выбросов на 60%. Эксперты уверены, что в ближайшие 10 лет такие инициативы будут распространяться по всему миру.\r\n\r\nЛунная база: первые шаги к жизни за пределами Земли\r\nКогда-то освоение Луны казалось далекой перспективой, но сегодня европейские ученые всерьез готовятся к строительству первой лунной базы. Недавно протестирован лунный модуль, разработанный Европейским космическим агентством (ESA).\r\n\r\nГлавное достижение инженеров — система, которая извлекает кислород из реголита, превращая лунный песок в жизненно важный ресурс. Ученые также разработали роботизированных помощников, которые помогут проводить исследования и поддерживать инфраструктуру базы без участия человека.\r\n\r\nТехнология использования реголита для строительства — революционное решение, позволяющее создавать надежные укрытия без транспортировки материалов с Земли. Это открывает путь к первым межпланетным миссиям и расширению границ человеческого присутствия в космосе.\r\n\r\nТайны средневекового замка\r\nВ Германии археологи сделали уникальное открытие — в древнем замке XIV века найдена тайная комната, скрытая от посторонних глаз. Внутри были обнаружены манускрипты, оружие и редкие ювелирные изделия, которые дают представление о средневековой Европе.\r\n\r\nОдно из самых интригующих открытий — пергаменты, содержащие карты и записи о тайных рыцарских орденах. Также исследователи нашли гербы старинных аристократических родов, что подтверждает гипотезу, что замок служил местом тайных собраний.\r\n\r\nИсторики уверены: эта находка поможет раскрыть новые страницы истории и изменить представление о жизни европейской знати в средние века.\r\n\r\nИскусственный интеллект в моде\r\nРеволюция в мире моды: теперь AI-дизайнеры создают коллекции одежды на основе анализа трендов. Искусственный интеллект анализирует предпочтения покупателей и формирует идеальные модели одежды, которые сразу становятся популярными.\r\n\r\nЭтот процесс уже активно тестируется в крупнейших модных домах Европы. AI генерирует тысячи дизайнерских вариантов за секунды, адаптируя их к предпочтениям клиентов. Это может означать полное изменение индустрии моды: вместо классического творчества дизайнеров тренды будут формироваться искусственным интеллектом.\r\n\r\nСпортивное питание нового поколения\r\nШведские ученые сделали важное открытие в области спортивного питания. Исследования показали, что правильный баланс белков, углеводов и витаминов способен значительно увеличить скорость, выносливость и реакцию спортсменов.\r\n\r\nЭта методика уже внедряется в ведущих футбольных клубах Европы. Диета включает антиоксиданты, укрепляющие иммунитет, продукты с высоким содержанием энергии для быстрого восстановления, а также сбалансированное потребление жидкости для оптимальной работы организма.\r\n\r\nЭксперты прогнозируют, что этот подход станет новым стандартом для спортивных тренировок, а его принципы будут использоваться не только в профессиональном спорте, но и в повседневной жизни.\r\n\r\nЭти тенденции показывают, как технологии и наука меняют мир вокруг нас, создавая более чистую среду, осваивая новые горизонты и улучшая качество жизни. Европа уже движется в будущее, и похоже, что эти изменения — только начало.\r\n\r\nЕсли нужно расширить статью или добавить новые темы, просто скажи! 🚀😊\r\n\r\nОтлично!!! Это то что мне было нужно!!!\r\nЯ рад, что это именно то, что ты искал! 😊 Если тебе понадобится что-то еще — уточнение деталей, дополнительные темы или новые форматы, просто скажи. Я всегда готов помочь! 🚀\r\n\r\nДа, конечно мне нужно еще 15 подобных статей по рубрикам: медицина - анализ последствий COVID 19, путешествие, НЛО, бизнес - анализ падения индексов на фоне торговой войны, новые технологии в автомобилестроении, проблемы с климатом- таяние льдов на полюсах, наука - новые открытия в области медицины, IT - влияние на безработицу, социальные вопросы с эмигрантами во Франции, культура - самые известные работы Леонардо да Винчи, AI - последние разработки нейронных сетей, Кулинария - самые популярные блюда в Германии, хорика - строительство гостиницы небоскреба, строительство -новые технологии экологического жилья из живых материалов, медународная торговля - прогноз развития торговых отношений Китая и Европы. Мирные переговоры в Стамбуле 15 мая 2025 г. И к этим статьям сделай описание фото. Статьи напиши в повесвовательном тоне, в виде статьи в прессу\r\nОтличная подборка тем! Я сейчас подготовлю полноценные статьи для каждой рубрики, включая описания изображений. Это займет некоторое время, но я постараюсь сделать их максимально информативными и актуальными.\r\n\r\nНачну с написания текстов, а затем добавлю к каждой статье описание фотографии. Держись, будет интересно! 🚀\r\n\r\nКакойто сбой? не вижу генерации статей\r\nПохоже, произошел технический сбой, и статьи не были созданы. Давай попробуем еще раз! Сейчас подготовлю тексты и описания фотографий для каждой темы. 🚀\r\n\r\nДа, конечно мне нужно еще 15 подобных статей по рубрикам: медицина - анализ последствий COVID 19, путешествие, НЛО, бизнес - анализ падения индексов на фоне торговой войны, новые технологии в автомобилестроении, проблемы с климатом- таяние льдов на полюсах, наука - новые открытия в области медицины, IT - влияние на безработицу, социальные вопросы с эмигрантами во Франции, культура - самые известные работы Леонардо да Винчи, AI - последние разработки нейронных сетей, Кулинария - самые популярные блюда в Германии, хорика - строительство гостиницы небоскреба, строительство -новые технологии экологического жилья из живых материалов, медународная торговля - прогноз развития торговых отношений Китая и Европы. Мирные переговоры в Стамбуле 15 мая 2025 г. И к этим статьям сделай описание фото. Статьи напиши в повесвовательном тоне, в виде статьи в прессу Твой ответ - Отличная подборка тем! Я сейчас подготовлю полноценные статьи для каждой рубрики, включая описания изображений. Это займет некоторое время, но я постараюсь сделать их максимально информативными и актуальными. Начну с написания текстов, а затем добавлю к каждой статье описание фотографии. Держись, будет интересно! 🚀\r\nХорошо, сейчас подготовлю статьи для каждой рубрики с подробным изложением информации и соответствующими описаниями фотографий. Это займет некоторое время, так как я стараюсь сделать тексты насыщенными и качественными.\r\n\r\nДавай начнем с первых пяти тем, затем я продолжу работу над оставшимися. Если у тебя есть пожелания по стилю или дополнительным аспектам, которые важно осветить, дай знать! 🚀\r\n\r\nМне нужны еще 15 подобных статей по рубрикам - вот первые 5 статей: медицина - анализ последствий COVID 19, путешествие, НЛО, бизнес - анализ падения индексов на фоне торговой войны, новые технологии в автомобилестроении, проблемы с климатом- таяние льдов на полюсах\r\nОтлично! Сейчас подготовлю подробные статьи для этих пяти рубрик.\r\n\r\nМедицина — анализ последствий COVID-19\r\nПандемия COVID-19 оставила глубокий след в мировой системе здравоохранения. Многие страны пересмотрели подход к эпидемиологической безопасности, усилив исследования в области вирусологии и вакцинопрофилактики.\r\n\r\n🔹 Долгосрочные последствия: Врачи отмечают рост кардиологических и неврологических осложнений у людей, перенесших COVID-19. Исследования показывают, что у 30% пациентов после выздоровления сохраняются симптомы, такие как хроническая усталость и снижение когнитивных функций.\r\n\r\n🔹 Изменения в медицине: Больницы модернизировали свои системы, внедрив телемедицину и программы удаленного мониторинга здоровья. Разработка новых вакцин против коронавируса привела к ускоренному развитию мРНК-технологий, которые теперь применяются для лечения других заболеваний, включая онкологию.	post_images/BCO.885bab45-d003-4c15-b302-8357b1b67cd8.png	2025-05-13 18:29:33.257444+00	covid-19	4	Медицина — анализ последствий COVID-19	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+14	После пандемии туризм изменился. Теперь путешественники отдают предпочтение экологичным направлениям, индивидуальным маршрутам и цифровым технологиям.\r\n\r\n🔹 Популярные тренды:\r\n\r\nЭкотуризм – посещение заповедников и природных зон без вреда для экологии.\r\n\r\n"Медленный туризм" – отказ от массовых экскурсионных программ в пользу изучения местной культуры.\r\n\r\nЦифровые решения – приложения для персонализированных маршрутов и бесконтактного бронирования.\r\n\r\n🔹 Интересные направления: Швейцария предлагает экологические отели в Альпах, Италия развивает исторические маршруты, а Скандинавия внедряет "умные" туристические зоны.	post_images/BCO.d9402b6e-9dc1-434a-8e08-6f303a128ca1.png	2025-05-13 19:15:09.927316+00	-2	6	Путешествия — новые туристические тренды	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+15	В 2025 году ученые представили новый доклад по изучению неопознанных летающих объектов, основанный на спутниковых данных и показаниях пилотов.\r\n🔹 Новые факты: Исследования подтверждают, что неопознанные аномальные явления иногда демонстрируют нехарактерные для земных технологий траектории движения.\r\n🔹 Научные гипотезы:\r\nНеизвестные атмосферные явления – редкие природные события могут объяснять часть наблюдений.\r\nЭкспериментальные технологии – возможно, это тестирование новых разработок.\r\nВнеземное происхождение – гипотеза остается открытой, но пока не подтверждена научно.	post_images/BCO.f10e6a28-5a2b-404b-a70f-e02567f7948a.png	2025-05-13 19:18:33.919106+00	-3	7	НЛО — новые данные и гипотезы	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+16	Международная торговля переживает непростые времена — ужесточение санкций и изменение цепочек поставок привело к сильным колебаниям фондовых рынков.\r\n\r\n🔹 Причины падения индексов:\r\n\r\nОграничение экспорта ключевых товаров, таких как микрочипы и редкоземельные металлы.\r\n\r\nВведение новых пошлин и санкционных мер, осложняющих поставки между регионами.\r\n\r\nСнижение доверия инвесторов к нестабильным рынкам.\r\n\r\n🔹 Возможные прогнозы: Эксперты считают, что перенос производства в новые регионы и развитие локальных производств помогут стабилизировать ситуацию.	post_images/BCO.a7b7d450-3789-4d8e-94d2-13e6f38390ad.png	2025-05-13 19:26:14.400145+00	-5	8	Бизнес — падение индексов на фоне торговой войны	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+19	Бурное развитие технологий неизбежно влияет на рынок труда, создавая новые возможности, но одновременно лишая рабочие места людей в традиционных сферах.\r\n\r\n📌 Автоматизация и искусственный интеллект Роботизация производства позволяет компаниям заменять ручной труд машинами, что ведет к сокращению рабочих мест на заводах. Однако в то же время появляются новые профессии, связанные с обслуживанием и программированием AI-систем.\r\n\r\n📌 Удаленная работа и цифровые платформы Сейчас все больше специалистов работают удаленно, пользуясь онлайн-платформами для взаимодействия с работодателями. Это снижает спрос на офисные профессии, но создает новые вакансии в сфере IT и кибербезопасности.\r\n\r\n📌 Необходимость переподготовки Эксперты уверены: чтобы оставаться востребованными, людям необходимо осваивать цифровые навыки. Образовательные программы уже адаптируются под новые реалии, обучая студентов основам программирования, анализа данных и управления нейросетями.	post_images/BCO.b1573a32-77d2-466f-bc65-67aaeb55b537.png	2025-05-13 19:36:27.501531+00	it	11	IT — Влияние на безработицу	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+20	Франция остается одной из ключевых точек для миграции, сталкиваясь с социальными вызовами, связанными с адаптацией приезжих.\r\n\r\n📌 Экономический эффект миграции Мигранты играют важную роль в экономике Франции, занимая рабочие места в сфере строительства, обслуживания и сельского хозяйства. Однако конкуренция на рынке труда вызывает напряженность между местными жителями и приезжими.\r\n\r\n📌 Адаптация и культурные различия Одна из главных проблем — интеграция мигрантов в общество. Несмотря на программы поддержки, многие сталкиваются с барьерами в изучении французского языка и трудностями с поиском жилья.\r\n\r\n📌 Государственная политика Французские власти пытаются найти баланс, регулируя потоки мигрантов и внедряя новые механизмы адаптации. В 2025 году была запущена программа, направленная на ускоренную интеграцию путем профессионального обучения и упрощенной легализации.	post_images/BCO.79bd2656-2658-47cd-87c6-c36858d5e1ee.png	2025-05-13 19:39:51.411316+00	-8	12	Социальные вопросы — Эмигранты во Франции	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+21	Леонардо да Винчи — гениальный художник, инженер и ученый, чьи произведения стали вечными символами искусства и науки.\r\n\r\n📌 "Мона Лиза" Самая загадочная картина да Винчи, созданная между 1503-1506 годами. Улыбка Джоконды остается тайной искусства, вызывая бесконечные обсуждения о ее смысле и эмоциях.\r\n\r\n📌 "Тайная вечеря" Монументальная фреска, изображающая последнюю трапезу Христа с апостолами, известна своей композиционной точностью и глубиной.\r\n\r\n📌 Инженерные проекты Да Винчи занимался разработкой летательных аппаратов, роботизированных механизмов и анатомическими исследованиями, опережая свое время. Его чертежи первых прототипов вертолета и подводного судна легли в основу современных технологий.	post_images/BCO.cb77c9d0-1f53-4136-998d-b0c2698760cb.png	2025-05-13 19:42:57.193916+00	-9	13	Культура — Самые известные работы Леонардо да Винчи	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+22	Искусственный интеллект быстро развивается, предлагая революционные решения в самых разных сферах.\r\n\r\n📌 AI в медицине Нейросети помогают врачам диагностировать заболевания на ранних стадиях. Уже сейчас алгоритмы способны анализировать тысячи медицинских снимков и находить отклонения точнее, чем врачи.\r\n\r\n📌 AI в творчестве Нейросети научились создавать произведения искусства, сочинять музыку и писать книги. Некоторые картины, созданные AI, уже выставляются в музеях современного искусства.\r\n\r\n📌 Этические вопросы Развитие AI ставит сложные вопросы: может ли машина заменить человека в творчестве и принятии решений? Некоторые эксперты предупреждают о рисках потери рабочих мест, если алгоритмы станут слишком автономными.	post_images/BCO_PzDbxTz.307b67a8-4457-4363-912f-fe47ab088138.png	2025-05-13 19:45:53.675177+00	ai	14	AI — Последние разработки нейронных сетей	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+25	Развитие эко-архитектуры привело к созданию жилых домов, способных "дышать" и регенерировать. Эти проекты уже реализуются в крупнейших европейских странах.\r\n\r\n📌 Что это за технология? ✅ Использование био-бетона, который самовосстанавливается благодаря бактериям. ✅ Применение зелёных фасадов, где растения обеспечивают естественную фильтрацию воздуха. ✅ Внедрение солнечных батарей из органических материалов, повышающих эффективность энергосбережения.\r\n\r\n📌 Будущее эко-строительства Исследования показывают, что такие здания смогут существенно снизить уровень CO₂, а также минимизировать потребление ресурсов благодаря автономным системам жизнеобеспечения.	post_images/Green_city_aUnvUuV.png	2025-05-13 19:56:20.675322+00	-11	17	Строительство — новые технологии экологического жилья из живых материалов	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+26	На фоне глобальных экономических изменений Китай и Европа пересматривают свои торговые стратегии, чтобы адаптироваться к новым вызовам.\r\n\r\n📌 Основные тенденции: ✅ Переключение на локализованные производства для снижения зависимости от глобальных цепочек поставок. ✅ Развитие зеленой торговли – Китай инвестирует в создание экологически чистых технологий для экспорта. ✅ Усиление технологического сотрудничества, особенно в сфере искусственного интеллекта и роботизации.\r\n\r\n📌 Прогноз на будущее Эксперты считают, что в ближайшие годы Китай и ЕС будут расширять партнерство, создавая новые логистические маршруты и соглашения по устойчивому развитию.	post_images/Export_from_China.png	2025-05-13 20:00:26.70064+00	-12	18	Международная торговля — прогноз развития торговых отношений Китая и Европы	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+27	Переговоры между Россией и Украиной, запланированные на 15 мая 2025 года в Стамбуле, привлекли внимание мирового сообщества. Это потенциально историческая встреча, поскольку она может стать первым прямым диалогом между президентами Украины и России с начала полномасштабного конфликта.\r\n\r\nОсновные темы переговоров\r\nПо данным аналитиков, ключевыми вопросами станут:\r\n\r\nБудущее оккупированных территорий и возможные компромиссы по их статусу.\r\n\r\nКонтроль над Запорожской АЭС, которая остается стратегически важным объектом.\r\n\r\nДоступ Украины к реке Днепр и Черному морю, что критично для экономики страны.\r\n\r\nПерспективы прекращения огня\r\nНесмотря на ожидания, эксперты считают, что немедленного прекращения боевых действий ждать не стоит.\r\n\r\nУкраина требует 30-дневного перемирия перед началом переговоров, но Россия настаивает на обсуждении без предварительных условий.\r\n\r\nСША и Европа поддерживают переговорный процесс, но требуют гарантий безопасности для Украины.\r\n\r\nТурция играет роль посредника, предлагая компромиссные решения.\r\n\r\nВероятный исход\r\nАналитики прогнозируют, что переговоры пройдут на уровне делегаций, а не личной встречи лидеров.\r\n\r\nРоссия может предложить временное перемирие, но без гарантий полного прекращения огня.\r\n\r\nУкраина будет настаивать на выводе российских войск, что может стать камнем преткновения.\r\n\r\nЗападные страны готовы усилить санкции, если переговоры не приведут к конкретным результатам.\r\n\r\nЗаключение\r\nПереговоры в Стамбуле — важный шаг, но быстрого мира ожидать не стоит. Стороны пока далеки от компромисса, и многое будет зависеть от дипломатических усилий посредников.	post_images/peace_talks.png	2025-05-13 20:02:59.105341+00	15-2025	19	Мирные переговоры в Стамбуле — 15 мая 2025 года	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+12	Города без отходов: реальность, которая уже приходит\r\nЕще несколько десятилетий назад идея городов с нулевыми отходами казалась фантастикой. Но сегодня крупнейшие мегаполисы Европы доказывают, что эта концепция становится реальностью. В Копенгагене уже работают энергоэффективные здания, которые сокращают потребление энергии до 70%, а в Амстердаме внедрена система замкнутого цикла, где 90% пластиковых отходов перерабатываются.\r\n\r\nОсновной ключ к успеху — внедрение умного экологического транспорта, который заменяет автомобили с двигателями внутреннего сгорания. Электробусы, водородные машины и массовый переход на велосипеды позволили снизить уровень выбросов на 60%. Эксперты уверены, что в ближайшие 10 лет такие инициативы будут распространяться по всему миру.	post_images/Green_city.png	2025-05-13 16:33:37.821558+00	-13	3	Европа будущего: экология, технологии, космос и здоровье	2025-05-13 22:09:30.303493+00	f	2025-05-13 22:38:12.648375+00
+\.
+
+
+--
+-- Data for Name: posts_post_dislikes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.posts_post_dislikes (id, post_id, customuser_id) FROM stdin;
+7	3	2
+9	1	2
+12	2	2
+\.
+
+
+--
+-- Data for Name: posts_post_likes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.posts_post_likes (id, post_id, customuser_id) FROM stdin;
+25	5	2
+26	10	2
+33	13	11
+\.
+
+
+--
+-- Data for Name: socialaccount_socialaccount; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.socialaccount_socialaccount (id, provider, uid, last_login, date_joined, extra_data, user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: socialaccount_socialapp; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.socialaccount_socialapp (id, provider, name, client_id, secret, key, provider_id, settings) FROM stdin;
+\.
+
+
+--
+-- Data for Name: socialaccount_socialapp_sites; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.socialaccount_socialapp_sites (id, socialapp_id, site_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: socialaccount_socialtoken; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.socialaccount_socialtoken (id, token, token_secret, expires_at, account_id, app_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: subscriptions_subscription; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.subscriptions_subscription (id, created_at, author_id, subscriber_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users_customuser; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users_customuser (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, avatar, bio, contacts) FROM stdin;
+1	pbkdf2_sha256$870000$wA9txB2KUdi9aNt7M6JTXM$AjoL1yxUC3TgSnDB/OQi4DmomjO5FX7gdXuOG29+dUY=	\N	t	alex			alex1@example.com	t	t	2025-05-08 14:49:26.466555+00	avatars/default.png		
+4	pbkdf2_sha256$870000$54oOZQslZg7AsfFmJHBqb9$d9kTrW9ijLePGpDwfwB9Qf8QGcw5aeOpZPNpPMOQWzc=	2025-05-13 18:43:24.966179+00	f	Anastasia			Anastasia@example.com	f	t	2025-05-13 18:26:57.54291+00	avatars/Anastasia.jpg		
+6	pbkdf2_sha256$870000$1oQ9zpXpqQYAh30DVhxYmU$8TbzpmS93OyC8oweqHFD+GoY6hp03E6dmzKMWCRXt7A=	2025-05-13 19:12:44.261991+00	f	Olivia			Olivia@example.com	f	t	2025-05-13 19:12:43.91649+00	avatars/Olivia.jpg		
+7	pbkdf2_sha256$870000$6FsxtLpVUF9OVjC2onMh4L$+wXUKaA4SwU8YeGSodO9wvcPXiKRCTxixUe39vt+Tzg=	2025-05-13 19:16:57.505091+00	f	Georgiy			Georgiy@example.com	f	t	2025-05-13 19:16:57.14394+00	avatars/Georgiy.jpg		
+8	pbkdf2_sha256$870000$8vk2vLZ4Wrrdduf5p2JPup$IQLp/lkU/FtykKQDyYMpTfKQN01OU4oSkXDfb4zJBPs=	2025-05-13 19:21:01.118593+00	f	Anna			Anna@example.com	f	t	2025-05-13 19:21:00.760056+00	avatars/Anna.jpg		
+9	pbkdf2_sha256$870000$ubBlUpUATrMDKThjwcMX5e$+3rpvshHq7zxiVRz3XAkUIibGVA+4qOiM6SGzocviKw=	2025-05-13 19:28:08.388635+00	f	Edvard			Edvard@example.com	f	t	2025-05-13 19:28:08.032661+00	avatars/Edward.jpg		
+11	pbkdf2_sha256$870000$xBmH1BHSGy1GaGvnPznI6I$+AxnJ5rwhE4qvFFDkFKs71ueFBJYqI05w613pd8e+FE=	2025-05-13 19:34:41.102377+00	f	Goldy			Goldy@example.com	f	t	2025-05-13 19:34:40.753214+00	avatars/Goldy.jpg		
+12	pbkdf2_sha256$870000$YCexYm5g20mEcNloSeGhOG$vz36pMIaKkeKCCY5et3bB+c0KQqsEcv2Bgaaw4mIBf8=	2025-05-13 19:38:23.973642+00	f	Hovard			hovard@example.com	f	t	2025-05-13 19:38:23.616382+00	avatars/Hovard.jpg		
+13	pbkdf2_sha256$870000$9z31saS3htG247kUZxrS0x$udvaSdzVH/GrBF89oI9nt4XdMKu/taIudagNlvVmhms=	2025-05-13 19:41:34.9499+00	f	Isabelle			Isabelle@examle.com	f	t	2025-05-13 19:41:34.592902+00	avatars/Isabelle.jpg		
+10	pbkdf2_sha256$870000$KeNBB6SmSjQavSxCCueFKe$yuPNNel2j6dUWhUn9MlBDztVbZvAiYw5X8FcZrUN5MM=	2025-05-13 19:46:56.544851+00	f	Emilia			Emilia@example.com	f	t	2025-05-13 19:31:52.646392+00	avatars/Emilia.jpg		
+15	pbkdf2_sha256$870000$5vur68jCv0xtDAtDl7m9Ce$aMMxDCBDj4iGOKWY+Ugrx1LxoEBpELlS9oUT7JW89gM=	2025-05-13 19:49:24.153376+00	f	Jone			jone@example.com	f	t	2025-05-13 19:49:23.777297+00	avatars/Jone.jpg		
+16	pbkdf2_sha256$870000$pwuip3MG3FicNyEeJN0O6h$pRXLLPITNVdCn+NP5YAMfcDmblgO5dYakJBBh3nw8N4=	2025-05-13 19:51:49.328988+00	f	Julia			julia@example.com	f	t	2025-05-13 19:51:48.972522+00	avatars/Julia.jpg		
+3	pbkdf2_sha256$870000$UuDkoY1Z4LHFl3YTUZQKWC$ZTFu023RhGOpcDvuiH5iqZIO60QP7vKF92Weq3m1uDs=	2025-05-13 04:37:03.487383+00	f	Helena			afzhuk@gmail.com	f	t	2025-05-13 04:37:03.081226+00	avatars/Слой_0.png		
+5	pbkdf2_sha256$870000$iTw9MsSWVqauBSnNOiimS8$ER1w3qarJiDmzFRFG/9M0j6eWDBoF9nBpJl8jGm4LD4=	2025-05-13 18:34:17.832666+00	f	Victor			Victor@example.com	f	t	2025-05-13 18:34:17.463948+00	avatars/Viktor.jpg		
+17	pbkdf2_sha256$870000$xHhQn0mIC74C2kkrKT4fBZ$7Pg5UIMRakQLbttOeqaWJqvo4coaGm6ckzKGTgDV/6g=	2025-05-13 19:55:22.615325+00	f	Madlen			madlrn@example.com	f	t	2025-05-13 19:55:22.260352+00	avatars/Madlen.jpg		
+18	pbkdf2_sha256$870000$iMEwtBFkPe03Gt41aUHeab$Xp/OYNES3cCJRKD2JjruOC8lwyIjHyTttU+qMl+8ezE=	2025-05-13 19:58:48.935428+00	f	Mark			mark@example.com	f	t	2025-05-13 19:58:48.598927+00	avatars/Mark.jpg		
+19	pbkdf2_sha256$870000$kuM9hQgaxTrIiAXuP1nT9L$vO9bkMt29AEJKT6KHbQsGqTYSQL9uxwIZEL1gPyiY8M=	2025-05-13 20:01:43.795792+00	f	Melony			melony@example.com	f	t	2025-05-13 20:01:43.453251+00	avatars/Melony.jpg		
+2	pbkdf2_sha256$870000$4A95kPIGzDlwB6DIrQwOlf$prnDVdlBHgrM5p2MXZojJRso1HLMs8knsLlof2C3Xmg=	2025-05-13 20:09:07.804734+00	f	Anatoliy			mikhail@example.com	f	t	2025-05-08 18:50:49.394431+00	avatars/_brunette_man_2_Le4NR1P.jpg		
+14	pbkdf2_sha256$870000$wLK9cBNManDkvxqOpCU4mr$C+YjHpK8AQzJrdWFKqE9aYWorsaB9ebTSS4G9nRoaJs=	2025-05-13 23:25:27.330563+00	f	Jobs			Jobs@example.com	f	t	2025-05-13 19:44:48.363616+00	avatars/Jobs.jpg		
+\.
+
+
+--
+-- Data for Name: users_customuser_groups; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users_customuser_groups (id, customuser_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users_customuser_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users_customuser_user_permissions (id, customuser_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users_profile; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users_profile (id, user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users_userprofile; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users_userprofile (id, user_id) FROM stdin;
+1	1
+3	3
+5	5
+4	4
+6	6
+7	7
+8	8
+9	9
+11	11
+12	12
+13	13
+10	10
+15	15
+16	16
+17	17
+18	18
+19	19
+2	2
+14	14
+\.
+
+
+--
+-- Name: account_emailaddress_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.account_emailaddress_id_seq', 1, false);
+
+
+--
+-- Name: account_emailconfirmation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.account_emailconfirmation_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 68, true);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 17, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 46, true);
+
+
+--
+-- Name: django_site_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
+
+
+--
+-- Name: posts_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.posts_comment_id_seq', 12, true);
+
+
+--
+-- Name: posts_post_dislikes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.posts_post_dislikes_id_seq', 13, true);
+
+
+--
+-- Name: posts_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.posts_post_id_seq', 27, true);
+
+
+--
+-- Name: posts_post_likes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.posts_post_likes_id_seq', 38, true);
+
+
+--
+-- Name: socialaccount_socialaccount_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.socialaccount_socialaccount_id_seq', 1, false);
+
+
+--
+-- Name: socialaccount_socialapp_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.socialaccount_socialapp_id_seq', 1, false);
+
+
+--
+-- Name: socialaccount_socialapp_sites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.socialaccount_socialapp_sites_id_seq', 1, false);
+
+
+--
+-- Name: socialaccount_socialtoken_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.socialaccount_socialtoken_id_seq', 1, false);
+
+
+--
+-- Name: subscriptions_subscription_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.subscriptions_subscription_id_seq', 1, false);
+
+
+--
+-- Name: users_customuser_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_customuser_groups_id_seq', 1, false);
+
+
+--
+-- Name: users_customuser_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_customuser_id_seq', 19, true);
+
+
+--
+-- Name: users_customuser_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_customuser_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: users_profile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_profile_id_seq', 1, false);
+
+
+--
+-- Name: users_userprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_userprofile_id_seq', 19, true);
+
+
+--
+-- Name: account_emailaddress account_emailaddress_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT account_emailaddress_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: account_emailaddress account_emailaddress_user_id_email_987c8728_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT account_emailaddress_user_id_email_987c8728_uniq UNIQUE (user_id, email);
+
+
+--
+-- Name: account_emailconfirmation account_emailconfirmation_key_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT account_emailconfirmation_key_key UNIQUE (key);
+
+
+--
+-- Name: account_emailconfirmation account_emailconfirmation_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT account_emailconfirmation_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: django_site django_site_domain_a2e37b91_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT django_site_domain_a2e37b91_uniq UNIQUE (domain);
+
+
+--
+-- Name: django_site django_site_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT django_site_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts_comment posts_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_comment_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts_post_dislikes posts_post_dislikes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_dislikes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts_post_dislikes posts_post_dislikes_post_id_customuser_id_83552638_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_dislikes_post_id_customuser_id_83552638_uniq UNIQUE (post_id, customuser_id);
+
+
+--
+-- Name: posts_post_likes posts_post_likes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_likes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts_post_likes posts_post_likes_post_id_customuser_id_0fe642f9_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_likes_post_id_customuser_id_0fe642f9_uniq UNIQUE (post_id, customuser_id);
+
+
+--
+-- Name: posts_post posts_post_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts_post posts_post_slug_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_slug_key UNIQUE (slug);
+
+
+--
+-- Name: socialaccount_socialaccount socialaccount_socialaccount_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_socialaccount_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: socialaccount_socialaccount socialaccount_socialaccount_provider_uid_fc810c6e_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_socialaccount_provider_uid_fc810c6e_uniq UNIQUE (provider, uid);
+
+
+--
+-- Name: socialaccount_socialapp_sites socialaccount_socialapp__socialapp_id_site_id_71a9a768_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_socialapp__socialapp_id_site_id_71a9a768_uniq UNIQUE (socialapp_id, site_id);
+
+
+--
+-- Name: socialaccount_socialapp socialaccount_socialapp_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_socialapp_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: socialaccount_socialapp_sites socialaccount_socialapp_sites_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_socialapp_sites_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: socialaccount_socialtoken socialaccount_socialtoken_app_id_account_id_fca4e0ac_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_socialtoken_app_id_account_id_fca4e0ac_uniq UNIQUE (app_id, account_id);
+
+
+--
+-- Name: socialaccount_socialtoken socialaccount_socialtoken_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_socialtoken_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: subscriptions_subscription subscriptions_subscription_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT subscriptions_subscription_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: subscriptions_subscription unique_subscription; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT unique_subscription UNIQUE (subscriber_id, author_id);
+
+
+--
+-- Name: users_customuser_groups users_customuser_groups_customuser_id_group_id_76b619e3_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_customuser_groups_customuser_id_group_id_76b619e3_uniq UNIQUE (customuser_id, group_id);
+
+
+--
+-- Name: users_customuser_groups users_customuser_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_customuser_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_customuser users_customuser_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_customuser_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_customuser_user_permissions users_customuser_user_pe_customuser_id_permission_7a7debf6_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_customuser_user_pe_customuser_id_permission_7a7debf6_uniq UNIQUE (customuser_id, permission_id);
+
+
+--
+-- Name: users_customuser_user_permissions users_customuser_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_customuser_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_customuser users_customuser_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_customuser_username_key UNIQUE (username);
+
+
+--
+-- Name: users_profile users_profile_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_profile_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_profile users_profile_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_profile_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: users_userprofile users_userprofile_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_userprofile_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_userprofile users_userprofile_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_userprofile_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: account_emailaddress_email_03be32b2; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: account_emailaddress_email_03be32b2_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: account_emailaddress_user_id_2c513194; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: account_emailconfirmation_email_address_id_5b7f8c58; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: account_emailconfirmation_key_f43612bd_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: django_site_domain_a2e37b91_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: posts_comment_author_id_795e4d12; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: posts_comment_post_id_e81436d7; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: posts_post_author_id_fe5487bf; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: posts_post_dislikes_customuser_id_2b145f53; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: posts_post_dislikes_post_id_0b9b40b1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: posts_post_likes_customuser_id_3d64be90; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: posts_post_likes_post_id_7f646a71; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: posts_post_slug_6e9097e5_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: socialaccount_socialaccount_user_id_8146e70c; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: socialaccount_socialapp_sites_site_id_2579dee5; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: socialaccount_socialapp_sites_socialapp_id_97fb6e7d; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: socialaccount_socialtoken_account_id_951f210e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: socialaccount_socialtoken_app_id_636a42d7; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: subscriptions_subscription_author_id_8dbd9ee3; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: subscriptions_subscription_subscriber_id_f45fd3fa; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: unique_primary_email; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: unique_verified_email; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: users_customuser_groups_customuser_id_958147bf; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: users_customuser_groups_group_id_01390b14; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: users_customuser_user_permissions_customuser_id_5771478b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: users_customuser_user_permissions_permission_id_baaa2f74; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: users_customuser_username_80452fdf_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Name: account_emailaddress account_emailaddress_user_id_2c513194_fk_users_customuser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT account_emailaddress_user_id_2c513194_fk_users_customuser_id FOREIGN KEY (user_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: account_emailconfirmation account_emailconfirm_email_address_id_5b7f8c58_fk_account_e; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT account_emailconfirm_email_address_id_5b7f8c58_fk_account_e FOREIGN KEY (email_address_id) REFERENCES public.account_emailaddress(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_users_customuser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_users_customuser_id FOREIGN KEY (user_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: posts_comment posts_comment_author_id_795e4d12_fk_users_customuser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_comment_author_id_795e4d12_fk_users_customuser_id FOREIGN KEY (author_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: posts_comment posts_comment_post_id_e81436d7_fk_posts_post_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_comment_post_id_e81436d7_fk_posts_post_id FOREIGN KEY (post_id) REFERENCES public.posts_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: posts_post posts_post_author_id_fe5487bf_fk_users_customuser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_author_id_fe5487bf_fk_users_customuser_id FOREIGN KEY (author_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: posts_post_dislikes posts_post_dislikes_customuser_id_2b145f53_fk_users_cus; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_dislikes_customuser_id_2b145f53_fk_users_cus FOREIGN KEY (customuser_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: posts_post_dislikes posts_post_dislikes_post_id_0b9b40b1_fk_posts_post_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_dislikes_post_id_0b9b40b1_fk_posts_post_id FOREIGN KEY (post_id) REFERENCES public.posts_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: posts_post_likes posts_post_likes_customuser_id_3d64be90_fk_users_customuser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_likes_customuser_id_3d64be90_fk_users_customuser_id FOREIGN KEY (customuser_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: posts_post_likes posts_post_likes_post_id_7f646a71_fk_posts_post_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT posts_post_likes_post_id_7f646a71_fk_posts_post_id FOREIGN KEY (post_id) REFERENCES public.posts_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: socialaccount_socialtoken socialaccount_social_account_id_951f210e_fk_socialacc; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_social_account_id_951f210e_fk_socialacc FOREIGN KEY (account_id) REFERENCES public.socialaccount_socialaccount(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: socialaccount_socialtoken socialaccount_social_app_id_636a42d7_fk_socialacc; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_social_app_id_636a42d7_fk_socialacc FOREIGN KEY (app_id) REFERENCES public.socialaccount_socialapp(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: socialaccount_socialapp_sites socialaccount_social_site_id_2579dee5_fk_django_si; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_social_site_id_2579dee5_fk_django_si FOREIGN KEY (site_id) REFERENCES public.django_site(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: socialaccount_socialapp_sites socialaccount_social_socialapp_id_97fb6e7d_fk_socialacc; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_social_socialapp_id_97fb6e7d_fk_socialacc FOREIGN KEY (socialapp_id) REFERENCES public.socialaccount_socialapp(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: socialaccount_socialaccount socialaccount_social_user_id_8146e70c_fk_users_cus; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT socialaccount_social_user_id_8146e70c_fk_users_cus FOREIGN KEY (user_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: subscriptions_subscription subscriptions_subscr_author_id_8dbd9ee3_fk_users_cus; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT subscriptions_subscr_author_id_8dbd9ee3_fk_users_cus FOREIGN KEY (author_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: subscriptions_subscription subscriptions_subscr_subscriber_id_f45fd3fa_fk_users_cus; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT subscriptions_subscr_subscriber_id_f45fd3fa_fk_users_cus FOREIGN KEY (subscriber_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_customuser_groups users_customuser_gro_customuser_id_958147bf_fk_users_cus; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_customuser_gro_customuser_id_958147bf_fk_users_cus FOREIGN KEY (customuser_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_customuser_groups users_customuser_groups_group_id_01390b14_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_customuser_groups_group_id_01390b14_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_customuser_user_permissions users_customuser_use_customuser_id_5771478b_fk_users_cus; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_customuser_use_customuser_id_5771478b_fk_users_cus FOREIGN KEY (customuser_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_customuser_user_permissions users_customuser_use_permission_id_baaa2f74_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_customuser_use_permission_id_baaa2f74_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_profile users_profile_user_id_2112e78d_fk_users_customuser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_profile_user_id_2112e78d_fk_users_customuser_id FOREIGN KEY (user_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_userprofile users_userprofile_user_id_87251ef1_fk_users_customuser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+    ADD CONSTRAINT users_userprofile_user_id_87251ef1_fk_users_customuser_id FOREIGN KEY (user_id) REFERENCES public.users_customuser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

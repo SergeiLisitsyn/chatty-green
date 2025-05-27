@@ -1,0 +1,89 @@
+<!-- Модальное окно "Поделиться" -->
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="shareForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="shareModalLabel">Поделиться постом</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="platform" class="form-label">Выберите платформу:</label>
+            <select class="form-select" id="platform" required>
+              <option value="">Выберите...</option>
+              <option value="email">📧 Email</option>
+              <option value="whatsapp">📱 WhatsApp</option>
+              <option value="telegram">✈️ Telegram</option>
+              <option value="facebook">📘 Facebook</option>
+              <option value="instagram">📸 Instagram</option>
+            </select>
+          </div>
+          <div class="mb-3" id="contactInput"></div>
+          <input type="hidden" id="shareUrl">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Отправить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentPostUrl = "";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.share-button').forEach(button => {
+      button.addEventListener('click', function () {
+        const slug = this.getAttribute('data-slug');
+        const url = `${window.location.origin}/posts/${slug}/`;
+        document.getElementById('shareUrl').value = url;
+        currentPostUrl = url;
+        document.getElementById('platform').value = "";
+        document.getElementById('contactInput').innerHTML = "";
+      });
+    });
+
+    document.getElementById('platform').addEventListener('change', function () {
+      const platform = this.value;
+      const contactInput = document.getElementById('contactInput');
+
+      if (platform === "email") {
+        contactInput.innerHTML = `
+          <label for="email" class="form-label">Email получателя:</label>
+          <input type="email" class="form-control" id="email" required>
+        `;
+      } else if (platform === "whatsapp" || platform === "telegram") {
+        contactInput.innerHTML = `
+          <label for="phone" class="form-label">Номер телефона:</label>
+          <input type="tel" class="form-control" id="phone" required>
+        `;
+      } else {
+        contactInput.innerHTML = "<p class='text-muted'>Ссылка будет открыта в новой вкладке.</p>";
+      }
+    });
+
+    document.getElementById('shareForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const platform = document.getElementById('platform').value;
+      const url = currentPostUrl;
+
+      if (platform === "email") {
+        const email = document.getElementById('email').value;
+        window.location.href = `mailto:${email}?subject=Интересный пост&body=Смотри: ${url}`;
+      } else if (platform === "whatsapp") {
+        const phone = document.getElementById('phone').value.replace(/\D/g, '');
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(url)}`, '_blank');
+      } else if (platform === "telegram") {
+        window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=Интересный пост`, '_blank');
+      } else if (platform === "facebook") {
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+      } else if (platform === "instagram") {
+        alert("Instagram не поддерживает прямой шаринг. Скопируйте ссылку вручную.");
+      }
+
+      bootstrap.Modal.getInstance(document.getElementById('shareModal')).hide();
+    });
+  });
+</script>

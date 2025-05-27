@@ -1,4 +1,13 @@
-{% extends 'base.html' %}
+<!-- users/templates/users/register.html -->
+
+{% extends "base.html" %}
+{% load socialaccount %}  <!-- Добавляем этот тег -->
+{% load static %}  <!-- Добавлено для загрузки тегов статических файлов -->
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/registration.css' %}">
+{% endblock %}
 
 {% block content %}
   <div class="container">
@@ -9,5 +18,17 @@
       {{ form.as_p }}
       <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
     </form>
+
+     <!-- Блок для соц. входа -->
+    <div class="social-login">
+      <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google">
+        <i class="fab fa-google"></i> Быстрая регистрация через Google
+      </a>
+      <!-- Включите другую ссылку для Telegram, если она вам нужна и функция реализована -->
+      <!-- <a href="{% url 'social:begin' 'telegram' %}" class="btn btn-telegram">Вход через Telegram</a> -->
+    </div>
+
+
+
   </div>
 {% endblock %}

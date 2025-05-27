@@ -1,109 +1,112 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% load time_filters %}
+
+
 {% block title %}Главная - Chatty{% endblock %}
 
 {% block content %}
-  <style>
-    body {
-      opacity: 0;
-      transition: opacity 2s ease-in;
-    }
-
-    body.fade-in {
-      opacity: 1;
-    }
-
-    .welcome-message {
-      font-size: 32px;
-      font-weight: bold;
-      color: #007BFF;
-      text-align: center;
-      margin-bottom: 15px;
-      text-shadow: 2px 2px 10px rgba(0, 123, 255, 0.3);
-    }
-
-    .news-title {
-      font-size: 24px;
-      font-weight: bold;
-      color: #007BFF;
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    .post-card {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 15px;
-        border-radius: 12px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-         display: block !important;
-    }
-
-    .post-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-    }
 
 
-    .chat-description {
-      font-family: 'Open Sans', sans-serif;
-      font-size: 18px;
-      font-weight: bold;
-      text-transform: uppercase;
-      text-align: center;
-      color: #333;
-    }
-  </style>
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 
-  <!-- Блок приветствия -->
+<!-- Блок приветствия -->
   <div style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
       <h1 class="welcome-message">
         {% if user.is_authenticated %}
-          {{ user.username }}, добро пожаловать в Chatty Green!
+          {{ user.username|capfirst }}, добро пожаловать в Chatty Green!
         {% else %}
           Добро пожаловать в Chatty Green!
         {% endif %}
       </h1>
-      <p class="chat-description">Лучший чат социальных новостей.</p>
-      <a href="{% url 'posts:post_list' %}">
-        <button type="submit" class="btn btn-primary">Перейти в чат</button>
-      </a>
-  </div>
 
-  <!-- Блок свежих новостей -->
- <div class="container mt-5">
-    <h2 class="news-title">Свежие новости</h2>
-    <div class="list-group">
-        <h3 class="text-success">Загружено {{ latest_posts|length }} новостей</h3>
-        {% for post in latest_posts %}
-        <div class="list-group-item py-3 d-flex gap-3 post-card">
-           <p class="text-warning">📰 Пост: {{ post.title }}</p>
-            <hr>
+    <p class="chat-description">Лучший чат новостей</p>
+    <a href="{% url 'posts:post_list' %}" class="btn btn-primary">Перейти в чат</a>
+</div> <!-- Конец блока приветствия -->
 
-            <div class="flex-shrink-0">
-                {% if post.image %}
-                <img src="{{ post.image.url }}" alt="Превью поста" class="rounded" width="100" height="100" style="object-fit: cover;">
-                {% else %}
-                <img src="{% static 'images/default_post.jpg' %}" alt="Без изображения" class="rounded" width="100" height="100" style="object-fit: cover;">
-                {% endif %}
-            </div>
-            <div class="w-100">
+<!-- Контейнер свежих новостей: ширина такая же, как у приветствия -->
+<div class="scrollable-news-container mt-4">
+    <h2 class="section-title">Свежие новости</h2>
+    {% if latest_posts %}
+      <div class="scrollable-news">
+        <div class="row g-4">
+          {% for post in latest_posts %}
+          <div class="col-md-6 col-lg-4">
+            <div class="card news-card shadow-sm">
+              {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Превью поста" class="card-img-top" style="object-fit: cover; height: 200px;">
+              {% else %}
+                <img src="{% static 'images/default_post.jpg' %}" alt="Без изображения" class="card-img-top" style="object-fit: cover; height: 200px;">
+              {% endif %}
+              <div class="card-body">
                 <a href="{% url 'posts:post_detail' post.slug %}" class="h5 fw-bold text-decoration-none text-dark d-block">
-                    {{ post.title|default:"(Без заголовка)" }}
+                  {{ post.title|default:"(Без заголовка)" }}
                 </a>
-                <p class="text-muted small mb-1">{{ post.created_at|date:"d M Y H:i" }} • {{ post.author.username }}</p>
-                <p class="mb-0">{{ post.text|truncatewords:30 }}</p>
+                <p class="time-info">
+                  {{ post.created_at|ru_timesince }} • {{ post.author.username|capfirst }}
+                </p>
+                <p class="mb-0">
+                  {{ post.text|truncatechars:110 }}…
+                  <a href="{% url 'posts:post_detail' post.slug %}" class="text-primary read-more">Читать далее</a>
+                </p>
+              </div>
             </div>
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-    </div>
+      </div>
+    {% else %}
+      <p class="text-center py-4">Пока нет свежих новостей. Пожалуйста, зайдите позже.</p>
+    {% endif %}
+
+  </div>
 </div>
 
+<!-- Блок рекламы - вне контейнера, смещён вправо -->
+<div class="ad-sidebar"> <!-- Контейнер сбоку -->
+  {% for ad in ads %} <!-- Проходим по всем активным рекламам -->
+    <div class="ad-card {% if forloop.first %}active{% endif %}"> <!-- Первая активная карточка -->
 
+      {% if ad.is_video %} <!-- Проверка: если видео -->
+        <video class="ad-media" autoplay muted loop playsinline>
+          <source src="{{ ad.image.url }}" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      {% elif ad.image %} <!-- Иначе — изображение -->
+        <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="ad-media">
+      {% endif %}
 
-  <script>
-    window.addEventListener('load', function () {
-      document.body.classList.add('fade-in');
-    });
-  </script>
+      <div class="ad-title">{{ ad.title }}</div> <!-- Заголовок рекламы -->
+      <div class="ad-description">{{ ad.description }}</div> <!-- Текст рекламы -->
+      <a href="{{ ad.link }}" target="_blank" class="ad-read-more">Подробнее</a> <!-- Переход по ссылке -->
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  window.addEventListener('load', function () {
+    document.body.classList.add('fade-in');
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const ads = document.querySelectorAll('.ad-card');  // Находим все карточки рекламы
+    let currentIndex = 0;                               // Индекс активной рекламы
+
+    function showAd(index) {
+      ads.forEach((ad, i) => {
+        ad.classList.toggle('active', i === index);    // Показываем только выбранную карточку
+      });
+    }
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % ads.length;  // Цикл по рекламе
+      showAd(currentIndex);                             // Показать следующую рекламу
+    }, 3000);                                          // Интервал 3 секунды
+
+    showAd(currentIndex);                              // Показать первую рекламу при загрузке
+  });
+</script>
+
 {% endblock %}
