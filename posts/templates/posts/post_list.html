@@ -1,6 +1,3 @@
-
-{#--post_list.html--#}
-
 {# posts/templates/posts/post_list.html #}
 
 {% extends 'base.html' %}
@@ -41,10 +38,8 @@
 
     <div class="list-group">
       {% for post in posts %}
-
         <div id="post-{{ post.id }}" class="list-group-item py-3 d-flex gap-3 post-card">
           <!-- Превью изображения -->
-
           <div class="flex-shrink-0">
             {% if post.image %}
               <img src="{{ post.image.url }}" alt="Миниатюра" class="rounded" width="100" height="100" style="object-fit: cover;">
@@ -55,7 +50,6 @@
 
           <div class="w-100">
             <!-- Заголовок поста -->
-
             {% if post.slug %}
               <a href="{% url 'posts:post_detail' post.slug %}" class="h5 fw-bold text-decoration-none text-dark d-block">
                 {{ post.title|default:"(Без заголовка)" }}

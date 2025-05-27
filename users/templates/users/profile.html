@@ -11,7 +11,9 @@
             <img src="{% if profile_user.avatar %}{{ profile_user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
                  alt="Аватар" class="img-thumbnail" width="200">
         </div>
+
         <div class="d-flex flex-column gap-2">
+
             <p><strong>Email:</strong> {{ profile_user.email }}</p>
             <p><strong>О себе:</strong> {{ profile_user.bio|default:"Не указано" }}</p>
 
@@ -29,7 +31,9 @@
                 <a href="{% url 'change_password' %}" class="btn btn-warning">
                     Сменить пароль
                 </a>
+
                 {% endif %}
+
             {% else %}
                 <form class="d-inline" method="post" action="{% url 'subscriptions:toggle' profile_user.username %}">
                     {% csrf_token %}
@@ -47,6 +51,7 @@
 
             <!-- Статистика подписок -->
             <p>
+
                 Подписчиков: <span id="subscribers-count">{{ profile_user.followers.count|default:"0" }}</span>
                 &nbsp;|&nbsp;
                 Подписок: {{ profile_user.subscriptions.count|default:"0" }}

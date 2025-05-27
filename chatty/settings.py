@@ -11,6 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
 # Проверка наличия `.env`
+
 env_path = BASE_DIR / '.env'
 if not env_path.exists():
     print(f"\n⚠️ Внимание: файл .env не найден по пути: {env_path}\n")

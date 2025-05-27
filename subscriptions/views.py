@@ -75,6 +75,7 @@ class SubscriptionToggleView(LoginRequiredMixin, View):
                 'subscribers_count': author.subscribers.count()
             })
         else:
+
             # Для обычного запроса перенаправляем  на профиль
             if next_url:
                 return redirect(next_url)

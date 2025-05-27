@@ -18,6 +18,7 @@ from django.shortcuts import render
 from posts.models import Post
 
 
+
 # Классы для работы с Post
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -160,6 +161,19 @@ class PostDetailViewId(DetailView):
     context_object_name = 'post'
     pk_field = 'pk'
     pk_url_kwarg = 'pk'  # Явное указание параметра URL
+
+
+class FeedView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'posts/feed.html'
+    context_object_name = 'posts'
+    paginate_by = 10 # Количество постов на одной странице
+
+    def get_queryset(self):
+        # Получаем список авторов, на которых подписан текущий пользователь
+        subscribed_authors = Subscription.objects.filter(subscriber=self.request.user).values_list('author', flat=True)
+        # Фильтруем посты только от этих авторов
+        return Post.objects.filter(author__in=subscribed_authors).order_by('-publication_date')
 
 
 class FeedView(LoginRequiredMixin, ListView):

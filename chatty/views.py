@@ -7,6 +7,7 @@ def welcome(request):
     """Отображает страницу приветствия (welcome.html)."""
     return render(request, 'welcome.html')
 
+
 def home(request):
     """Отображает главную страницу."""
     return render(request, 'home.html')
@@ -31,5 +32,6 @@ def search_view(request):
     query = request.GET.get('q')  # Получаем введенный запрос
     results = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query)) if query else None
     return render(request, 'include/search_results.html', {'results': results})
+
 
 
