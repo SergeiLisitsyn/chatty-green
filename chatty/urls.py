@@ -7,8 +7,13 @@ from django.conf.urls.static import static
 from . import views
 from .views import search_view
 from posts.views import home  # импортируем наше представление
+from django.http import HttpResponse
+
+def health_check(request):
+    return HttpResponse("OK", status=200)
 
 urlpatterns = [
+    path('health/', health_check),
     path('admin/', admin.site.urls), #Панель администратора Djan
     path('home/', home, name='home'), # Основная страница
     path('', include('users.urls')),  # ✅ Подключаем маршруты из `users/urls.py` регистрация, вход
