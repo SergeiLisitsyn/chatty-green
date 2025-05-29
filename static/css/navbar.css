@@ -54,27 +54,31 @@
 .navbar .form-control {
     margin-top: auto;
     margin-bottom: auto;
-/* Выпадающее меню под гамбургером */
-.custom-dropdown {
-  background-color: rgba(255, 255, 255, 0.5) !important; /* Белый фон с 50% прозрачностью */
-  border: none;
-  padding: 0;
-  min-width: auto;
-  white-space: normal; /* Перенос текста, если он длинный */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 1100;
-}
+    /* Выпадающее меню под гамбургером */
 
-/* Стили для ссылок в dropdown‑меню */
-.custom-dropdown .dropdown-item {
-  color: #333333;         /* Темно-серый цвет */
-  padding: 8px 12px;
-  font-weight: bold;     /* Делаем текст жирнее */
-}
+    .custom-dropdown {
+        background-color: rgba(255, 255, 255, 0.5) !important; /* Белый фон с 50% прозрачностью */
+        border: none;
+        padding: 0;
+        min-width: auto;
+        white-space: normal; /* Перенос текста, если он длинный */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1100;
+    }
 
-/* При наведении ссылки: белый текст и затемнённый фон */
-.custom-dropdown .dropdown-item:hover,
-.custom-dropdown .dropdown-item:focus {
-  color: white;
-  background-color: rgba(0, 0, 0, 0.2);
+    /* Стили для ссылок в dropdown‑меню */
+
+    .custom-dropdown .dropdown-item {
+        color: #333333; /* Темно-серый цвет */
+        padding: 8px 12px;
+        font-weight: bold; /* Делаем текст жирнее */
+    }
+
+    /* При наведении ссылки: белый текст и затемнённый фон */
+
+    .custom-dropdown .dropdown-item:focus {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
 }
