@@ -17,7 +17,6 @@ from django.utils.timezone import now
 
 User = get_user_model()
 
-User = get_user_model()
 
 class Post(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
@@ -33,7 +32,6 @@ class Post(models.Model):
     is_archived = models.BooleanField(default=False)
     advertisement = models.ForeignKey(Advertisement, on_delete=models.SET_NULL, null=True, blank=True)  # Рекламный блок
 
-    advertisement = models.ForeignKey(Advertisement, on_delete=models.SET_NULL, null=True, blank=True)  # Рекламный блок
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -67,6 +65,7 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['created_at']
+
 
 
 class Advertisement(models.Model):

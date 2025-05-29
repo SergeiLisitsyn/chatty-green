@@ -29,7 +29,6 @@ executing==2.2.0
 filelock==3.18.0
 frozenlist==1.6.0
 gunicorn==23.0.0
-h11==0.16.0
 httpcore==1.0.7
 httpx==0.28.1
 idna==3.10
@@ -61,7 +60,6 @@ pycparser==2.22
 pydantic==1.10.19
 pydantic_core==2.34.1
 pyflakes==3.1.0
-pygame==2.6.0
 Pygments==2.19.1
 pyTelegramBotAPI==4.23.0
 pytest==8.3.5
