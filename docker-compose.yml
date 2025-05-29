@@ -27,7 +27,12 @@ services:
       - db
     env_file:
       - .env
-    command: sh -c "exec psql -h ${PG_HOST} -p ${PG_PORT} -U ${PG_USER} -d ${PG_NAME}"
+    command:  >
+      sh -c "python manage.py migrate &&
+      python manage.py collectstatic --no-input --clear &&
+      gunicorn chatty.wsgi:application --bind 0.0.0.0:10000"
+    ports:
+      - "10000:10000"  # Исправленный порт
     tty: true
 
 
@@ -35,9 +40,9 @@ services:
     image: chatty_green_web:latest      # <-- добавили
     build: .
     container_name: web
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:10000"
     ports:
-      - "8000:8000"
+      - "10000:10000"
     depends_on:
       - db
     env_file:
