@@ -11,7 +11,7 @@ COPY requirements.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 # Скрипты
-#COPY entrypoint.sh wait-for-db.sh ./
+COPY entrypoint.sh wait-for-db.sh ./
 #RUN chmod +x entrypoint.sh wait-for-db.sh
 
 # --- переменная окружения для этапа build ---
@@ -24,7 +24,9 @@ COPY . .
 
 # Если нужно собирать статику, раскомментируй:
 # RUN mkdir -p /static && python manage.py collectstatic --no-input
+EXPOSE 10000
 
+CMD ["./entrypoint.sh"]
 #ENTRYPOINT ["./entrypoint.sh"]
 # Временная замена сложного entrypoint
-CMD ["sh", "-c", "echo 'Контейнер запущен!' && sleep 300"]
+CMD ["sh", "-c", "echo 'Контейнер запущен!'"]
