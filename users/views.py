@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-
+from videopost.models import VideoPost
 from posts.models import Post
 from subscriptions.models import Subscription
 from .models import CustomUser  # если переопределялась модель
@@ -70,11 +70,18 @@ def profile(request, username):
         liked_post_ids = posts_query.filter(likes=request.user).values_list('id', flat=True)
         user_liked_posts = list(liked_post_ids)
 
+    # 👇 Добавляем видео — последние 3 или сколько нужно
+    user_videos = VideoPost.objects.filter(
+        author=profile_user,
+        is_archived=False
+    ).order_by('-publication_date')[:6]
+
     context = {
         'profile_user': profile_user,
         'is_subscribed': is_subscribed,
         'user_posts': user_posts,
-        'user_liked_posts': user_liked_posts
+        'user_liked_posts': user_liked_posts,
+        'user_videos': user_videos,
     }
     return render(request, 'users/profile.html', context)
 

@@ -181,3 +181,104 @@ footer {
     width: 100%;
     margin-top: auto;
 }
+
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  background-color: #333;
+  color: white;
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+  display: none;
+  z-index: 1000;
+}
+.cookie-banner button {
+  margin-left: 10px;
+  padding: 6px 12px;
+  background: #007BFF;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* 🔹 Золотая обводка вокруг аватара */
+.avatar-frame {
+    border: 4px solid #bca739 !important; /* Толщина и цвет */
+    border-radius: 50% !important; /* Делаем рамку круглой */
+    padding: 1px; /* Небольшой отступ внутри */
+}
+
+/* 🔹 Стили для блока "О себе" в edit_profile.html  */
+.card-body {
+    font-family: 'Tilda Sans', sans-serif !important;; /* Устанавливаем шрифт */
+    font-size: 14px !important; /* Размер шрифта */
+    color: #333; /* Цвет текста */
+}
+
+/* 🔹 Стили для заголовка (label) в edit_profile.html */
+.form-label {
+    font-weight: bold; /* Делаем заголовок жирным */
+    font-size: 14px; /* Увеличиваем размер */
+    color: #007bff; /* Синий цвет */
+}
+
+/* 🔹 Стили для поля ввода (textarea) в navbar.html*/
+.form-control {
+    font-size: 12px; /* Размер текста */
+    color: #555; /* Серый оттенок */
+    border-radius: 8px; /* Скругленные углы */
+    padding: 10px; /* Отступы */
+    background-color: #d8d8d8; /* Светлый фон */
+}
+
+/* 🔹 Общие стили текста */
+body {
+    font-family: 'Arial', sans-serif; /* Удобочитаемый шрифт */
+    font-size: 16px; /* Размер */
+    color: #333; /* Темно-серый цвет */
+}
+
+/* 🔹 Заголовок профиля */
+h2 {
+    font-size: 24px; /* Увеличенный размер */
+    font-weight: bold; /* Жирный */
+    color: #007bff; /* Синий цвет */
+}
+
+/* 🔹 Основная информация пользователя */
+p {
+    font-size: 15px; /* Размер шрифта */
+    color: #444; /* Чуть темнее */
+}
+
+/* 🔹 Стили ссылок */
+a {
+    color: #007bff;
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* 🔹 Кнопки */
+.btn-primary, .btn-warning {
+    font-size: 14px; /* Уменьшаем размер */
+    padding: 8px 12px; /* Отступы */
+}
+
+/* 🔹 Карточки */
+.card-header {
+    font-size: 18px; /* Размер заголовков */
+    font-weight: bold;
+    color: #333;
+}
+
+/* 🔹 Текст статей и видео */
+.text-muted {
+    font-size: 14px;
+    color: #666;
+}
+

@@ -1,0 +1,108 @@
+{# videopost/templates/videopost/videopost_list.html #}
+{% extends 'base.html' %}
+{% load static %}
+<script src="{% static 'js/likes.js' %}"></script>
+
+{% load humanize %}
+{% load time_filters %}
+
+{% block title %}Видео посты{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/videopost.css' %}">
+
+<div class="container mt-5">
+  <!-- Заголовок страницы -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Видео посты</h2>
+  </div>
+
+  <!-- Кнопка создания видеопоста -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    {% if user.is_authenticated %}
+      {% if user.is_banned %}
+        <p><strong>Ваш профиль заблокирован!</strong></p>
+        <p><strong>Причина:</strong> {{ request.user.ban_reason }}</p>
+        <p><strong>Срок блокировки до:</strong> {{ request.user.banned_until }}</p>
+      {% else %}
+        <a href="{% url 'videopost:videopost_create' %}" class="btn btn-success">🎥 Новый видеопост</a>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <!-- Список видео -->
+  {% if videopost %}
+    {% include "include/paginator.html" with page=page_obj %}
+
+    <div class="list-group">
+      {% for video in videopost %}
+        <div id="video-{{ video.id }}" class="list-group-item py-3 d-flex gap-3 video-card">
+          <!-- Превью видео -->
+          <div class="flex-shrink-0">
+            <a href="{% url 'videopost:videopost_detail' video.slug %}">
+              {% if video.thumbnail %}
+                <img src="{{ video.thumbnail.url }}" alt="Превью видео" class="rounded" width="100" height="100" style="object-fit: cover;">
+              {% else %}
+                <img src="{% static 'images/default_video.jpg' %}" alt="Заглушка" class="rounded" width="100" height="100" style="object-fit: cover;">
+              {% endif %}
+            </a>
+          </div>
+
+          <div class="w-100">
+            <!-- Заголовок -->
+            <a href="{% url 'videopost:videopost_detail' video.slug %}" class="h5 fw-bold text-decoration-none text-dark d-block">
+              {{ video.title|default:"(Без названия)" }}
+            </a>
+
+            <!-- Описание -->
+            <p class="mb-2 text-muted small">{{ video.description|truncatewords:30 }}</p>
+
+            <!-- Кнопки -->
+
+            <!-- Лайк -->
+            <div class="d-flex justify-content-between text-muted small mt-2">
+              <div class="d-flex gap-3 align-items-center">
+                <span class="like-button" data-slug="{{ video.slug }}" data-type="videopost" title="Нравится">
+                  👍 <span class="like-count">{{ video.likes.count }}</span>
+                </span>
+
+            <!-- Дизлайк -->
+                <span class="dislike-button" data-slug="{{ video.slug }}" data-type="videopost" title="Не нравится">
+                  👎 <span class="dislike-count">{{ video.dislikes.count }}</span>
+                </span>
+
+            <!-- Комментарии -->
+                <a href="{% url 'videopost:videopost_detail' video.slug %}#comments" title="Комментарии">
+                  <img src="{% static 'images/chat_18866235.png' %}" alt="Комментарии" width="16" height="16">
+                </a>
+
+            <!-- Поделиться -->
+                <span class="share-button" data-slug="{{ video.slug }}" data-bs-toggle="modal" data-bs-target="#shareModal" style="cursor: pointer;" title="Поделиться">
+                  <img src="{% static 'images/share_8358780.png' %}" alt="Поделиться" width="16" height="16">
+                </span>
+              </div>
+
+              <div class="video-meta text-muted small" style="font-size: 0.75rem;">
+                {{ video.created_at|ru_timesince }} • {{ video.author.username|capfirst }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% include "include/paginator.html" with page=page_obj %}
+
+  {% else %}
+    <div class="alert alert-info mt-4" role="alert">Пока нет видеопостов. Добавьте первый!</div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+  {% if user.is_authenticated %}
+    <script src="{% static 'js/likes.js' %}"></script>
+
+  {% endif %}
+  {% include 'videopost/share.html' %}
+{% endblock %}

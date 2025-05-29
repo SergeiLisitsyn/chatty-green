@@ -11,6 +11,7 @@ from users import views as users_views
 
 app_name = 'users'
 
+
 urlpatterns = [
 
     path('admin/', admin.site.urls), #Панель администратора Djan
@@ -25,6 +26,7 @@ urlpatterns = [
     path('posts/', include('posts.urls', namespace='posts')),# Маршруты приложения "posts" (управление публикациями)
     path('subscriptions/', include('subscriptions.urls', namespace='subscriptions')),# Маршруты приложения "subscriptions" (подписки пользователей)
     path('search/', search_view, name='search'),  #  Поиск публикаций (функция `search_results`)
+    path('videopost/', include('videopost.urls')),
     path('social-auth/', include('social_django.urls', namespace='social')),
 
 ]

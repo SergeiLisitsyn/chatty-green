@@ -25,4 +25,5 @@ urlpatterns = [
     path('profile/<str:username>/edit/', views.edit_profile, name='edit_profile'),  # Добавлен путь для редактирования профиля
     path("accounts/", include("allauth.urls")),  #  Подключаем авторизацию через email/Google
 
+
 ]

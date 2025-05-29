@@ -1,3 +1,4 @@
+// static/js/subscriptions.js
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Subscription script loaded!');
 

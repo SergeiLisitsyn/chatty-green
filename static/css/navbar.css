@@ -13,7 +13,7 @@
     width: 900px;                  /* Фиксированная ширина поля поиска */
     height: 36px;                  /* Немного меньше контейнера */
     padding: 0 10px;               /* Внутренние отступы для комфорта ввода */
-    font-size: 16px;               /* Размер шрифта */
+    font-size: 12px;               /* Размер шрифта */
     border: 2px solid #ccc;        /* Светло-серая рамка вокруг поля */
     border-radius: 8px;            /* Скругленные углы */
     transition: all 0.3s ease;     /* Плавное изменение стилей при взаимодействии */
@@ -50,6 +50,10 @@
     background-color: #323333 !important;
 }
 
+/* В файле static/css/navbar.css */
+.navbar .form-control {
+    margin-top: auto;
+    margin-bottom: auto;
 /* Выпадающее меню под гамбургером */
 .custom-dropdown {
   background-color: rgba(255, 255, 255, 0.5) !important; /* Белый фон с 50% прозрачностью */

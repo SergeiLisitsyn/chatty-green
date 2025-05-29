@@ -1,10 +1,10 @@
+# posts/models.py
 from django.db import models
 from django.utils.text import slugify
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
-
 
 from ads.models import Advertisement
 
@@ -14,6 +14,8 @@ from unidecode import unidecode
 import uuid
 from django.utils.timezone import now
 
+
+User = get_user_model()
 
 User = get_user_model()
 
@@ -29,6 +31,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
     dislikes = models.ManyToManyField(User, related_name='disliked_posts', blank=True)
     is_archived = models.BooleanField(default=False)
+    advertisement = models.ForeignKey(Advertisement, on_delete=models.SET_NULL, null=True, blank=True)  # Рекламный блок
 
     advertisement = models.ForeignKey(Advertisement, on_delete=models.SET_NULL, null=True, blank=True)  # Рекламный блок
 

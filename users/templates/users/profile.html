@@ -4,88 +4,127 @@
 {% load static %}
 
 {% block content %}
+
 <div class="container mt-4">
-    <h2>Профиль {{ profile_user.username }}</h2>
-    <div class="row">
-        <div class="col-md-3">
-            <img src="{% if profile_user.avatar %}{{ profile_user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
-                 alt="Аватар" class="img-thumbnail" width="200">
-        </div>
+  <h2>Профиль {{ profile_user.username|capfirst }}</h2>
+  <div class="row">
+    <!-- Левая колонка: аватар + основная информация + навигация -->
+    <div class="col-md-3">
+      <img src="{% if profile_user.avatar %}{{ profile_user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
+           alt="Аватар" class="img-thumbnail mb-3" style="width: 100%; height: auto;">
 
-        <div class="d-flex flex-column gap-2">
+      <p><strong>Email:</strong> {{ profile_user.email }}</p>
+      <p><strong>О себе:</strong> {{ profile_user.bio|default:"Не указано" }}</p>
 
-            <p><strong>Email:</strong> {{ profile_user.email }}</p>
-            <p><strong>О себе:</strong> {{ profile_user.bio|default:"Не указано" }}</p>
-
-            {% if request.user == profile_user %}
-                 {% if request.user.is_banned %}
-                  <p><strong>Ваш профиль забаннен</strong></p>
-                  <p><strong>Причина банна</strong> {{request.user.ban_reason}}</p>
-                  <p><strong>Срок банна</strong> {{request.user.banned_until}}</p>
-
-                 {% else %}
-
-                <a href="{% url 'edit_profile' username=profile_user.username %}" class="btn btn-primary">
-                    Редактировать профиль
-                </a>
-                <a href="{% url 'change_password' %}" class="btn btn-warning">
-                    Сменить пароль
-                </a>
-
-                {% endif %}
-
+      {% if request.user == profile_user %}
+        {% if request.user.is_banned %}
+          <p><strong>Ваш профиль забанен</strong></p>
+          <p><strong>Причина:</strong> {{ request.user.ban_reason }}</p>
+          <p><strong>Срок бана:</strong> {{ request.user.banned_until }}</p>
+        {% else %}
+          <a href="{% url 'edit_profile' username=profile_user.username %}" class="btn btn-primary mb-2 w-100">
+            Редактировать профиль
+          </a>
+          <a href="{% url 'change_password' %}" class="btn btn-warning w-100 mb-3">
+            Сменить пароль
+          </a>
+        {% endif %}
+      {% else %}
+        <form class="d-inline w-100 mb-3" method="post" action="{% url 'subscriptions:toggle' profile_user.username %}">
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="btn btn-sm btn-outline-primary subscribe-button d-flex align-items-center justify-content-center"
+            style="width: 150px; height: 32px; border-radius: .375rem;"
+            data-username="{{ profile_user.username }}"
+          >
+            {% if is_subscribed %}
+              <i class="fa-solid fa-user-minus me-1 text-warning"></i> Отписаться
             {% else %}
-                <form class="d-inline" method="post" action="{% url 'subscriptions:toggle' profile_user.username %}">
-                    {% csrf_token %}
-                    <button type="submit"
-                        class="btn subscription-toggle {% if is_subscribed %}btn-outline-secondary{% else %}btn-primary{% endif %}"
-                        data-username="{{ profile_user.username }}">
-                        {% if is_subscribed %}
-                            <i class="fa-solid fa-user-minus me-1"></i>Отписаться
-                        {% else %}
-                            <i class="fa-solid fa-user-plus me-1"></i>Подписаться
-                        {% endif %}
-                    </button>
-                </form>
+              <i class="fa-solid fa-user-plus me-1 text-warning"></i> Подписаться
             {% endif %}
+          </button>
+        </form>
+      {% endif %}
 
-            <!-- Статистика подписок -->
-            <p>
+      <p class="mt-3 mb-1">
+        <strong>Подписчиков:</strong> <span id="subscribers-count">{{ profile_user.followers.count|default:"0" }}</span><br>
+        <strong>Подписок:</strong> {{ profile_user.subscriptions.count|default:"0" }}
+      </p>
 
-                Подписчиков: <span id="subscribers-count">{{ profile_user.followers.count|default:"0" }}</span>
-                &nbsp;|&nbsp;
-                Подписок: {{ profile_user.subscriptions.count|default:"0" }}
-            </p>
-
-
-            <!-- Дополнительно: вывод последних статей пользователя -->
-            <div class="profile-posts mt-4">
-                <h3>Статьи</h3>
-                {% if user_posts %}
-                    {% for post in user_posts %}
-                        <div class="post-preview">
-                            <h4>
-                                <a href="{% url 'posts:post_detail' post.slug %}">{{ post.title }}</a>
-                            </h4>
-                            <p>{{ post.text|truncatechars:150 }}</p>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>Нет опубликованных статей.</p>
-                {% endif %}
-            </div>
-
-            <!-- Навигация к страницам подписок -->
-            <p class="mt-3">
-                <a href="{% url 'subscriptions:feed' %}">Лента</a> |
-                <a href="{% url 'subscriptions:followers' profile_user.username %}">Подписчики</a> |
-                <a href="{% url 'subscriptions:following' profile_user.username %}">Подписки</a>
-            </p>
-        </div>
+      <!-- Навигация подписок -->
+      <p class="mt-2">
+        <a href="{% url 'subscriptions:feed' %}">Лента</a> |
+        <a href="{% url 'subscriptions:followers' profile_user.username %}">Подписчики</a> |
+        <a href="{% url 'subscriptions:following' profile_user.username %}">Подписки</a>
+      </p>
     </div>
+
+    <!-- Правая колонка: карточки Статей и Видео -->
+
+    <div class="col-md-9">
+      <!-- Карточка: Статьи -->
+      <div class="card mb-4" style="height: 300px; overflow: hidden;">
+        <!-- Заголовок остается на месте -->
+        <div class="card-header bg-white" style="position: sticky; top: 0; z-index: 1;">
+          <h5 class="mb-0">Статьи</h5>
+        </div>
+
+        <!-- Только эта часть будет прокручиваться -->
+        <div class="card-body" style="height: 244px; overflow-y: auto;">
+          {% if user_posts %}
+            {% for post in user_posts %}
+              <div class="post-preview mb-3">
+                <h6 class="mb-1">
+                  <a href="{% url 'posts:post_detail' post.slug %}" class="text-decoration-none">
+                    {{ post.title }}
+                  </a>
+                </h6>
+                <p class="text-muted mb-0">{{ post.text|truncatechars:150 }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">Нет опубликованных статей.</p>
+          {% endif %}
+        </div>
+      </div>
+
+<!-- Карточка: Видео -->
+<div class="card mb-4">
+  <div class="card-header" style="position: sticky; top: 0; z-index: 1; background-color: #fff;">
+    <h5 class="mb-0">Видео</h5>
+  </div>
+  <div class="card-body" style="max-height: 260px; overflow-y: auto;">
+    {% if user_videos %}
+      {% for video in user_videos %}
+        <div class="video-preview d-flex align-items-center mb-3">
+          {% if video.thumbnail %}
+            <img src="{{ video.thumbnail.url }}"
+                 alt="Превью"
+                 class="img-fluid me-3"
+                 style="width: 80px; height: auto; object-fit: cover;">
+          {% endif %}
+          <div>
+            <h6 class="mb-1">
+              <a href="{% url 'videopost:videopost_detail' video.slug %}" class="text-decoration-none">
+                {{ video.title }}
+              </a>
+            </h6>
+            <p class="text-muted mb-0">{{ video.description|truncatechars:150 }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-muted">Нет опубликованных видео.</p>
+    {% endif %}
+  </div>
+</div>
+
+    </div>
+  </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'subscriptions/js/subscriptions.js' %}"></script>
+  <script src="{% static 'subscriptions/js/subscriptions.js' %}"></script>
 {% endblock %}

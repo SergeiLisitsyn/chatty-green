@@ -14,9 +14,6 @@ from subscriptions.models import Subscription
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from posts.templatetags import time_filters
 from django.db.models import Q
-from django.shortcuts import render
-from posts.models import Post
-
 
 
 # Классы для работы с Post
@@ -72,7 +69,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    success_url = reverse_lazy('post_list')
+    success_url = reverse_lazy('posts:post_list')
     template_name = 'posts/post_confirm_delete.html'
 
     def test_func(self):
@@ -100,7 +97,8 @@ class PostDetailView(DetailView):
             comment.post = self.object
             comment.author = request.user
             comment.save()
-            return redirect('posts:post_list')
+            return redirect('posts:post_list') # после добавления комментария пользователь перенаправляется на список постов, а не остаётся на том же посте.
+            # return redirect('posts:post_detail', slug=self.object.slug) # после добавления комментария пользователь остается на этой же странице
 
         context = self.get_context_data()
         context['form'] = form
@@ -163,18 +161,6 @@ class PostDetailViewId(DetailView):
     pk_url_kwarg = 'pk'  # Явное указание параметра URL
 
 
-class FeedView(LoginRequiredMixin, ListView):
-    model = Post
-    template_name = 'posts/feed.html'
-    context_object_name = 'posts'
-    paginate_by = 10 # Количество постов на одной странице
-
-    def get_queryset(self):
-        # Получаем список авторов, на которых подписан текущий пользователь
-        subscribed_authors = Subscription.objects.filter(subscriber=self.request.user).values_list('author', flat=True)
-        # Фильтруем посты только от этих авторов
-        return Post.objects.filter(author__in=subscribed_authors).order_by('-publication_date')
-
 
 class FeedView(LoginRequiredMixin, ListView):
     model = Post
@@ -221,4 +207,7 @@ def search_results(request):
     posts = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query), is_archived=False)
 
     return render(request, "posts/search_results.html", {"posts": posts, "query": query})
+
+
+
 

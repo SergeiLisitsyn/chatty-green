@@ -1,4 +1,12 @@
 <!-- templates/include/navbar.html -->
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+
+<nav class="navbar navbar-expand-lg navbar-dark custom-gray align-items-center">
+  <div class="container-fluid d-flex align-items-center justify-content-between" style="padding-right: 30px;">
+    <a class="navbar-brand me-3" href="#">Chatty</a>
+<!-- templates/include/navbar.html -->
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 
@@ -47,63 +55,76 @@
     <!-- 🔍 Поле поиска -->
     <form action="{% url 'search' %}" method="GET" class="d-flex justify-content-center flex-grow-1">
       <div class="input-group" style="max-width: 1200px;">
+    <!-- 🔍 Поле поиска (Размещено по центру между Chatty и Главная) -->
+    <form action="{% url 'search' %}" method="GET" class="d-flex flex-grow-1 justify-content-center">
+      <div class="input-group" style="max-width: 900px;">
         <input type="text" name="q" class="form-control rounded-pill ps-4 text-left"
                placeholder="🔍 Найти пост..." style="height: 32px;">
+    </div>
+</form>
+
+        <!-- Навигация справа -->
+        <ul class="navbar-nav d-flex align-items-center gap-3 ms-auto" style="margin-right: 1cm;">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Главная</a>
+            </li>
+            <li class="nav-item">
+                    <a class="nav-link" href="{% url 'posts:post_list' %}">Лента</a>
+            </li>
+
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'videopost:videopost_list' %}">Видео</a>
+            </li>
+
+            {% if user.is_authenticated %}
+
+                <li class="nav-item d-flex align-items-center">
+                    <img
+                        src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
+                        alt="Аватар"
+                        class="rounded-circle"
+                        width="30"
+                        height="30"
+                        style="object-fit: cover; margin-right: 8px;"
+                    />
+
+                    <a class="nav-link" href="{% url 'profile' username=user.username %}">{{ user.username|capfirst }}</a>
+
+                </li>
+                <li class="nav-item">
+                    <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link text-white">Выход</button>
+                    </form>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Войти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary text-white" href="{% url 'register' %}">Регистрация</a>
+                </li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
-    </form>
+    </nav>
 
-    <!-- Навигация справа -->
-    <ul class="navbar-nav d-flex align-items-center gap-3 ms-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'home' %}">Главная</a>
-      </li>
-      {% if user.is_authenticated %}
-        <li class="nav-item d-flex align-items-center">
-          <img
-            src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
-            alt="Аватар"
-            class="rounded-circle"
-            width="30"
-            height="30"
-            style="object-fit: cover; margin-right: 8px;">
-          <a class="nav-link" href="{% url 'profile' username=user.username %}">{{ user.username }}</a>
-        </li>
-        <li class="nav-item">
-          <form method="POST" action="{% url 'logout' %}" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="nav-link btn btn-link text-white">Выход</button>
-          </form>
-        </li>
-      {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Войти</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link btn btn-primary text-white" href="{% url 'register' %}">Регистрация</a>
-        </li>
-      {% endif %}
-    </ul>
-  </div>
-</nav>
-
- <script>
+<script>
 function showSuggestions(query) {
     const suggestionsList = document.getElementById("suggestions-list");
     suggestionsList.innerHTML = "";
-
     if (query.length < 2) {
-        return; // Показываем подсказки только если длина >= 2
+        return;
     }
-
     fetch(`/search/suggestions/?q=${encodeURIComponent(query)}`)
         .then(response => response.json())
         .then(data => {
             if (!Array.isArray(data)) return;
-
             data.forEach(title => {
                 const item = document.createElement("li");
                 item.className = "list-group-item";
-                // Можно использовать <a>, чтобы клик переходил по ссылке с поиском
                 item.innerHTML = `<a href="/search/?q=${encodeURIComponent(title)}" class="text-dark text-decoration-none">${title}</a>`;
                 suggestionsList.appendChild(item);
             });
@@ -112,16 +133,16 @@ function showSuggestions(query) {
             console.error('Ошибка загрузки подсказок:', error);
         });
 }
+</script>
 
-     <script>
+<script>
 function logoutFunction(e) {
     e.preventDefault();
     var logoutForm = document.getElementById("logout-form");
     if (logoutForm) {
-       logoutForm.submit();
+        logoutForm.submit();
     } else {
-       console.error("Logout form not found!");
+        console.error("Logout form not found!");
     }
 }
 </script>
-
