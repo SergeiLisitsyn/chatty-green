@@ -14,15 +14,24 @@ python manage.py migrate --no-input
 echo "=== Сбор статики ==="
 python manage.py collectstatic --no-input --clear
 
-# Проверка работы приложения перед запуском
 echo "Проверка Django..."
 python manage.py check
 
+# Временный запуск Gunicorn без exec + сохранение логов
 echo "=== Запуск Gunicorn ==="
-exec gunicorn your_project.wsgi:application \
+gunicorn chatty.wsgi:application \
     --bind 0.0.0.0:10000 \
     --workers 2 \
     --timeout 120 \
-    --access-logfile - \
-    --error-logfile - \
-    --log-level debug
+    --access-logfile /app/gunicorn-access.log \
+    --error-logfile /app/gunicorn-error.log \
+    --log-level debug &
+
+# Сохраняем PID Gunicorn для возможного завершения
+GUNICORN_PID=$!
+
+echo "=== Запуск Gunicorn завершен (PID $GUNICORN_PID) ==="
+
+# Удержание контейнера активным для диагностики
+echo "Контейнер активен для диагностики. Используйте Shell для отладки."
+tail -f /dev/null
