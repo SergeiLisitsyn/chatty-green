@@ -20,29 +20,17 @@ services:
       timeout: 5s
       retries: 10
 
-  psql:
-    image: postgres:13-alpine
-    container_name: psql
-    depends_on:
-      - db
-    env_file:
-      - .env
-    command:  >
-      sh -c "python manage.py migrate &&
-      python manage.py collectstatic --no-input --clear &&
-      gunicorn chatty.wsgi:application --bind 0.0.0.0:10000"
-    ports:
-      - "10000:10000"  # Исправленный порт
-    tty: true
-
 
   web:
     image: chatty_green_web:latest      # <-- добавили
     build: .
     container_name: web
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:10000"
+    command: >
+      sh -c "python manage.py migrate &&
+      python manage.py collectstatic --no-input --clear &&
+      gunicorn chatty.wsgi:application --bind 0.0.0.0:10000"
     ports:
-      - "10000:10000"
+      - "10000:10000"  # Исправленный порт
     depends_on:
       - db
     env_file:
@@ -89,3 +77,4 @@ volumes:
   postgres_data:
   media_volume:
 
+["sh", "-c", "echo 'Контейнер запущен!'"]
