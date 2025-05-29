@@ -1,84 +1,148 @@
-/* Контейнер поиска */
-.search-container {
-    position: relative;             /* Чтобы дочерний абсолютный элемент позиционировался внутри этого контейнера */
-    display: flex;                  /* Используем flex для удобного центрирования и выравнивания */
-    justify-content: center;        /* Горизонтальное центрирование содержимого */
-    align-items: center;            /* Вертикальное выравнивание по центру */
-    width: auto;                    /* Контейнер занимает всю доступную ширину */
-    height: 40px;                   /* Фиксированная высота — примерно высота navbar */
-}
+/* ===== ОСНОВНЫЕ СТИЛИ НАВБАРА ===== */
 
-/* Поле ввода */
-.search-input {
-    width: 900px;                  /* Фиксированная ширина поля поиска */
-    height: 36px;                  /* Немного меньше контейнера */
-    padding: 0 10px;               /* Внутренние отступы для комфорта ввода */
-    font-size: 12px;               /* Размер шрифта */
-    border: 2px solid #ccc;        /* Светло-серая рамка вокруг поля */
-    border-radius: 8px;            /* Скругленные углы */
-    transition: all 0.3s ease;     /* Плавное изменение стилей при взаимодействии */
-    box-sizing: border-box;        /* чтобы padding учитывался внутри height */
-}
-
-/* Обводка при фокусе */
-.search-input:focus {
-    outline: none;                 /* Убираем стандартную обводку браузера */
-    border-color: #007bff;         /* Смена цвета рамки на синий при фокусе */
-    background-color: #f8f9fa;     /* Светлый фон для подсветки */
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* Легкая синяя тень вокруг поля */
-}
-
-/* Список подсказок */
-#suggestions-list {
-    position: absolute;            /* Абсолютное позиционирование относительно .search-container */
-    top: 100%;                    /* Позиционируем сразу под полем ввода */
-    left: 0;                      /* Прижимаем к левому краю контейнера */
-    width: 100%;                  /* Ширина совпадает с шириной контейнера */
-    max-height: 200px;            /* Максимальная высота списка, чтобы не занимал слишком много места */
-    overflow-y: auto;             /* Добавляем вертикальную прокрутку при переполнении */
-    background-color: white;      /* Белый фон для читаемости */
-    border: 1px solid #ccc;       /* Тонкая светлая рамка вокруг списка */
-    border-radius: 0 0 8px 8px;   /* Скругляем только нижние углы */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для отделения от остального контента */
-    margin: 0;                    /* Убираем внешние отступы */
-    padding: 0;                   /* Убираем внутренние отступы */
-    list-style-type: none;        /* Убираем маркеры списка */
-    z-index: 1000;                /* Чтобы подсказки были поверх других элементов */
-}
-
+/* Класс для основного фона навбара */
 .custom-gray {
-    background-color: #323333 !important;
+    background-color: #323333 !important; /* Темно-серый цвет фона */
+    min-height: 56px; /* Минимальная высота навбара */
 }
 
-/* В файле static/css/navbar.css */
-.navbar .form-control {
-    margin-top: auto;
-    margin-bottom: auto;
-    /* Выпадающее меню под гамбургером */
+/* Базовые стили для навбара Bootstrap */
+.navbar {
+    padding-top: 0;    /* Убираем верхний отступ */
+    padding-bottom: 0; /* Убираем нижний отступ */
+}
 
-    .custom-dropdown {
-        background-color: rgba(255, 255, 255, 0.5) !important; /* Белый фон с 50% прозрачностью */
-        border: none;
-        padding: 0;
-        min-width: auto;
-        white-space: normal; /* Перенос текста, если он длинный */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        z-index: 1100;
-    }
+/* ===== СТИЛИ ПОИСКОВОЙ ФОРМЫ ===== */
 
-    /* Стили для ссылок в dropdown‑меню */
+/* Контейнер для формы поиска */
+.search-form {
+    flex-grow: 1;          /* Занимает все доступное пространство */
+    display: flex;         /* Flex-контейнер */
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: center;   /* Центрирование по вертикали */
+    height: 100%;          /* Занимает всю высоту родителя */
+    margin: 0 15px;        /* Отступы слева и справа */
+}
 
-    .custom-dropdown .dropdown-item {
-        color: #333333; /* Темно-серый цвет */
-        padding: 8px 12px;
-        font-weight: bold; /* Делаем текст жирнее */
-    }
+/* Контейнер для input поля поиска */
+.search-input-container {
+    max-width: 900px; /* Максимальная ширина поля */
+    width: 100%;      /* Занимает всю доступную ширину */
+    display: flex;    /* Flex-контейнер */
+    align-items: center; /* Выравнивание по центру */
+}
 
-    /* При наведении ссылки: белый текст и затемнённый фон */
+/* Стили для самого input поля */
+.search-input {
+    width: 100%;           /* Занимает всю ширину контейнера */
+    height: 32px;          /* Фиксированная высота */
+    padding: 0 15px 0 35px; /* Отступы: верх, право, низ, лево */
+    font-size: 14px;       /* Размер шрифта */
+    border: none;          /* Убираем границу */
+    border-radius: 16px;   /* Скругленные углы */
+    background-color: #4a4b4b; /* Цвет фона */
+    color: white;         /* Цвет текста */
+    transition: all 0.3s ease; /* Плавные анимации */
+    box-sizing: border-box; /* Учет padding в ширине */
+}
 
-    .custom-dropdown .dropdown-item:focus {
-        color: white;
-        background-color: rgba(0, 0, 0, 0.2);
-    }
+/* Стили для placeholder текста */
+.search-input::placeholder {
+    color: #b0b0b0; /* Серый цвет placeholder */
+}
 
+/* Стили для активного состояния поля (при фокусе) */
+.search-input:focus {
+    outline: none; /* Убираем стандартный outline */
+    background-color: #5a5b5b; /* Изменяем цвет фона */
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2); /* Тень вокруг */
+}
+
+/* ===== СТИЛИ ДЛЯ ВЫПАДАЮЩЕГО МЕНЮ ===== */
+
+/* Основные стили dropdown меню */
+.custom-dropdown {
+    background-color: rgba(255, 255, 255, 0.5) !important; /* Полупрозрачный белый фон */
+    border: none;          /* Убираем границу */
+    padding: 0;            /* Убираем отступы */
+    min-width: auto;       /* Автоматическая ширина */
+    white-space: normal;   /* Разрешаем перенос текста */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень */
+    z-index: 1100;         /* Высокий z-index для перекрытия */
+}
+
+/* Стили для элементов меню */
+.custom-dropdown .dropdown-item {
+    color: #333333;       /* Темный цвет текста */
+    padding: 8px 12px;    /* Отступы внутри элементов */
+    font-weight: bold;    /* Жирный шрифт */
+}
+
+/* Стили для активных/наведенных элементов */
+.custom-dropdown .dropdown-item:focus,
+.custom-dropdown .dropdown-item:hover {
+    color: white;                   /* Белый текст */
+    background-color: rgba(0, 0, 0, 0.2); /* Полупрозрачный черный фон */
+}
+
+/* ===== СТИЛИ ДЛЯ АВАТАРА ===== */
+
+/* Круглый аватар пользователя */
+.navbar .rounded-circle {
+    object-fit: cover;    /* Обрезка изображения по контейнеру */
+    margin-right: 8px;    /* Отступ справа */
+    border: 1px solid #bca739 !important; /* Толщина и цвет */
+    border-radius: 50% !important; /* Делаем рамку круглой */
+    padding: 1px; /* Небольшой отступ внутри */
+}
+
+
+/* ===== ОБЩИЕ СТИЛИ НАВБАРА ===== */
+
+/* Контейнер для навигационных ссылок */
+.navbar-nav {
+    align-items: center; /* Выравнивание по центру */
+}
+
+/* Стили для навигационных ссылок */
+.nav-link {
+    padding: 8px 12px; /* Отступы внутри ссылок */
+}
+
+/* ===== СТИЛИ ДЛЯ СПИСКА ПОДСКАЗОК ПОИСКА ===== */
+
+/* Контейнер для подсказок поиска */
+#suggestions-list {
+    position: absolute;   /* Абсолютное позиционирование */
+    top: 100%;           /* Позиция под полем поиска */
+    left: 0;             /* Прижимаем к левому краю */
+    width: 100%;         /* Ширина как у поля поиска */
+    max-height: 200px;   /* Максимальная высота */
+    overflow-y: auto;    /* Скролл при переполнении */
+    background-color: #b1b3b3; /* Цвет фона */
+    border: none;        /* Без границы */
+    border-radius: 0 0 8px 8px; /* Скругление нижних углов */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Тень */
+    margin: 0;           /* Убираем отступы */
+    padding: 0;          /* Убираем отступы */
+    list-style-type: none; /* Убираем маркеры списка */
+    z-index: 1000;       /* Для перекрытия других элементов */
+}
+
+/* Элементы списка подсказок */
+#suggestions-list li {
+    padding: 8px 15px;       /* Отступы внутри элементов */
+    border-bottom: 1px solid #5a5b5b; /* Разделительная линия */
+}
+
+/* Ссылки в подсказках */
+#suggestions-list li a {
+    color: #ffffff;          /* Светло-серый цвет текста */
+    text-decoration: none;   /* Убираем подчеркивание */
+    display: block;          /* Блочное отображение */
+}
+
+/* Состояние при наведении на подсказку */
+#suggestions-list li:hover {
+    background-color: #5a5b5b; /* Изменение фона */
 }
