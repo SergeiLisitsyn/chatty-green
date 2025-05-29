@@ -201,6 +201,7 @@ LOGOUT_REDIRECT_URL = '/posts/'
 
 LOGIN_URL = '/accounts/login/'  # Страница входа
 
+PORT = os.environ.get('PORT', '10000')
 
 
 
