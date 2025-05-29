@@ -77,4 +77,3 @@ volumes:
   postgres_data:
   media_volume:
 
-["sh", "-c", "echo 'Контейнер запущен!'"]
