@@ -1,1 +1,0 @@
-web: gunicorn chatty.wsgi --config gunicorn.conf.py

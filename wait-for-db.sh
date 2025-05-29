@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/bin/sh
+set -e
 
-# Ждем, пока база данных станет доступна.
-# Предполагается, что заданы переменные окружения PG_HOST и PG_PORT.
-while ! nc -z "$PG_HOST" "$PG_PORT"; do
-  echo "Waiting for database connection at $PG_HOST:$PG_PORT..."
+host="${DATABASE_HOST:-db}"
+port="${DATABASE_PORT:-5432}"
+
+echo "Ожидание PostgreSQL ($host:$port)..."
+until nc -z "$host" "$port"; do
   sleep 1
 done
 
-echo "Database is up - continuing."
+echo "PostgreSQL доступен"
