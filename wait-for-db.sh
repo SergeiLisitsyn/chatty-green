@@ -1,9 +1,11 @@
 #!/bin/sh
-set -e
-
+set -ex   # Включить подробное логирование и выход при ошибке
+echo "Начало wait-for-db.sh"
+echo "DATABASE_URL: $DATABASE_URL"
 # Извлекаем параметры из DATABASE_URL
 DB_HOST=$(echo "$DATABASE_URL" | sed -e 's/.*@\([^:]*\):.*/\1/')
 DB_PORT=$(echo "$DATABASE_URL" | sed -e 's/.*:\([0-9]*\)\/.*/\1/')
+echo "Проверка подключения к $DB_HOST:$DB_PORT"
 
 TIMEOUT=60
 COUNT=0
