@@ -23,7 +23,7 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 # Скрипты
 COPY entrypoint.sh wait-for-db.sh ./
-#RUN chmod +x entrypoint.sh wait-for-db.sh
+RUN chmod +x entrypoint.sh wait-for-db.sh
 
 # --- переменная окружения для этапа build ---
 ENV RUN_MIGRATIONS="false" \
