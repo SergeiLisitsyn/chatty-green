@@ -40,6 +40,12 @@
               {{ form.email|add_class:"form-control bg-light" }}
             </div>
 
+            <div class="mb-3 form-check">
+              {{ form.display_email|add_class:"form-check-input" }}
+              {{ form.display_email.label_tag }}
+            </div>
+
+
             <div class="mb-3">
               <label class="form-label">Контакты</label>
               {{ form.contacts|add_class:"form-control bg-light"|attr:"placeholder:+7 999 123 45 67" }}
