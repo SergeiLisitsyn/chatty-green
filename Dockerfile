@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y \
     iputils-ping \
     curl \
     vim-tiny \
+    netcat-openbsd \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Python-зависимости
