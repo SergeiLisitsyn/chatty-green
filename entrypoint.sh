@@ -20,7 +20,7 @@ python manage.py check
 
 # Временный запуск Gunicorn без exec + сохранение логов
 echo "=== Запуск Gunicorn ==="
-gunicorn chatty.wsgi:application \
+exec gunicorn chatty.wsgi:application \
     --bind 0.0.0.0:10000 \
     --workers 2 \
     --timeout 120 \
