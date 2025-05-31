@@ -5,7 +5,8 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark custom-gray align-items-center">
   <div class="container-fluid d-flex align-items-center justify-content-between" style="padding-right: 40px;">
-    <a class="navbar-brand me-3" href="#">Chatty</a>
+   <a class="navbar-brand me-3" href="{% if user.is_authenticated %}{% url 'profile' username=user.username %}{% else %}{% url 'home' %}{% endif %}">Chatty</a>
+
 
     <!-- Левая часть: логотип и кнопка-гамбургер с dropdown-меню -->
     <div class="d-flex align-items-center">

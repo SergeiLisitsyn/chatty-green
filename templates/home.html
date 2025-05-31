@@ -9,18 +9,29 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 <!-- Блок приветствия -->
-  <div style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
-      <h1 class="welcome-message">
-        {% if user.is_authenticated %}
-          {{ user.username|capfirst }}, добро пожаловать в Chatty Green!
-        {% else %}
-          Добро пожаловать в Chatty Green!
-        {% endif %}
-      </h1>
+<div style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
+  {% if user.is_authenticated %}
+    <h1 class="welcome-message">
+      {{ user.username|capfirst }}, добро пожаловать в Chatty Green!
+    </h1>
+  {% else %}
+    <h1 class="welcome-message">
+      Добро пожаловать в Chatty Green!
+    </h1>
+    <p class="additional-text">
 
-    <p class="chat-description">Лучший чат новостей</p>
-    <a href="{% url 'posts:post_list' %}" class="btn btn-primary">Перейти в чат</a>
-</div> <!-- Конец блока приветствия -->
+      Chatty Green — это уникальное сообщество, где вы всегда узнаете о последних новостях,
+      сможете участвовать в обсуждениях и найти единомышленников. Ознакомьтесь с нашим сайтом, чтобы узнать больше
+      о возможностях и новинках.
+    </p>
+  {% endif %}
+
+  <p class="chat-description">Лучший чат новостей</p>
+  <a href="{% url 'posts:post_list' %}" class="btn btn-primary">Перейти в чат</a>
+</div>
+<!-- Конец блока приветствия -->
+
+
 
 <!-- Контейнер свежих новостей: ширина такая же, как у приветствия -->
 <div class="scrollable-news-container mt-4">
