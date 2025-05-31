@@ -14,9 +14,15 @@ from pathlib import Path
 import os
 
 from django.urls import reverse_lazy
-#from dotenv import load_dotenv
 import dj_database_url
 
+import os
+from dotenv import load_dotenv
+
+if os.path.exists('.env'):
+    load_dotenv('.env')
+else:
+    print("ℹ️ .env файл не найден, используются переменные окружения")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
