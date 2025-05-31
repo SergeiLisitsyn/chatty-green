@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Системные пакеты
 RUN apt-get update && apt-get install -y \
-    netcat-openbsd gcc libpq-dev && apt-get clean \
+#    netcat-openbsd gcc libpq-dev && apt-get clean \
     procps \       # для ps, top, free
     net-tools \    # для netstat, ifconfig
     iputils-ping \ # для ping
