@@ -7,6 +7,7 @@ echo "==========================="
 # Ожидание базы данных
 echo "Ожидание базы данных..."
 ./wait-for-db.sh
+python wait-for-db.py
 
 echo "=== Применение миграций ==="
 python manage.py migrate --no-input
@@ -42,3 +43,6 @@ echo "=== Запуск Gunicorn завершен (PID $GUNICORN_PID) ==="
 # Удержание контейнера активным для диагностики
 echo "Контейнер активен для диагностики. Используйте Shell для отладки."
 tail -f /dev/null
+
+echo "Ожидание базы данных..."
+python wait-for-db.py || echo "Проверка БД пропущена"
