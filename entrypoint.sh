@@ -27,6 +27,13 @@ gunicorn chatty.wsgi:application \
     --error-logfile /app/gunicorn-error.log \
     --log-level debug &
 
+sleep 5  # Дать время на запуск
+if ! ps -p $GUNICORN_PID > /dev/null; then
+  echo "❌ Gunicorn завершился с ошибкой!"
+  cat /app/gunicorn-error.log
+  exit 1
+fi
+
 # Сохраняем PID Gunicorn для возможного завершения
 GUNICORN_PID=$!
 
