@@ -3,13 +3,18 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Системные пакеты
+# Установка диагностических утилит:
+#   procps    - для ps, top, free
+#   net-tools - для netstat, ifconfig
+#   iputils-ping - для ping
+#   curl      - для HTTP-запросов
+#   vim-tiny  - для просмотра файлов
 RUN apt-get update && apt-get install -y \
-#    netcat-openbsd gcc libpq-dev && apt-get clean \
-    procps \       # для ps, top, free
-    net-tools \    # для netstat, ifconfig
-    iputils-ping \ # для ping
-    curl \         # для curl
-    nano \     # для просмотра файлов
+    procps \
+    net-tools \
+    iputils-ping \
+    curl \
+    vim-tiny \
     && rm -rf /var/lib/apt/lists/*
 
 # Python-зависимости
