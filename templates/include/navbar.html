@@ -11,7 +11,7 @@
     <div class="d-flex align-items-center">
       <div class="dropdown">
         <button
-          class="btn btn-dark dropdown-toggle"
+          class="nav-link btn btn-link text-white"
           type="button"
           id="hamburgerDropdown"
           data-bs-toggle="dropdown"
@@ -45,12 +45,11 @@
       </div>
     </div>
 
-
         <!-- 🔍 Поле поиска -->
         <form action="{% url 'search' %}" method="GET" class="search-form">
             <div class="search-input-container">
                 <input type="text" name="q" class="form-control search-input"
-                       placeholder="🔍 Найти пост...">
+                       placeholder="Найти пост...">
             </div>
         </form>
         <!-- Навигация справа -->
@@ -74,8 +73,8 @@
                         src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
                         alt="Аватар"
                         class="rounded-circle"
-                        width="30"
-                        height="30"
+                        width="40"
+                        height="40"
                         style="object-fit: cover; margin-right: 8px;"
                     />
 

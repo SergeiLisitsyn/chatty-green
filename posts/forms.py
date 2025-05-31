@@ -12,12 +12,28 @@ class PostForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Заголовок поста'
+                'placeholder': 'Заголовок поста',
+                'style': '''
+                    font-family: "Tilda Sans", sans-serif;
+                    font-size: 16px;
+                    background-color: #ffffff;  # Белый фон
+                    border: 1px solid #ced4da;  # Серая рамка
+                    border-radius: 4px;         # Закругленные углы
+                    padding: 8px 12px;         # Отступы внутри поля
+                '''
             }),
             'text': forms.Textarea(attrs={
                 'class': 'form-control',
-                'rows': 5,
-                'placeholder': 'Текст поста'
+                'rows': 12,
+                'placeholder': 'Текст поста',
+                'style': '''
+                    font-family: "Tilda Sans", sans-serif;
+                    font-size: 14px;
+                    background-color: #ffffff;
+                    border: 1px solid #ced4da;
+                    border-radius: 4px;
+                    padding: 12px;
+                '''
             }),
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control'

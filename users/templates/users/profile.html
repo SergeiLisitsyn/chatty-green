@@ -11,7 +11,7 @@
     <!-- Левая колонка: аватар + основная информация + навигация -->
     <div class="col-md-3">
       <img src="{% if profile_user.avatar %}{{ profile_user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
-           alt="Аватар" class="img-thumbnail mb-3" style="width: 100%; height: auto;">
+           alt="Аватар" class="img-fluid rounded-circle mb-3 avatar-frame" style="width: 200px; height: auto;">
 
       <p><strong>Email:</strong> {{ profile_user.email }}</p>
       <p><strong>О себе:</strong> {{ profile_user.bio|default:"Не указано" }}</p>

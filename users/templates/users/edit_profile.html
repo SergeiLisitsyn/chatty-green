@@ -1,26 +1,38 @@
+<!-- users/templates/users/edit_profile.html -->
+
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 {% load static %}
+{% load socialaccount %}
+
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
 {% block content %}
 <div class="container mt-4">
   <h2 class="mb-4">Редактировать профиль {{ user.username|capfirst }}</h2>
   <div class="row">
 
-    <!-- Левая колонка: Аватар -->
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-body text-center">
-          <p class="fw-bold">Текущий аватар</p>
-          <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
-               alt="Аватар" class="iimg-fluid rounded-circle mb-3 avatar-frame" style="max-width: 200px;">
-          <div class="mt-2">
-            {{ form.avatar|add_class:"form-control visually-hidden" }}
-            <label for="{{ form.avatar.id_for_label }}" class="btn btn-sm btn-outline-secondary">Изменить фото</label>
-          </div>
-        </div>
+<!-- Левая колонка: Аватар -->
+<div class="col-md-3">
+  <div class="card">
+    <div class="card-body text-center">
+      <p class="fw-bold">Текущий аватар</p>
+      <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
+           alt="Аватар"
+           class="img-fluid rounded-circle mb-3 avatar-frame"
+           style="max-width: 200px;">
+
+      <div class="mt-2">
+
+        <!-- Скрытое поле загрузки -->
+        {{ form.avatar|add_class:"form-control visually-hidden" }}
+
+        <!-- Кнопка "Изменить фото" -->
+        <label for="{{ form.avatar.id_for_label }}" class="btn btn-sm btn-outline-secondary">Изменить фото</label>
       </div>
     </div>
+  </div>
+</div>
 
     <!-- Правая колонка -->
     <div class="col-md-9">
@@ -44,18 +56,6 @@
               <label class="form-label">Контакты</label>
               {{ form.contacts|add_class:"form-control bg-light"|attr:"placeholder:+7 999 123 45 67" }}
             </div>
-
-            <div class="mb-3 position-relative">
-              <label for="{{ form.password1.id_for_label }}">Пароль</label>
-              {{ form.password1|add_class:"form-control bg-light password-field"|attr:"placeholder:Введите пароль" }}
-              <i class="fa fa-eye password-toggle" data-target="#{{ form.password1.id_for_label }}"></i>
-            </div>
-
-            <div class="mb-3 position-relative">
-              <label for="{{ form.password2.id_for_label }}">Подтверждение пароля</label>
-              {{ form.password2|add_class:"form-control bg-light password-field"|attr:"placeholder:Повторите пароль" }}
-              <i class="fa fa-eye password-toggle" data-target="#{{ form.password2.id_for_label }}"></i>
-            </div>
           </div>
         </div>
 
@@ -70,7 +70,7 @@
         <!-- Кнопки -->
         <div class="d-flex justify-content-between">
           <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-          <a href="{% url 'profile' user.username %}" class="btn btn-outline-secondary">Отмена</a>
+          <a href="{% url 'profile' user.username %}" class="btn btn-primary">Отмена</a>
         </div>
       </form>
     </div>
@@ -79,22 +79,18 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-  // Переключение видимости пароля
-  document.querySelectorAll('.password-toggle').forEach(icon => {
-    icon.style.cursor = "pointer";
-    icon.style.position = "absolute";
-    icon.style.top = "38px";
-    icon.style.right = "12px";
-    icon.style.color = "#aaa";
 
-    icon.addEventListener('click', function () {
-      const target = document.querySelector(this.getAttribute('data-target'));
-      if (target) {
-        target.type = target.type === 'password' ? 'text' : 'password';
-        this.classList.toggle('fa-eye-slash');
-      }
-    });
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const avatarInput = document.getElementById("{{ form.avatar.id_for_label }}");
+    if (avatarInput) {
+      avatarInput.addEventListener('change', function () {
+        const form = document.getElementById('profile-form');
+        if (form) {
+          form.submit();
+        }
+      });
+    }
   });
 </script>
 {% endblock %}

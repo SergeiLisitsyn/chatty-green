@@ -6,6 +6,7 @@ from . import views
 from .views import CustomLoginView
 
 from django.urls import reverse_lazy
+from .views import privacy_policy_view
 
 
 
@@ -24,6 +25,8 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('profile/<str:username>/edit/', views.edit_profile, name='edit_profile'),  # Добавлен путь для редактирования профиля
     path("accounts/", include("allauth.urls")),  #  Подключаем авторизацию через email/Google
+    path('privacy-policy/', privacy_policy_view, name='privacy_policy'),
+
 
 
 ]

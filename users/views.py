@@ -113,14 +113,15 @@ def edit_profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
 
     if request.method == 'POST':
-        form = CustomUserEditForm(request.POST, request.FILES, instance=user)  # Используйте нужную форму
+        form = CustomUserEditForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             return redirect('profile', username=user.username)
     else:
-        form = CustomUserCreationForm(instance=user)  # Предзаполненная форма
+        form = CustomUserEditForm(instance=user)
 
     return render(request, 'users/edit_profile.html', {'form': form, 'user': user})
+
 
 
 def change_password(request):
@@ -163,3 +164,8 @@ class LoggingPasswordResetConfirmView(PasswordResetConfirmView):
         print("============================\n")
 
         return response
+
+def privacy_policy_view(request):
+        return render(request, 'users/privacy_policy.html')
+
+

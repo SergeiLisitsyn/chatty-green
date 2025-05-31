@@ -15,6 +15,7 @@ textarea {
     height: 80px; /* Уменьшенная высота */
     border: 1px solid #ccc; /* Добавьте рамку */
     border-radius: 8px;
+    color: #070707; /* Цвет текста */
     padding: 10px; /* Отступ для текста */
     resize: none; /* Запретить изменение размера */
 }
@@ -26,7 +27,7 @@ textarea {
 
 /* Делаем кнопку Google */
 .social-login {
-    margin-top: 20px;
+    margin-top: 16px;
 }
 
 .btn-google {

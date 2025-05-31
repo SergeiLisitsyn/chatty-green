@@ -1,4 +1,5 @@
 #!/bin/sh
+# entrypoint.sh
 # Ожидание базы данных
 ./wait-for-db.sh
 
