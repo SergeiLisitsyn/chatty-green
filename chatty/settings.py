@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 
 from django.urls import reverse_lazy
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import dj_database_url
 
 
@@ -110,7 +110,7 @@ WSGI_APPLICATION = 'chatty.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('PG_NAME'),
@@ -123,10 +123,10 @@ DATABASES = {
         },
     }
 }
-DATABASE_URL = os.getenv("DATABASE_URL")
-#DATABASES = {
-#    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-#}
+DATABASE_URL = os.getenv("DATABASE_URL")'''
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
