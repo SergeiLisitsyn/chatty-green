@@ -4,7 +4,13 @@ WORKDIR /app
 
 # Системные пакеты
 RUN apt-get update && apt-get install -y \
-        netcat-openbsd gcc libpq-dev && apt-get clean
+    netcat-openbsd gcc libpq-dev && apt-get clean \
+    procps \       # для ps, top, free
+    net-tools \    # для netstat, ifconfig
+    iputils-ping \ # для ping
+    curl \         # для curl
+    nano \     # для просмотра файлов
+    && rm -rf /var/lib/apt/lists/*
 
 # Python-зависимости
 COPY requirements.txt .
@@ -27,7 +33,7 @@ COPY . .
 EXPOSE 10000
 
 # Команда запуска (та же что и в docker-compose)
-CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --no-input --clear && gunicorn chatty.wsgi:application --bind 0.0.0.0:10000"]
+#CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --no-input --clear && gunicorn chatty.wsgi:application --bind 0.0.0.0:10000"]
 
 CMD ["./entrypoint.sh"]
 #ENTRYPOINT ["./entrypoint.sh"]
