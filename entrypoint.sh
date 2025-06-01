@@ -25,3 +25,5 @@ exec gunicorn chatty.wsgi:application \
     --access-logfile - \
     --error-logfile - \
     --log-level debug
+
+echo "=== контейнер запущен! ==="
