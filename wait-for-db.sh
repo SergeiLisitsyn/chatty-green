@@ -3,19 +3,17 @@ set -e
 
 host="${DB_HOST:-db}"
 port="${DB_PORT:-5432}"
-max_retries=30
-retry_interval=2
+timeout=30
 
 echo "Ожидание PostgreSQL ($host:$port)..."
 
-for ((i=1; i<=$max_retries; i++)); do
-    if nc -z -w 1 "$host" "$port"; then
-        echo "✅ PostgreSQL доступен!"
-        exit 0
+while ! nc -z -w 1 "$host" "$port"; do
+    timeout=$((timeout - 1))
+    if [ $timeout -le 0 ]; then
+        echo "Таймаут подключения к БД!" >&2
+        exit 1
     fi
-    echo "⏳ Попытка $i/$max_retries..."
-    sleep $retry_interval
+    sleep 1
 done
 
-echo "❌ Ошибка: PostgreSQL не доступен после $max_retries попыток!"
-exit 1
+echo "База данных доступна!"
