@@ -45,5 +45,7 @@ EXPOSE 10000
 # Команда запуска (та же что и в docker-compose)
 #CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --no-input --clear && gunicorn chatty.wsgi:application --bind 0.0.0.0:10000"]
 
-CMD ["./entrypoint.sh"]
-
+#CMD ["./entrypoint.sh"]
+#ENTRYPOINT ["./entrypoint.sh"]
+# Временная замена сложного entrypoint
+CMD ["sh", "-c", "echo 'Контейнер запущен!'"]
