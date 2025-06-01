@@ -5,7 +5,8 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark custom-gray align-items-center">
   <div class="container-fluid d-flex align-items-center justify-content-between" style="padding-right: 40px;">
-    <a class="navbar-brand me-3" href="#">Chatty</a>
+   <a class="navbar-brand me-3" href="{% url 'home' %}">Chatty</a>
+
 
     <!-- Левая часть: логотип и кнопка-гамбургер с dropdown-меню -->
     <div class="d-flex align-items-center">
@@ -52,53 +53,84 @@
                        placeholder="Найти пост...">
             </div>
         </form>
-        <!-- Навигация справа -->
-        <ul class="navbar-nav d-flex align-items-center gap-3 ms-auto" style="margin-right: 0.3cm;">
 
+      <!-- Правая навигация для больших экранов -->
+    <ul class="navbar-nav d-none d-lg-flex align-items-center gap-3 ms-auto" style="margin-right: 0.3cm;">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">Главная</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'posts:post_list' %}">Лента</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'videopost:videopost_list' %}">Видео</a>
+      </li>
+      {% if user.is_authenticated %}
+        <li class="nav-item d-flex align-items-center">
+          <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
+               alt="Аватар" class="rounded-circle" width="40" height="40"
+               style="object-fit: cover; margin-right: 8px;">
+          <a class="nav-link" href="{% url 'profile' username=user.username %}">{{ user.username|capfirst }}</a>
+        </li>
+        <li class="nav-item">
+          <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="nav-link btn btn-link text-white">Выход</button>
+          </form>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Войти</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-primary text-white" href="{% url 'register' %}">Регистрация</a>
+        </li>
+      {% endif %}
+    </ul>
+
+    <!-- Правый гамбургер для маленьких экранов -->
+    <div class="right-menu-container d-lg-none ms-2" style="position: relative;">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#rightNavbarCollapse"
+              aria-controls="rightNavbarCollapse" aria-expanded="false" aria-label="Toggle right navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Абсолютно позиционированное меню, которое появляется поверх контента -->
+      <div id="rightNavbarCollapse" class="collapse" style="position: absolute; top: 100%; right: 0; left: auto; background-color: #343a40; z-index: 1050; width: 250px; padding: 0.5rem 1rem;">
+        <ul class="navbar-nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'home' %}">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'posts:post_list' %}">Лента</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'videopost:videopost_list' %}">Видео</a>
+          </li>
+          {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">Главная</a>
+              <a class="nav-link text-white" href="{% url 'profile' username=user.username %}">Профиль</a>
             </li>
             <li class="nav-item">
-                    <a class="nav-link" href="{% url 'posts:post_list' %}">Лента</a>
+              <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-link btn btn-link text-white p-0">Выход</button>
+              </form>
             </li>
-
+          {% else %}
             <li class="nav-item">
-                 <a class="nav-link" href="{% url 'videopost:videopost_list' %}">Видео</a>
+              <a class="nav-link text-white" href="{% url 'login' %}">Войти</a>
             </li>
-
-            {% if user.is_authenticated %}
-
-                <li class="nav-item d-flex align-items-center">
-                    <img
-                        src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
-                        alt="Аватар"
-                        class="rounded-circle"
-                        width="40"
-                        height="40"
-                        style="object-fit: cover; margin-right: 8px;"
-                    />
-
-                    <a class="nav-link" href="{% url 'profile' username=user.username %}">{{ user.username|capfirst }}</a>
-
-                </li>
-                <li class="nav-item">
-                    <form method="POST" action="{% url 'logout' %}" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="nav-link btn btn-link text-white">Выход</button>
-                    </form>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Войти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white" href="{% url 'register' %}">Регистрация</a>
-                </li>
-            {% endif %}
-          </ul>
-        </div>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'register' %}">Регистрация</a>
+            </li>
+          {% endif %}
+        </ul>
       </div>
-    </nav>
+    </div>
+  </div>
+</nav>
+
+
 
 <script>
 function showSuggestions(query) {

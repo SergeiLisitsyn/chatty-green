@@ -105,32 +105,58 @@
   }
 }
 
-/* ===== СТИЛИ ДЛЯ ВЫПАДАЮЩЕГО МЕНЮ ===== */
 
-/* Основные стили dropdown меню */
-.custom-dropdown {
-    background-color: rgba(255, 255, 255, 0.5) !important; /* Полупрозрачный белый фон */
-    border: none;          /* Убираем границу */
-    padding: 0;            /* Убираем отступы */
-    min-width: auto;       /* Автоматическая ширина */
-    white-space: normal;   /* Разрешаем перенос текста */
+/* ====== ЕДИНЫЙ СТИЛЬ ДЛЯ ВЫПАДАЮЩИХ МЕНЮ ====== */
+
+/* Базовые стили для всех dropdown меню */
+.custom-dropdown,
+#rightNavbarCollapse,
+.left-menu {
+    background-color: #333333 !important;  /* Тёмно-серый фон */
+    border: none;                 /* Убираем границу */
+    padding: 0;                   /* Убираем отступы */
+    min-width: auto;              /* Автоматическая ширина */
+    white-space: normal;          /* Разрешаем перенос текста */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень */
-    z-index: 1100;         /* Высокий z-index для перекрытия */
+    z-index: 1100;                /* Высокий z-index для перекрытия */
 }
 
-/* Стили для элементов меню */
+/* Стили для элементов меню (для .custom-dropdown) */
 .custom-dropdown .dropdown-item {
-    color: #333333;       /* Темный цвет текста */
-    padding: 8px 12px;    /* Отступы внутри элементов */
-    font-weight: bold;    /* Жирный шрифт */
+    color: #ffffff;               /* Белый текст */
+    padding: 8px 12px;            /* Отступы внутри элементов */
+    font-weight: normal;            /* Жирный шрифт */
 }
-
-/* Стили для активных/наведенных элементов */
 .custom-dropdown .dropdown-item:focus,
 .custom-dropdown .dropdown-item:hover {
-    color: white;                   /* Белый текст */
-    background-color: rgba(0, 0, 0, 0.2); /* Полупрозрачный черный фон */
+    color: #ffffff;                   /* Белый текст */
+    background-color: #444444;        /* Немного светлее тёмно-серого для эффекта наведения */
 }
+
+/* Стили для выпадающих меню в collapse (правая или левая боковая панель) – если меню состоит из ссылок */
+#rightNavbarCollapse .nav-link,
+.left-menu .nav-link {
+    display: block;               /* Чтобы ссылки занимали всю ширину */
+    color: #333333;               /* Темный цвет текста */
+    padding: 8px 12px;            /* Отступы, как в .dropdown-item */
+    font-weight: normal;
+    text-decoration: none;
+}
+#rightNavbarCollapse .nav-link:focus,
+#rightNavbarCollapse .nav-link:hover,
+.left-menu .nav-link:focus,
+.left-menu .nav-link:hover {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Плавное появление и тень для collapse меню (например, правого меню) */
+#rightNavbarCollapse {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 
 /* ===== СТИЛИ ДЛЯ АВАТАРА ===== */
 
@@ -194,6 +220,7 @@
     background-color: #5a5b5b; /* Изменение фона */
 }
 
+
 .nav-link.btn.btn-link.text-white {
     /* Базовые стили */
     background-color: #007BFF;      /* Темно-серый/синий фон (как в Tailwind gray-700) */
@@ -241,3 +268,4 @@
     margin-right: 6px;             /* Отступ между иконкой и текстом */
     font-size: 16px;               /* Размер иконки */
 }
+

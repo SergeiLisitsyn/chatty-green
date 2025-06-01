@@ -2,6 +2,9 @@ from django.shortcuts import render
 from posts.models import Post
 from django.db.models import Q
 
+from videopost.models import VideoPost
+
+
 def welcome(request):
     """Отображает страницу приветствия (welcome.html)."""
     return render(request, 'welcome.html')
@@ -18,9 +21,19 @@ def register(request):
 
 def search_results(request):
     query = request.GET.get("q", "").strip()
+    # Результаты поиска для постов (по заголовку и тексту)
     posts = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query), is_archived=False)
-
-    return render(request, "posts/search_results.html", {"posts": posts, "query": query})
+    # Результаты поиска для видео (по заголовку и описанию)
+    video_results = VideoPost.objects.filter(
+        Q(title__icontains=query) | Q(description__icontains=query),
+        is_archived=False
+    )
+    context = {
+        'query': query,
+        'post_results': posts,
+        'video_results': video_results,
+    }
+    return render(request, "include/search_results.html", context)
 
 def search_view(request):
     """
