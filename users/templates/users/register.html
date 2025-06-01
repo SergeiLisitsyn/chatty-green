@@ -4,6 +4,7 @@
 {% load socialaccount %}
 
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="stylesheet" href="{% static 'css/registration.css' %}">
 
 {% block content %}
 <div class="container mt-4">
@@ -21,8 +22,9 @@
                class="iimg-fluid rounded-circle mb-3 avatar-frame"
                style="max-width: 200px;">
           <div class="mt-2">
-            {{ form.avatar|add_class:"form-control visually-hidden" }}
-            <label for="{{ form.avatar.id_for_label }}" class="btn btn-sm btn-outline-secondary">Изменить фото</label>
+            {# Скрытый input для выбора файла, с явным id="avatar-input" #}
+            {{ form.avatar|add_class:"form-control visually-hidden"|attr:"id:avatar-input" }}
+            <label for="avatar-input" class="btn btn-sm btn-outline-secondary">Изменить фото</label>
           </div>
         </div>
       </div>
@@ -30,37 +32,45 @@
 
     <!-- Правая колонка -->
     <div class="col-md-9">
-      <form method="POST" enctype="multipart/form-data">
+      <!-- Добавили id="register-form" на форму -->
+      <form method="POST" enctype="multipart/form-data" id="register-form">
         {% csrf_token %}
 
         <!-- Карточка 1 -->
         <div class="card mb-4">
           <div class="card-body">
+            <!-- Username -->
             <div class="mb-3">
-              {{ form.username.label_tag }}
+              <label for="{{ form.username.id_for_label }}" class="form-label">Имя пользователя</label>
               {{ form.username|add_class:"form-control bg-light" }}
             </div>
 
-            <div class="mb-3">
-              {{ form.email.label_tag }}
-              {{ form.email|add_class:"form-control bg-light" }}
+
+            <!-- Email и Контакты в одной строке -->
+            <div class="row mb-3">
+              <div class="col">
+                <label class="form-label">Email</label>
+                <!-- {{ form.email.label_tag }} -->
+                {{ form.email|add_class:"form-control bg-light"|attr:"placeholder:name@exemple.com" }}
+              </div>
+              <div class="col">
+                <label class="form-label">Контакты</label>
+                {{ form.contacts|add_class:"form-control bg-light"|attr:"placeholder:+7 999 123 45 67" }}
+              </div>
             </div>
 
-            <div class="mb-3">
-              <label class="form-label">Контакты</label>
-              {{ form.contacts|add_class:"form-control bg-light"|attr:"placeholder:+7 999 123 45 67" }}
-            </div>
-
-            <div class="mb-3 position-relative">
-              <label for="{{ form.password1.id_for_label }}">Пароль</label>
-              {{ form.password1|add_class:"form-control bg-light password-field"|attr:"placeholder:Введите пароль" }}
-              <i class="fa fa-eye password-toggle" data-target="#{{ form.password1.id_for_label }}"></i>
-            </div>
-
-            <div class="mb-3 position-relative">
-              <label for="{{ form.password2.id_for_label }}">Подтверждение пароля</label>
-              {{ form.password2|add_class:"form-control bg-light password-field"|attr:"placeholder:Повторите пароль" }}
-              <i class="fa fa-eye password-toggle" data-target="#{{ form.password2.id_for_label }}"></i>
+            <!-- Пароль и Подтверждение пароля в одной строке -->
+            <div class="row">
+              <div class="col mb-3 position-relative">
+                <label for="{{ form.password1.id_for_label }}">Пароль</label>
+                {{ form.password1|add_class:"form-control bg-light password-field"|attr:"placeholder:Введите пароль" }}
+                <i class="fa fa-eye password-toggle" data-target="#{{ form.password1.id_for_label }}"></i>
+              </div>
+              <div class="col mb-3 position-relative">
+                <label for="{{ form.password2.id_for_label }}">Подтверждение пароля</label>
+                {{ form.password2|add_class:"form-control bg-light password-field"|attr:"placeholder:Повторите пароль" }}
+                <i class="fa fa-eye password-toggle" data-target="#{{ form.password2.id_for_label }}"></i>
+              </div>
             </div>
           </div>
         </div>
@@ -85,18 +95,21 @@
         <!-- Кнопки -->
         <div class="d-flex justify-content-between">
           <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-          <a href="{% url 'home' %}" class="btn btn-outline-secondary">Отмена</a>
+          <a href="{% url 'home' %}" class="btn btn-primary">Отмена</a>
         </div>
 
         <!-- Быстрая регистрация через Google -->
         <div class="text-center mt-4">
           <p class="text-muted">или</p>
-          <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger w-100">
-            <i class="fab fa-google"></i> Регистрация через Google
+          <a href="{% url 'social:begin' 'google-oauth2' %}" class="google-btn btn w-100">
+            <strong>Регистрация через</strong>&nbsp;
+            <img src="{% static 'images/Google1.png' %}" alt="Google Logo" class="google-image">
           </a>
         </div>
+
       </form>
     </div>
+
   </div>
 </div>
 {% endblock %}
@@ -120,21 +133,28 @@
     });
   });
 
-  // Обновление аватара при выборе файла
-  const fileInput = document.querySelector('input[name="{{ form.avatar.name }}"]');
-  const preview = document.getElementById('avatarPreview');
+  // Обновление аватара при выборе файла и автосабмит формы
+  (function() {
+    const fileInput = document.getElementById('avatar-input');
+    const preview   = document.getElementById('avatarPreview');
+    const form      = document.getElementById('register-form');
 
-  if (fileInput && preview) {
-    fileInput.addEventListener('change', function (event) {
-      const file = event.target.files[0];
-      if (file && file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          preview.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  }
+    if (fileInput && preview && form) {
+      fileInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+          // 1) Сначала обновляем предпросмотр
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            preview.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+
+          // 2) И сразу отправляем форму, чтобы сохранить аватар
+          form.submit();
+        }
+      });
+    }
+  })();
 </script>
 {% endblock %}

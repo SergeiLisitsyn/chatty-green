@@ -1,5 +1,27 @@
 /* static/css/registration.css */
 
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    border: 1px solid #000; /* Чёрная тонкая обводка */
+    border-radius: 5px;     /* Лёгкое закругление */
+}
+
+
+/* Общие настройки заголовков на странице регистрации */
+h2,
+h4,
+.label-heading {
+    color: #007bff;             /* Синий цвет заголовков */
+    font-family: 'TildaSans', sans-serif;
+    font-size: 14px;
+    font-weight: bold;          /* Жирный шрифт */
+    text-transform: uppercase;
+}
+
+/* Карточка регистрации */
 .register-card {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(8px);
@@ -7,44 +29,47 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     max-width: 800px;
     margin: 60px auto;
-    padding: 20px; /* добавьте отступы для внутреннего содержимого */
+    padding: 20px; /* Отступы для внутреннего содержимого */
 }
 
+/* Текстовая область "О себе" */
 textarea {
     width: 100%;
-    height: 80px; /* Уменьшенная высота */
-    border: 1px solid #ccc; /* Добавьте рамку */
+    height: 80px;               /* Уменьшенная высота */
+    background: rgb(68, 68, 69);
+    border: 3px solid #070707;     /* Рамка */
     border-radius: 8px;
-    color: #070707; /* Цвет текста */
-    padding: 10px; /* Отступ для текста */
-    resize: none; /* Запретить изменение размера */
+    color: #070707;             /* Цвет текста */
+    padding: 10px;              /* Внутренний отступ */
+    resize: none;               /* Запретить изменение размера */
 }
 
+/* Кнопка "Зарегистрироваться" */
 .btn-primary {
-    width: 100%; /* Если вы хотите, чтобы кнопка занимала всю ширину */
-    border-radius: 5px; /* Добавим немного закругления */
+    width: 100%;                /* Кнопка на всю ширину колонки */
+    border-radius: 5px;         /* Небольшое закругление */
+    font-weight: bold;          /* Жирный текст на кнопке */
 }
 
-/* Делаем кнопку Google */
-.social-login {
-    margin-top: 16px;
+/* Стили для строчки с Email и Контактами */
+/* Размещаем оба поля в одной строке, равномерно занимая место */
+.row.email-contacts {
+    display: flex;
+    gap: 1rem;                  /* Отступ между полями */
+    flex-wrap: wrap;            /* Перенос на новую строку, если слишком узко */
+}
+.row.email-contacts .col {
+    flex: 1 1 0;                /* Одинаковая ширина для колонок */
 }
 
-.btn-google {
-    display: inline-flex; /* Используем flex для выравнивания иконки и текста */
-    align-items: center; /* Вертикальное выравнивание */
-    background-color: #4285F4; /* Цвет фона Google */
-    color: white; /* Цвет текста */
-    padding: 10px 15px; /* Отступы для кнопки */
-    border-radius: 5px; /* Закругление углов */
-    text-decoration: none; /* Убираем подчеркивание */
+/* Стили для строчки с Пароль и Подтверждение пароля */
+/* Располагаем оба поля в одну строку */
+.row.passwords {
+    display: flex;
+    gap: 1rem;                  /* Отступ между полями */
+    flex-wrap: wrap;
+}
+.row.passwords .col {
+    flex: 1 1 0;                /* Одинаковая ширина для колонок */
 }
 
-.btn-google i {
-    margin-right: 8px; /* Отступ между иконкой и текстом */
-}
-
-/* Подсветка при наведении */
-.btn-google:hover {
-    background-color: #357AE8; /* Цвет при наведении */
-}
