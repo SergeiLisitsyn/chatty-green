@@ -68,7 +68,7 @@
       {% if user.is_authenticated %}
         <li class="nav-item d-flex align-items-center">
           <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
-               alt="Аватар" class="rounded-circle" width="40" height="40"
+               alt="Аватар" class="rounded-circle" width="35" height="35"
                style="object-fit: cover; margin-right: 8px;">
           <a class="nav-link" href="{% url 'profile' username=user.username %}">{{ user.username|capfirst }}</a>
         </li>
@@ -83,7 +83,7 @@
           <a class="nav-link" href="{% url 'login' %}">Войти</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-primary text-white" href="{% url 'register' %}">Регистрация</a>
+          <a class="nav-link btn btn-link text-white" href="{% url 'register' %}">Регистрация</a>
         </li>
       {% endif %}
     </ul>
