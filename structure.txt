@@ -13,6 +13,7 @@ Chatty_green/
 │   ├── models.py
 │   ├── urls.py
 │   └── views.py
+├── allfileshas.txt
 ├── chatty/
 │   ├── __init__.py
 │   ├── asgi.py
@@ -28,13 +29,14 @@ Chatty_green/
 ├── entrypoint.sh
 ├── manage.py
 ├── media/
-│   ├── Video/
 │   ├── ads/
+│   │   ├── images/
 │   │   └── videos/
 │   ├── ads_images/
 │   ├── avatars/
 │   ├── post_images/
 │   ├── test.txt
+│   ├── uploaded_videos/
 │   └── video_thumbnails/
 ├── nginx/
 │   ├── Dockerfile
@@ -60,8 +62,7 @@ Chatty_green/
 │   ├── models.py
 │   ├── templates/
 │   │   ├── include/
-│   │   │   ├── paginator.html
-│   │   │   └── post_preview.html
+│   │   │   └── paginator.html
 │   │   └── posts/
 │   │       ├── post_confirm_delete.html
 │   │       ├── post_detail.html
@@ -81,10 +82,12 @@ Chatty_green/
 │   ├── css/
 │   │   ├── ads.css
 │   │   ├── base.css
+│   │   ├── form_post.css
 │   │   ├── home.css
 │   │   ├── interaction-buttons.css
 │   │   ├── navbar.css
 │   │   ├── posts.css
+│   │   ├── registration.css
 │   │   └── videopost_detail.css
 │   ├── images/
 │   ├── js/
@@ -131,6 +134,7 @@ Chatty_green/
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
+│   ├── context_processors.py
 │   ├── forms.py
 │   ├── migrations/
 │   │   ├── 0001_initial.py
@@ -150,6 +154,7 @@ Chatty_green/
 │   │       ├── password_reset_confirm.html
 │   │       ├── password_reset_done.html
 │   │       ├── password_reset_form.html
+│   │       ├── privacy_policy.html
 │   │       ├── profile.html
 │   │       ├── register.html
 │   │       └── templatetags/

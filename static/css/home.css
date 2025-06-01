@@ -207,6 +207,7 @@ body.fade-in {
 h1, h2, h3 {
   font-family: "Tilda Sans Bold", sans-serif; /* Жирный шрифт */
   font-size: 14px;                /* Размер текста */
+  color: #1a202c;
 }
 
 /* Основной контейнер контента */

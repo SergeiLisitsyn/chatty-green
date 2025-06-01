@@ -1,34 +1,160 @@
-<!-- users/templates/users/register.html -->
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% load socialaccount %}
 
-{% extends "base.html" %}
-{% load socialaccount %}  <!-- Добавляем этот тег -->
-{% load static %}  <!-- Добавлено для загрузки тегов статических файлов -->
-
-{% block extra_css %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" type="text/css" href="{% static 'css/registration.css' %}">
-{% endblock %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="stylesheet" href="{% static 'css/registration.css' %}">
 
 {% block content %}
-  <div class="container">
-    <h2>Регистрация нового пользователя</h2>
+<div class="container mt-4">
+  <h2 class="mb-4">Регистрация нового пользователя</h2>
+  <div class="row">
 
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-    </form>
-
-     <!-- Блок для соц. входа -->
-    <div class="social-login">
-      <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google">
-        <i class="fab fa-google"></i> Быстрая регистрация через Google
-      </a>
-      <!-- Включите другую ссылку для Telegram, если она вам нужна и функция реализована -->
-      <!-- <a href="{% url 'social:begin' 'telegram' %}" class="btn btn-telegram">Вход через Telegram</a> -->
+    <!-- Левая колонка: Аватар -->
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <p class="fw-bold">Текущий аватар</p>
+          <img id="avatarPreview"
+               src="/media/avatars/default.png"
+               alt="Аватар"
+               class="iimg-fluid rounded-circle mb-3 avatar-frame"
+               style="max-width: 200px;">
+          <div class="mt-2">
+            {# Скрытый input для выбора файла, с явным id="avatar-input" #}
+            {{ form.avatar|add_class:"form-control visually-hidden"|attr:"id:avatar-input" }}
+            <label for="avatar-input" class="btn btn-sm btn-outline-secondary">Изменить фото</label>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- Правая колонка -->
+    <div class="col-md-9">
+      <!-- Добавили id="register-form" на форму -->
+      <form method="POST" enctype="multipart/form-data" id="register-form">
+        {% csrf_token %}
 
+        <!-- Карточка 1 -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <!-- Username -->
+            <div class="mb-3">
+              <label for="{{ form.username.id_for_label }}" class="form-label">Имя пользователя</label>
+              {{ form.username|add_class:"form-control bg-light" }}
+            </div>
+
+
+            <!-- Email и Контакты в одной строке -->
+            <div class="row mb-3">
+              <div class="col">
+                <label class="form-label">Email</label>
+                <!-- {{ form.email.label_tag }} -->
+                {{ form.email|add_class:"form-control bg-light"|attr:"placeholder:name@exemple.com" }}
+              </div>
+              <div class="col">
+                <label class="form-label">Контакты</label>
+                {{ form.contacts|add_class:"form-control bg-light"|attr:"placeholder:+7 999 123 45 67" }}
+              </div>
+            </div>
+
+            <!-- Пароль и Подтверждение пароля в одной строке -->
+            <div class="row">
+              <div class="col mb-3 position-relative">
+                <label for="{{ form.password1.id_for_label }}">Пароль</label>
+                {{ form.password1|add_class:"form-control bg-light password-field"|attr:"placeholder:Введите пароль" }}
+                <i class="fa fa-eye password-toggle" data-target="#{{ form.password1.id_for_label }}"></i>
+              </div>
+              <div class="col mb-3 position-relative">
+                <label for="{{ form.password2.id_for_label }}">Подтверждение пароля</label>
+                {{ form.password2|add_class:"form-control bg-light password-field"|attr:"placeholder:Повторите пароль" }}
+                <i class="fa fa-eye password-toggle" data-target="#{{ form.password2.id_for_label }}"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 2 -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <label class="form-label">О себе</label>
+            {{ form.bio|add_class:"form-control bg-light"|attr:"rows:3" }}
+          </div>
+        </div>
+
+        <!-- Согласие -->
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" required id="consentCheckbox">
+          <label class="form-check-label" for="consentCheckbox">
+            Я даю согласие на обработку моих персональных данных в соответствии с
+            <a href="{% url 'privacy_policy' %}" target="_blank">Политикой конфиденциальности</a>
+          </label>
+        </div>
+
+        <!-- Кнопки -->
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+          <a href="{% url 'home' %}" class="btn btn-primary">Отмена</a>
+        </div>
+
+        <!-- Быстрая регистрация через Google -->
+        <div class="text-center mt-4">
+          <p class="text-muted">или</p>
+          <a href="{% url 'social:begin' 'google-oauth2' %}" class="google-btn btn w-100">
+            <strong>Регистрация через</strong>&nbsp;
+            <img src="{% static 'images/Google1.png' %}" alt="Google Logo" class="google-image">
+          </a>
+        </div>
+
+      </form>
+    </div>
 
   </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Переключение видимости пароля
+  document.querySelectorAll('.password-toggle').forEach(icon => {
+    icon.style.cursor = "pointer";
+    icon.style.position = "absolute";
+    icon.style.top = "38px";
+    icon.style.right = "12px";
+    icon.style.color = "#aaa";
+
+    icon.addEventListener('click', function () {
+      const target = document.querySelector(this.getAttribute('data-target'));
+      if (target) {
+        target.type = target.type === 'password' ? 'text' : 'password';
+        this.classList.toggle('fa-eye-slash');
+      }
+    });
+  });
+
+  // Обновление аватара при выборе файла и автосабмит формы
+  (function() {
+    const fileInput = document.getElementById('avatar-input');
+    const preview   = document.getElementById('avatarPreview');
+    const form      = document.getElementById('register-form');
+
+    if (fileInput && preview && form) {
+      fileInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+          // 1) Сначала обновляем предпросмотр
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            preview.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+
+          // 2) И сразу отправляем форму, чтобы сохранить аватар
+          form.submit();
+        }
+      });
+    }
+  })();
+</script>
 {% endblock %}

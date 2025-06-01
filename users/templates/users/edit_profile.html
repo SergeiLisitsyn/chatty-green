@@ -1,106 +1,58 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
 {% load static %}
+{% load widget_tweaks %}
+
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
 {% block content %}
 <div class="container mt-4">
   <h2 class="mb-4">Редактировать профиль {{ user.username|capfirst }}</h2>
-  <div class="row">
 
-    <!-- Левая колонка: Аватар -->
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-body text-center">
-          <p class="fw-bold">Текущий аватар</p>
-          <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
-               alt="Аватар" class="iimg-fluid rounded-circle mb-3 avatar-frame" style="max-width: 200px;">
-          <div class="mt-2">
-            {{ form.avatar|add_class:"form-control visually-hidden" }}
-            <label for="{{ form.avatar.id_for_label }}" class="btn btn-sm btn-outline-secondary">Изменить фото</label>
-          </div>
-        </div>
+  {# Открываем форму здесь, прежде чем разбивать на колонки #}
+  <form method="POST" enctype="multipart/form-data" id="profile-form">
+    {% csrf_token %}
+    <div class="row">
+
+      <!-- Левая колонка: Текущий аватар + скрытый input + кнопка -->
+      <div class="col-md-3">
+        <p>Текущий аватар:</p>
+        <img
+          src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
+          alt="Аватар"
+          class="img-fluid rounded-circle mb-3 avatar-frame" style="width: 200px; height: auto;"
+          width="200"
+        >
+
+        {# Скрытое поле загрузки avataра, но внутри <form> #}
+        {{ form.avatar|add_class:"visually-hidden"|attr:"id:avatar-input" }}
+
+        {# Кнопка, которая привязана к этому скрытому input #}
+        <label for="avatar-input" class="btn btn-sm btn-outline-secondary">
+          Изменить фото
+        </label>
+
       </div>
+
+
+      <!-- Правая колонка: остальные поля формы, кроме avatar -->
+      <div class="col-md-9">
+        {% for field in form %}
+          {% if field.name != 'avatar' %}
+
+            <div class="mb-3">
+              {{ field.label_tag }}
+              {{ field|add_class:"form-control bg-light" }}
+              {% if field.errors %}
+                <div class="text-danger small">{{ field.errors|striptags }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+      </div>
+
     </div>
-
-    <!-- Правая колонка -->
-    <div class="col-md-9">
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        <!-- Карточка 1 -->
-        <div class="card mb-4">
-          <div class="card-body">
-            <div class="mb-3">
-              {{ form.username.label_tag }}
-              {{ form.username|add_class:"form-control bg-light" }}
-            </div>
-
-            <div class="mb-3">
-              {{ form.email.label_tag }}
-              {{ form.email|add_class:"form-control bg-light" }}
-            </div>
-
-            <div class="mb-3 form-check">
-              {{ form.display_email|add_class:"form-check-input" }}
-              {{ form.display_email.label_tag }}
-            </div>
-
-
-            <div class="mb-3">
-              <label class="form-label">Контакты</label>
-              {{ form.contacts|add_class:"form-control bg-light"|attr:"placeholder:+7 999 123 45 67" }}
-            </div>
-
-            <div class="mb-3 position-relative">
-              <label for="{{ form.password1.id_for_label }}">Пароль</label>
-              {{ form.password1|add_class:"form-control bg-light password-field"|attr:"placeholder:Введите пароль" }}
-              <i class="fa fa-eye password-toggle" data-target="#{{ form.password1.id_for_label }}"></i>
-            </div>
-
-            <div class="mb-3 position-relative">
-              <label for="{{ form.password2.id_for_label }}">Подтверждение пароля</label>
-              {{ form.password2|add_class:"form-control bg-light password-field"|attr:"placeholder:Повторите пароль" }}
-              <i class="fa fa-eye password-toggle" data-target="#{{ form.password2.id_for_label }}"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- Карточка 2 -->
-        <div class="card mb-4">
-          <div class="card-body">
-            <label class="form-label">О себе</label>
-            {{ form.bio|add_class:"form-control bg-light"|attr:"rows:3" }}
-          </div>
-        </div>
-
-        <!-- Кнопки -->
-        <div class="d-flex justify-content-between">
-          <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-          <a href="{% url 'profile' user.username %}" class="btn btn-outline-secondary">Отмена</a>
-        </div>
-      </form>
-    </div>
-  </div>
+  </form>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-  // Переключение видимости пароля
-  document.querySelectorAll('.password-toggle').forEach(icon => {
-    icon.style.cursor = "pointer";
-    icon.style.position = "absolute";
-    icon.style.top = "38px";
-    icon.style.right = "12px";
-    icon.style.color = "#aaa";
-
-    icon.addEventListener('click', function () {
-      const target = document.querySelector(this.getAttribute('data-target'));
-      if (target) {
-        target.type = target.type === 'password' ? 'text' : 'password';
-        this.classList.toggle('fa-eye-slash');
-      }
-    });
-  });
-</script>
 {% endblock %}
