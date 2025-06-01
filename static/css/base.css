@@ -10,6 +10,7 @@ body {
     margin: 0;                                        /* Убираем отступы у body */
     min-height: 100vh;                                /* Минимальная высота экрана — 100% */
     font-family: Tilda Sans, sans-serif;              /* Шрифт по умолчанию */
+    font-size: 12px;
     display: flex;                                    /* Включаем флекс-бокс для высоты */
     flex-direction: column;                           /* Расположение сверху вниз */
 }
