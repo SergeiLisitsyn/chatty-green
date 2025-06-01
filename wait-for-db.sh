@@ -1,26 +1,21 @@
-#!/bin/sh
-set -ex   # Включить подробное логирование и выход при ошибке
-echo "Начало wait-for-db.sh"
-echo "DATABASE_URL: $DATABASE_URL"
-# Извлекаем параметры из DATABASE_URL
-DB_HOST=$(echo "$DATABASE_URL" | sed -e 's/.*@\([^:]*\):.*/\1/')
-DB_PORT=$(echo "$DATABASE_URL" | sed -e 's/.*:\([0-9]*\)\/.*/\1/')
-echo "Проверка подключения к $DB_HOST:$DB_PORT"
+#!/bin/bash
+set -e
 
-TIMEOUT=60
-COUNT=0
+host="${DB_HOST:-db}"
+port="${DB_PORT:-5432}"
+max_retries=30
+retry_interval=2
 
-echo "Ожидание PostgreSQL ($DB_HOST:$DB_PORT) (таймаут: ${TIMEOUT}с)..."
+echo "Ожидание PostgreSQL ($host:$port)..."
 
-# Используем bash-встроенный TCP-сокет вместо netcat
-until (timeout 1 bash -c "cat < /dev/null > /dev/tcp/$DB_HOST/$DB_PORT") &> /dev/null; do
-    COUNT=$((COUNT+1))
-    if [ $COUNT -ge $TIMEOUT ]; then
-        echo "⛔ Таймаут подключения к PostgreSQL!"
-        exit 1
+for ((i=1; i<=$max_retries; i++)); do
+    if nc -z -w 1 "$host" "$port"; then
+        echo "✅ PostgreSQL доступен!"
+        exit 0
     fi
-    echo "⏳ Ожидание ($COUNT/$TIMEOUT)..."
-    sleep 1
+    echo "⏳ Попытка $i/$max_retries..."
+    sleep $retry_interval
 done
 
-echo "✅ PostgreSQL доступен"
+echo "❌ Ошибка: PostgreSQL не доступен после $max_retries попыток!"
+exit 1
