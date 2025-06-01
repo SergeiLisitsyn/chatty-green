@@ -48,4 +48,4 @@ EXPOSE 10000
 CMD ["./entrypoint.sh"]
 #ENTRYPOINT ["./entrypoint.sh"]
 # Временная замена сложного entrypoint
-#CMD ["sh", "-c", "echo 'Контейнер запущен!'"]
+CMD ["sh", "-c", "echo 'Контейнер запущен!'"]
