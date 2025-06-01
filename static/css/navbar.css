@@ -1,6 +1,8 @@
+/* static/css/navbar.css */
 /* ===== ОСНОВНЫЕ СТИЛИ НАВБАРА ===== */
 
 /* Класс для основного фона навбара */
+@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
 .custom-gray {
     background-color: #323333 !important; /* Темно-серый цвет фона */
     min-height: 56px; /* Минимальная высота навбара */

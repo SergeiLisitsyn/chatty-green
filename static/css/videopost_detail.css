@@ -1,4 +1,8 @@
+/* static/css/videopost_detail.css */
+
 /* --Настройка размеров player--*/
+@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
+
 .video-js {
     width: 100% !important;
     height: 500px !important;} /* Фиксируем высоту */

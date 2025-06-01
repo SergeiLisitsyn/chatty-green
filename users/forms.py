@@ -19,6 +19,7 @@ class CustomUserCreationForm(UserCreationForm):
         }),
         required=False
     )
+
     # Добавляем поле для выбора отображения email
     display_email = forms.BooleanField(
         required=False,
@@ -27,7 +28,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'avatar', 'bio', 'contacts', 'password1', 'password2', "display_email"]
+        fields = ['username', 'email', 'avatar', 'bio', 'contacts', 'password1', 'password2', 'display_email']
 
 
 class CustomUserEditForm(forms.ModelForm):
@@ -38,7 +39,7 @@ class CustomUserEditForm(forms.ModelForm):
 
         fields = ['username', 'email', 'avatar', 'bio', 'contacts', 'display_email']
         widgets = {
-                    'avatar': forms.ClearableFileInput(attrs={'id': 'id_avatar'}),
+                    'avatar': forms.ClearableFileInput(attrs={'id': 'id_avatar'})
         }
 
 

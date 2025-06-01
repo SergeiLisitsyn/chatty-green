@@ -3,6 +3,7 @@
 /* === ГРУППА КНОПОК ВЗАИМОДЕЙСТВИЯ (ЛАЙК, ДИЗЛАЙК И ПРОЧЕЕ) === */
 
 /* Контейнер, в котором располагаются все кнопки взаимодействия */
+@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
 .interaction-buttons {
     display: flex;          /* Размещает дочерние элементы в одну строку */
     gap: 16px;              /* Отступ между кнопками */

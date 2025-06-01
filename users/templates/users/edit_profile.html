@@ -1,3 +1,5 @@
+<!-- users/templates/users/edit_profile.html -->
+
 {% extends 'base.html' %}
 {% load static %}
 {% load widget_tweaks %}
@@ -8,37 +10,24 @@
 <div class="container mt-4">
   <h2 class="mb-4">Редактировать профиль {{ user.username|capfirst }}</h2>
 
-  {# Открываем форму здесь, прежде чем разбивать на колонки #}
   <form method="POST" enctype="multipart/form-data" id="profile-form">
     {% csrf_token %}
     <div class="row">
-
-      <!-- Левая колонка: Текущий аватар + скрытый input + кнопка -->
       <div class="col-md-3">
         <p>Текущий аватар:</p>
-        <img
-          src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
-          alt="Аватар"
-          class="img-fluid rounded-circle mb-3 avatar-frame" style="width: 200px; height: auto;"
-          width="200"
-        >
-
-        {# Скрытое поле загрузки avataра, но внутри <form> #}
+        <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
+             alt="Аватар"
+             class="img-fluid rounded-circle mb-3 avatar-frame" style="width: 200px; height: auto;"
+             width="200">
         {{ form.avatar|add_class:"visually-hidden"|attr:"id:avatar-input" }}
-
-        {# Кнопка, которая привязана к этому скрытому input #}
         <label for="avatar-input" class="btn btn-sm btn-outline-secondary">
           Изменить фото
         </label>
-
       </div>
 
-
-      <!-- Правая колонка: остальные поля формы, кроме avatar -->
       <div class="col-md-9">
         {% for field in form %}
           {% if field.name != 'avatar' %}
-
             <div class="mb-3">
               {{ field.label_tag }}
               {{ field|add_class:"form-control bg-light" }}
@@ -48,10 +37,8 @@
             </div>
           {% endif %}
         {% endfor %}
-
         <button type="submit" class="btn btn-primary">Сохранить изменения</button>
       </div>
-
     </div>
   </form>
 </div>

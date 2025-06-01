@@ -1,6 +1,6 @@
 /* static/css/base.css */
 /* === БАЗОВЫЙ СТИЛЬ САЙТА === */
-
+@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
 body {
     background-image: url("../images/background.jpg"); /* Фоновое изображение (исправлено название) */
     background-size: cover;                           /* Растягиваем фон на весь экран */

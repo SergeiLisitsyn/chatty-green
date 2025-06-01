@@ -1,3 +1,6 @@
+/* static/css/form_post.css */
+@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
+
 /* Основные стили для контейнера формы */
 .container.mt-4 {
     max-width: 800px;

@@ -1,4 +1,9 @@
 /* static/css/registration.css */
+@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
+
+body {
+  font-family: 'Rubik', sans-serif;
+ }
 
 input[type="text"],
 input[type="email"],
@@ -73,3 +78,32 @@ textarea {
     flex: 1 1 0;                /* Одинаковая ширина для колонок */
 }
 
+/* Независимый блок политики конфиденциальности */
+.privacy-panel {
+  position: fixed;                 /* Независимая позиция на экране */
+  top: 100px;                      /* Отступ сверху (чуть ниже шапки) */
+  right: 30px;                     /* Прижат к правому краю */
+  width: 350px;                    /* Увеличенная ширина блока */
+  height: 450px;                   /* Фиксированная высота */
+  overflow-y: auto;               /* Прокрутка при переполнении */
+  background-color: #fff;         /* Белый фон */
+  border: 1px solid #ccc;         /* Светлая рамка */
+  border-radius: 10px;            /* Скруглённые углы */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Тень для объёма */
+  padding: 20px;                  /* Внутренние отступы */
+  z-index: 9999;                  /* Поверх всех других элементов */
+  font-family: 'Tilda Sans', sans-serif;
+  font-size: 14px;
+  display: none;                  /* Скрыт по умолчанию */
+}
+
+/* Анимация появления */
+.privacy-panel.fade-in {
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+/* Ключи анимации */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
