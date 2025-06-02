@@ -1,19 +1,23 @@
 #!/bin/bash
 set -e
 
-host="${DB_HOST:-db}"
-port="${DB_PORT:-5432}"
+# Автоматическое извлечение хоста и порта из DATABASE_URL
+DB_HOST=$(python -c "from urllib.parse import urlparse; import os; u = urlparse(os.getenv('DATABASE_URL')); print(u.hostname)")
+DB_PORT=$(python -c "from urllib.parse import urlparse; import os; u = urlparse(os.getenv('DATABASE_URL')); print(u.port or 5432)")
+
 timeout=30
+interval=1
 
-echo "Ожидание PostgreSQL ($host:$port)..."
+echo "Ожидание PostgreSQL ($DB_HOST:$DB_PORT)..."
 
-while ! nc -z -w 1 "$host" "$port"; do
-    timeout=$((timeout - 1))
-    if [ $timeout -le 0 ]; then
-        echo "Таймаут подключения к БД!" >&2
-        exit 1
+for i in $(seq 1 $timeout); do
+    if timeout 1 bash -c "cat < /dev/null > /dev/tcp/$DB_HOST/$DB_PORT" 2>/dev/null; then
+        echo "✅ PostgreSQL доступен!"
+        exit 0
     fi
-    sleep 1
+    echo "⏳ Попытка $i/$timeout..."
+    sleep $interval
 done
 
-echo "База данных доступна!"
+echo "❌ Таймаут подключения к БД!"
+exit 1
