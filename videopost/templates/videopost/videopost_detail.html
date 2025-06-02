@@ -179,7 +179,7 @@
     {% endif %}
   {% else %}
     <p class="text-danger">Пожалуйста, <a href="{% url 'login' %}">войдите</a>, чтобы оставить комментарий.</p>
-    <a href="{% url 'videopost:list' %}" class="btn btn-action mt-3">Назад</a>
+    <a href="{% url 'videopost:videopost_list' %}" class="btn btn-action mt-3">Назад</a>
   {% endif %}
 </div>
 

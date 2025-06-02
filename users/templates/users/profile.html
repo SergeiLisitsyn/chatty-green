@@ -9,17 +9,17 @@
   <h2>Профиль {{ profile_user.username|capfirst }}</h2>
   <div class="row">
     <!-- Левая колонка: аватар + основная информация + навигация -->
-    <div class="col-md-3">
-      <img
-          src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
-          alt="Аватар"
-          class="img-fluid rounded-circle mb-3 avatar-frame" style="width: 200px; height: auto;"
-          width="200"
-        >
-      {% if request.user == profile_user or profile_user.display_email %}
-        <p><strong>Email:</strong> {{ profile_user.email }}</p>
-      {% endif %}
+    <div class="col-md-3 text-center">
+  <img
+    src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
+    alt="Аватар"
+    class="rounded-circle mb-3 avatar-frame"
+    style="width: 200px; height: 200px; object-fit: cover;"
+  >
 
+  {% if request.user == profile_user or profile_user.display_email %}
+    <p><strong>Email:</strong> {{ profile_user.email }}</p>
+  {% endif %}
 
       <p><strong>О себе:</strong> {{ profile_user.bio|default:"Не указано" }}</p>
 
