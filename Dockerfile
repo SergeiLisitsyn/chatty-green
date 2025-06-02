@@ -6,6 +6,7 @@ WORKDIR /app
 # Установка зависимостей (включая netcat)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     netcat-openbsd && \
+    ca-certificates \
     rm -rf /var/lib/apt/lists/*
 
 # Копируем зависимости первыми (для кэширования)
