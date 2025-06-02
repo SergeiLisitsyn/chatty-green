@@ -6,16 +6,16 @@
 {% block content %}
 
   <div class="container mt-4">
-    <h2>{{ post.title|default:"(Без заголовка)" }}</h2>
-    <p>Автор: <a href="{% url 'profile' username=post.author.username %}">{{ post.author.username|capfirst }}</a></p>
-
-    <p><strong>Дата публикации:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
-    <p><strong>Создан:</strong> {{ post.created_at|ru_timesince }}</p>
-
+<h2>{{ post.title|default:"(Без заголовка)" }}</h2>
     <!-- Проверяем, загружено ли изображение -->
     {% if post.image %}
       <img src="{{ post.image.url }}" alt="Изображение поста" class="img-fluid my-3">
     {% endif %}
+
+    <p>Автор: <a href="{% url 'profile' username=post.author.username %}">{{ post.author.username|capfirst }}</a></p>
+
+    <p><strong>Дата публикации:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
+    <p><strong>Создан:</strong> {{ post.created_at|ru_timesince }}</p>
 
        <p>{{ post.text|linebreaks  }}</p>
 
