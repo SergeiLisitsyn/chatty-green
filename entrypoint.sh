@@ -1,12 +1,28 @@
-#!/bin/sh
-# entrypoint.sh
-# Ожидание базы данных
-./wait-for-db.sh
+#!/bin/bash
+set -x
 
-# Миграции (только для web-сервиса)
-if [ "$RUN_MIGRATIONS" = "true" ]; then
-    python manage.py migrate --no-input
+echo "=== Проверка окружения ==="
+python -c "import os; print('DATABASE_URL:', os.getenv('DATABASE_URL'))"
+
+echo "=== Ожидание БД ==="
+if ! ./wait-for-db.sh; then
+    echo "❌ Ошибка: БД не доступна!" >&2
+    exit 1
 fi
 
-# Выполнение переданной команды
-exec "$@"
+echo "=== Применение миграций ==="
+python manage.py migrate --no-input
+
+# Создание суперпользователя
+python create_admin.py
+
+echo "=== Сбор статики ==="
+python manage.py collectstatic --no-input --clear
+
+echo "=== Запуск Gunicorn ==="
+exec gunicorn chatty.wsgi:application \
+    --bind 0.0.0.0:$PORT \
+    --workers 2 \
+    --timeout 120 \
+    --access-logfile - \
+    --error-logfile -
