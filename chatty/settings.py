@@ -136,17 +136,16 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default= EXTERNAL_DATABASE_URL,
         conn_max_age=600,
         conn_health_checks=True,
-        ssl_require=True  # Критически важно для Render
+        ssl_require=True  # Автоматически подставит правильные настройки
     )
 }
 
-DATABASES['default']['OPTIONS'] = {
+"""DATABASES['default']['OPTIONS'] = {
     'sslmode': 'verify-full',
     'sslrootcert': '/etc/ssl/certs/ca-certificates.crt'
-}
+}"""
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
