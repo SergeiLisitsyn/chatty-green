@@ -116,7 +116,7 @@ WSGI_APPLICATION = 'chatty.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',  # Или ваше имя БД
@@ -131,14 +131,14 @@ WSGI_APPLICATION = 'chatty.wsgi.application'
         },
         'CONN_MAX_AGE': 300,  # Поддержка постоянных соединений
     }
-}"""
-DATABASES = {
+}
+"""DATABASES = {
     'default': dj_database_url.parse(
         os.getenv('DATABASE_URL', 'postgres://postgres:password@postgres.oregon-postgres.render.com:5432/postgres'),
         conn_max_age=600,
         conn_health_checks=True
     )
-}
+}"""
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
