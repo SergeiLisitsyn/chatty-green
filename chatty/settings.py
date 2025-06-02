@@ -115,7 +115,7 @@ WSGI_APPLICATION = 'chatty.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-EXTERNAL_DATABASE_URL = 'postgresql://chatty:MYdDv1BXL73NYPygEMBeEihX6EerpXio@dpg-d0ul5me3jp1c738csh9g-a.frankfurt-postgres.render.com/chattydb'
+EXTERNAL_DATABASE_URL = 'postgresql://chatty:MYdDv1BXL73NYPygEMBeEihX6EerpXio@dpg-d0ul5me3jp1c738csh9g-a/chattydb_3ygp'
 """DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
