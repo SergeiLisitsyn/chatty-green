@@ -116,20 +116,22 @@ WSGI_APPLICATION = 'chatty.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-'''DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('PG_NAME'),
-        'USER': os.getenv('PG_USER'),
-        'PASSWORD': os.getenv('PG_PASSWORD'),
-        'HOST': os.getenv('PG_HOST'),
-        'PORT': os.getenv('PG_PORT'),
+        'NAME': 'postgres',  # Или ваше имя БД
+        'USER': 'postgres',
+        'PASSWORD': 'password',  # Замените на реальный пароль
+        'HOST': 'postgres.oregon-postgres.render.com',
+        'PORT': '5432',
         'OPTIONS': {
-            'client_encoding': 'UTF8',
+            'sslmode': 'require',
+            'sslrootcert': '/etc/ssl/certs/ca-certificates.crt',  # Стандартный путь
+            'options': '-c statement_timeout=5000'  # Таймаут 5 сек
         },
+        'CONN_MAX_AGE': 300,  # Поддержка постоянных соединений
     }
-}
-DATABASE_URL = os.getenv("DATABASE_URL")'''
+}"""
 DATABASES = {
     'default': dj_database_url.parse(
         os.getenv('DATABASE_URL', 'postgres://postgres:password@postgres.oregon-postgres.render.com:5432/postgres'),
