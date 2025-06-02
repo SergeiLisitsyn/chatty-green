@@ -4,7 +4,7 @@
 /* Класс для основного фона навбара */
 @import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
 .custom-gray {
-    background-color: #323333 !important; /* Темно-серый цвет фона */
+    background-color: #2e2e2e !important; /* Темно-серый цвет фона ________ НЕ МЕНЯТЬ!!!!________*/
     min-height: 56px; /* Минимальная высота навбара */
 }
 
