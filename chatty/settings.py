@@ -58,9 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-
     'social_django',
-
     'django.contrib.sites',
 
     # Аутентификация
@@ -70,7 +68,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
 
 
-    # Твои приложения
+    # Мои приложения
     'users',
     'posts',
     'ads',
@@ -294,14 +292,25 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_FORMS = {'signup': 'users.forms.CustomSignupForm'}
 
 
-# SOCIAL ACCOUNT
+# SOCIAL ACCOUNT Вариант от Оли
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#          'APP': {  # Удалите или закомментируйте этот блок!
+#              'client_id': os.getenv('GOOGLE_CLIENT_ID', ""),
+#              'secret': os.getenv('GOOGLE_CLIENT_SECRET', ""),
+#              'key': '',
+#          },
+#         'SCOPE': ['email', 'profile'],
+#         'AUTH_PARAMS': {'access_type': 'online'},
+#     },
+#     'github': {
+#         'SCOPE': ['user:email'],
+#         'AUTH_PARAMS': {'access_type': 'online'},
+#     },
+# }
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-         'APP': {  # Удалите или закомментируйте этот блок!
-             'client_id': os.getenv('GOOGLE_CLIENT_ID', ""),
-             'secret': os.getenv('GOOGLE_CLIENT_SECRET', ""),
-             'key': '',
-         },
         'SCOPE': ['email', 'profile'],
         'AUTH_PARAMS': {'access_type': 'online'},
     },
@@ -310,6 +319,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {'access_type': 'online'},
     },
 }
+
 
 #SOCIALACCOUNT_LOGIN_ON_GET = True
 
