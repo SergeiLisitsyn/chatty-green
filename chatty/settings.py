@@ -115,8 +115,8 @@ WSGI_APPLICATION = 'chatty.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
+EXTERNAL_DATABASE_URL = 'postgresql://chatty:MYdDv1BXL73NYPygEMBeEihX6EerpXio@dpg-d0ul5me3jp1c738csh9g-a.frankfurt-postgres.render.com/chattydb_3ygp'
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',  # Или ваше имя БД
@@ -131,14 +131,22 @@ DATABASES = {
         },
         'CONN_MAX_AGE': 300,  # Поддержка постоянных соединений
     }
-}
-"""DATABASES = {
-    'default': dj_database_url.parse(
-        os.getenv('DATABASE_URL', 'postgres://postgres:password@postgres.oregon-postgres.render.com:5432/postgres'),
-        conn_max_age=600,
-        conn_health_checks=True
-    )
 }"""
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default= EXTERNAL_DATABASE_URL,
+        conn_max_age=600,
+        conn_health_checks=True,
+        ssl_require=True  # Критически важно для Render
+    )
+}
+
+DATABASES['default']['OPTIONS'] = {
+    'sslmode': 'verify-full',
+    'sslrootcert': '/etc/ssl/certs/ca-certificates.crt'
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
