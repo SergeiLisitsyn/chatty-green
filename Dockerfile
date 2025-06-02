@@ -6,6 +6,7 @@ WORKDIR /app
 # Установка системных зависимостей
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc python3-dev && \
+    netcat-openbsd && \
     rm -rf /var/lib/apt/lists/*
 
 # Копируем зависимости первыми (для кэширования)
