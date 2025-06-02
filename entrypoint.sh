@@ -13,6 +13,9 @@ fi
 echo "=== Применение миграций ==="
 python manage.py migrate --no-input
 
+# Создание суперпользователя
+python create_admin.py
+
 echo "=== Сбор статики ==="
 python manage.py collectstatic --no-input --clear
 
