@@ -1,207 +1,169 @@
 <!-- templates/include/navbar.html -->
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Chatty - Навигация</title>
 
-    <!-- Подключаем Bootstrap 5 -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 
-    <style>
-      /* Стили для подсказок поиска */
-      #suggestions-list {
-        list-style-type: none;
-        padding: 0;
-        position: absolute;
-        background: white;
-        width: 100%;
-        border: 1px solid #ddd;
-        max-height: 200px;
-        overflow-y: auto;
-        z-index: 1000;
-      }
-      #suggestions-list li:hover {
-        background: #f0f0f0;
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Навигационная панель -->
-    <nav class="navbar navbar-dark bg-dark">
-      <div class="container-fluid d-flex justify-content-between align-items-center">
-        <!-- Левая часть: логотип и кнопка-гамбургер для полного меню -->
-        <div class="d-flex align-items-center">
-          <a class="navbar-brand me-2" href="#">Chatty</a>
-          <button
-            class="btn btn-dark"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#fullMenuOffcanvas"
-            aria-controls="fullMenuOffcanvas"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-dark custom-gray align-items-center">
+  <div class="container-fluid d-flex align-items-center justify-content-between" style="padding-right: 40px;">
+   <a class="navbar-brand me-3" href="{% url 'home' %}">Chatty</a>
 
-        <!-- Средняя часть: поисковая форма -->
-        <div class="flex-grow-1 mx-4 position-relative">
-          <form action="{% url 'search' %}" method="GET" class="d-flex">
-            <div class="input-group" style="max-width: 900px;">
-              <input
-                type="text"
-                id="search-box"
-                name="q"
-                class="form-control rounded-pill ps-4"
-                placeholder="🔍 Найти пост..."
-                style="height: 32px;"
-                onkeyup="showSuggestions(this.value)"
-              />
-              <ul
-                id="suggestions-list"
-                class="list-group position-absolute w-100"
-              ></ul>
-            </div>
-          </form>
-        </div>
 
-        <!-- Правая часть: базовое меню для больших экранов -->
-        <div>
-          <ul class="navbar-nav flex-row align-items-center">
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="{% url 'home' %}">Главная</a>
-            </li>
-            {% if user.is_authenticated %}
-              <li class="nav-item mx-2 d-flex align-items-center">
-                <img
-                  src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
-                  alt="Аватар"
-                  class="rounded-circle"
-                  width="40"
-                  height="40"
-                  style="object-fit: cover; margin-right: 8px;"
-                />
-                <a class="nav-link" href="{% url 'profile' username=user.username %}"
-                  >{{ user.username }}</a
-                >
-              </li>
-              <li class="nav-item mx-2">
-                <form method="POST" action="{% url 'logout' %}" style="display: inline;">
-                  {% csrf_token %}
-                  <button
-                    type="submit"
-                    class="btn btn-link nav-link text-white"
-                  >
-                    Выход
-                  </button>
-                </form>
-              </li>
-            {% else %}
-              <li class="nav-item mx-2">
-                <a class="nav-link" href="{% url 'login' %}">Войти</a>
-              </li>
-              <li class="nav-item mx-2">
-                <a class="nav-link btn btn-primary text-white" href="{% url 'register' %}">Регистрация</a>
-              </li>
-            {% endif %}
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Offcanvas-панель для полного списка функций (открывается слева) -->
-    <div
-      class="offcanvas offcanvas-start"
-      tabindex="-1"
-      id="fullMenuOffcanvas"
-      aria-labelledby="fullMenuOffcanvasLabel"
-    >
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="fullMenuOffcanvasLabel">
-          Полный список функций сайта
-        </h5>
+    <!-- Левая часть: логотип и кнопка-гамбургер с dropdown-меню -->
+    <div class="d-flex align-items-center">
+      <div class="dropdown">
         <button
+          class="nav-link btn btn-link text-white"
           type="button"
-          class="btn-close"
-          data-bs-dismiss="offcanvas"
-          aria-label="Закрыть"
-        ></button>
-      </div>
-      <div class="offcanvas-body">
-        <!-- Базовое меню пользователя (повтор) -->
-        <ul class="navbar-nav mb-3">
-          <li class="nav-item mb-2">
-            <a class="nav-link" href="{% url 'welcome' %}">Приветственная страница</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
-          </li>
+          id="hamburgerDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="dropdown-menu custom-dropdown" aria-labelledby="hamburgerDropdown">
+          <li><h5 class="dropdown-header">Полный список функций сайта</h5></li>
+          <li><a class="dropdown-item" href="{% url 'welcome' %}">Приветственная страница</a></li>
+          <li><a class="dropdown-item" href="{% url 'register' %}">Регистрация</a></li>
           {% if not user.is_authenticated %}
-            <li class="nav-item mb-2">
-              <a class="nav-link" href="{% url 'login' %}">Вход</a>
-            </li>
+            <li><a class="dropdown-item" href="{% url 'login' %}">Вход</a></li>
           {% endif %}
           {% if user.is_authenticated %}
-            <li class="nav-item mb-2">
-              <a class="nav-link" href="{% url 'logout' %}">Выход</a>
-            </li>
-            <li class="nav-item mb-2">
-              <a class="nav-link" href="{% url 'profile' username=user.username %}">Профиль</a>
-            </li>
-            <li class="nav-item mb-2">
-              <a class="nav-link" href="{% url 'change_password' %}">Изменить пароль</a>
-            </li>
-            <li class="nav-item mb-2">
-              <a class="nav-link" href="{% url 'edit_profile' username=user.username %}">Редактировать профиль</a>
+            <li><a class="dropdown-item" href="{% url 'login' %}">Вход</a></li>
+            <li><a class="dropdown-item" href="{% url 'profile' username=user.username %}">Профиль</a></li>
+            <li><a class="dropdown-item" href="{% url 'change_password' %}">Изменить пароль</a></li>
+            <li><a class="dropdown-item" href="{% url 'edit_profile' username=user.username %}">Редактировать профиль</a></li>
+            <li>
+              <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <a class="dropdown-item" href="#" onclick="event.preventDefault(); this.closest('form').submit();">Выход</a>
+              </form>
             </li>
           {% endif %}
+          <li><hr class="dropdown-divider"></li>
+          <li><h6 class="dropdown-header">Функции приложения posts</h6></li>
+          <li><a class="dropdown-item" href="{% url 'posts:post_list' %}">Список постов</a></li>
+          <li><a class="dropdown-item" href="{% url 'posts:post_create' %}">Создать пост</a></li>
         </ul>
-
-        <hr />
-
-        <!-- Дополнительное меню: функции приложения posts -->
-        <div class="full-functionality-menu">
-
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <a href="{% url 'posts:post_list' %}">Список постов</a>
-            </li>
-            <li class="list-group-item">
-              <a href="{% url 'posts:post_create' %}">Создать пост</a>
-            </li>
-            <li class="list-group-item">
-
-          </ul>
-        </div>
       </div>
     </div>
 
-    <!-- Скрипт для подсказок поиска (без изменений) -->
-    <script>
-      function showSuggestions(query) {
-        if (query.length < 2) {
-          document.getElementById("suggestions-list").innerHTML = "";
-          return;
-        }
-        fetch(`/search/suggestions/?q=${query}`)
-          .then((response) => response.json())
-          .then((data) => {
-            let suggestionsList = document.getElementById("suggestions-list");
-            suggestionsList.innerHTML = "";
-            data.forEach((title) => {
-              let item = document.createElement("li");
-              item.className = "list-group-item";
-              item.innerHTML = `<a href="/search/?q=${title}" class="text-dark text-decoration-none">${title}</a>`;
-              suggestionsList.appendChild(item);
+        <!-- 🔍 Поле поиска -->
+        <form action="{% url 'search' %}" method="GET" class="search-form">
+            <div class="search-input-container">
+                <input type="text" name="q" class="form-control search-input"
+                       placeholder="Найти пост...">
+            </div>
+        </form>
+
+      <!-- Правая навигация для больших экранов -->
+    <ul class="navbar-nav d-none d-lg-flex align-items-center gap-3 ms-auto" style="margin-right: 0.3cm;">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">Главная</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'posts:post_list' %}">Лента</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'videopost:videopost_list' %}">Видео</a>
+      </li>
+      {% if user.is_authenticated %}
+        <li class="nav-item d-flex align-items-center">
+          <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{{ MEDIA_URL }}avatars/default.png{% endif %}"
+               alt="Аватар" class="rounded-circle" width="35" height="35"
+               style="object-fit: cover; margin-right: 8px;">
+          <a class="nav-link" href="{% url 'profile' username=user.username %}">{{ user.username|capfirst }}</a>
+        </li>
+        <li class="nav-item">
+          <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="nav-link btn btn-link text-white">Выход</button>
+          </form>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Войти</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-link text-white" href="{% url 'register' %}">Регистрация</a>
+        </li>
+      {% endif %}
+    </ul>
+
+    <!-- Правый гамбургер для маленьких экранов -->
+    <div class="right-menu-container d-lg-none ms-2" style="position: relative;">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#rightNavbarCollapse"
+              aria-controls="rightNavbarCollapse" aria-expanded="false" aria-label="Toggle right navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Абсолютно позиционированное меню, которое появляется поверх контента -->
+      <div id="rightNavbarCollapse" class="collapse" style="position: absolute; top: 100%; right: 0; left: auto; background-color: #343a40; z-index: 1050; width: 250px; padding: 0.5rem 1rem;">
+        <ul class="navbar-nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'home' %}">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'posts:post_list' %}">Лента</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'videopost:videopost_list' %}">Видео</a>
+          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'profile' username=user.username %}">Профиль</a>
+            </li>
+            <li class="nav-item">
+              <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-link btn btn-link text-white p-0">Выход</button>
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'login' %}">Войти</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'register' %}">Регистрация</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+<script>
+function showSuggestions(query) {
+    const suggestionsList = document.getElementById("suggestions-list");
+    suggestionsList.innerHTML = "";
+    if (query.length < 2) {
+        return;
+    }
+    fetch(`/search/suggestions/?q=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!Array.isArray(data)) return;
+            data.forEach(title => {
+                const item = document.createElement("li");
+                item.className = "list-group-item";
+                item.innerHTML = `<a href="/search/?q=${encodeURIComponent(title)}" class="text-dark text-decoration-none">${title}</a>`;
+                suggestionsList.appendChild(item);
             });
-          });
-      }
-    </script>
-  </body>
-</html>
+        })
+        .catch(error => {
+            console.error('Ошибка загрузки подсказок:', error);
+        });
+}
+</script>
+
+<script>
+function logoutFunction(e) {
+    e.preventDefault();
+    var logoutForm = document.getElementById("logout-form");
+    if (logoutForm) {
+        logoutForm.submit();
+    } else {
+        console.error("Logout form not found!");
+    }
+}
+</script>

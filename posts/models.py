@@ -1,3 +1,4 @@
+# posts/models.py
 from django.db import models
 from django.utils.text import slugify
 from django.conf import settings
@@ -6,6 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from ads.models import Advertisement
+
 from posts.templatetags import time_filters
 from django.contrib.auth import get_user_model
 from unidecode import unidecode
@@ -29,6 +31,7 @@ class Post(models.Model):
     dislikes = models.ManyToManyField(User, related_name='disliked_posts', blank=True)
     is_archived = models.BooleanField(default=False)
     advertisement = models.ForeignKey(Advertisement, on_delete=models.SET_NULL, null=True, blank=True)  # Рекламный блок
+
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -62,6 +65,7 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['created_at']
+
 
 
 class Advertisement(models.Model):

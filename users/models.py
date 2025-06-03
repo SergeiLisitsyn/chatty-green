@@ -40,6 +40,14 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', default='avatars/default.png')
     bio = models.TextField(blank=True, verbose_name="О себе")
     contacts = models.CharField(max_length=255, blank=True, verbose_name="Контакты")
+    # Поле для выбора отображения email; по умолчанию скрытый
+    display_email = models.BooleanField(default=False, verbose_name="Показывать мой email")
+
+    # Новые поля для бана
+    is_banned = models.BooleanField(default=False, verbose_name="Забанен")
+    ban_reason = models.TextField(blank=True, null=True, verbose_name="Причина бана")
+    banned_until = models.DateTimeField(blank=True, null=True, verbose_name="Забанен до")
+
 
     # Новые поля для бана
     is_banned = models.BooleanField(default=False, verbose_name="Забанен")

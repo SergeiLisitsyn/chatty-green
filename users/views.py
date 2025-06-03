@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-
+from videopost.models import VideoPost
 from posts.models import Post
 from subscriptions.models import Subscription
 from .models import CustomUser  # если переопределялась модель
@@ -38,6 +38,7 @@ def register(request):
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
             return redirect('profile', username=user.username)
     else:
@@ -70,11 +71,18 @@ def profile(request, username):
         liked_post_ids = posts_query.filter(likes=request.user).values_list('id', flat=True)
         user_liked_posts = list(liked_post_ids)
 
+    # 👇 Добавляем видео — последние 3 или сколько нужно
+    user_videos = VideoPost.objects.filter(
+        author=profile_user,
+        is_archived=False
+    ).order_by('-publication_date')[:6]
+
     context = {
         'profile_user': profile_user,
         'is_subscribed': is_subscribed,
         'user_posts': user_posts,
-        'user_liked_posts': user_liked_posts
+        'user_liked_posts': user_liked_posts,
+        'user_videos': user_videos,
     }
     return render(request, 'users/profile.html', context)
 
@@ -106,14 +114,15 @@ def edit_profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
 
     if request.method == 'POST':
-        form = CustomUserEditForm(request.POST, request.FILES, instance=user)  # Используйте нужную форму
+        form = CustomUserEditForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             return redirect('profile', username=user.username)
     else:
-        form = CustomUserCreationForm(instance=user)  # Предзаполненная форма
+        form = CustomUserEditForm(instance=user)
 
     return render(request, 'users/edit_profile.html', {'form': form, 'user': user})
+
 
 
 def change_password(request):
@@ -156,3 +165,8 @@ class LoggingPasswordResetConfirmView(PasswordResetConfirmView):
         print("============================\n")
 
         return response
+
+def privacy_policy_view(request):
+        return render(request, 'users/privacy_policy.html')
+
+
