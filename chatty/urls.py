@@ -13,7 +13,6 @@ app_name = 'users'
 
 
 urlpatterns = [
-    path('health/', health_check),
     path('admin/', admin.site.urls), #Панель администратора Djan
     path('profile/<str:username>/', users_views.profile, name='profile'),
     path('', welcome, name='welcome'),  # сначала приветствие
