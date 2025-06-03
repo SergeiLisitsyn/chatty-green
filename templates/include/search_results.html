@@ -1,18 +1,43 @@
+{# --templates/include/search_results.html-- #}
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container mt-4">
+    <h2>Результаты поиска по запросу: "{{ query }}"</h2>
 
-    {% if results %}
-        <ul>
-            {% for post in results %}
-                <li>
-                    <a href="{% url 'posts:post_detail' post.slug %}">{{ post.title }}</a>
 
-                    <p>{{ post.content|truncatewords:20 }}</p>
-                </li>
-            {% endfor %}
-        </ul>
+    {% if post_results or video_results %}
+
+        {% if post_results %}
+            <h3>Статьи</h3>
+            <ul>
+                {% for post in post_results %}
+                    <li>
+                        <a href="{% url 'posts:post_detail' post.slug %}">{{ post.title }}</a>
+                        <p>{{ post.content|truncatewords:20 }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>По вашему запросу статьи не найдены.</p>
+        {% endif %}
+
+        {% if video_results %}
+            <h3>Видео</h3>
+            <ul>
+                {% for video in video_results %}
+                    <li>
+                        <a href="{% url 'videopost:videopost_detail' video.slug %}">{{ video.title }}</a>
+                        <p>{{ video.description|truncatewords:20 }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>По вашему запросу видео не найдены.</p>
+        {% endif %}
+
     {% else %}
         <p>Ничего не найдено.</p>
     {% endif %}
+</div>
 {% endblock %}

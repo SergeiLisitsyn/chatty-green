@@ -1,21 +1,58 @@
+<!-- users/templates/users/edit_profile.html -->
+
 {% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
 
 {% block content %}
-  <div class="container">
-    <h2>Редактировать профиль {{ user.username }}</h2>
+<div class="container mt-4">
+  <h2 class="mb-4">Редактировать профиль {{ user.username|capfirst }}</h2>
 
-    <div class="row mb-3">
-      <div class="col-md-3">
+  <form method="POST" enctype="multipart/form-data" id="profile-form">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-3 text-center">
         <p>Текущий аватар:</p>
-        <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
-             alt="Аватар" class="img-thumbnail" width="200">
+       <img
+          src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
+          alt="Аватар"
+          class="rounded-circle mb-3 avatar-frame"
+          style="width: 200px; height: 200px; object-fit: cover;"
+        >
+        {{ form.avatar|add_class:"visually-hidden"|attr:"id:avatar-input" }}
+        <label for="avatar-input" class="btn btn-sm btn-outline-secondary">
+          Изменить фото
+        </label>
       </div>
-    </div>
 
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-    </form>
-  </div>
+      <div class="col-md-9">
+        {% for field in form %}
+          {% if field.name != 'avatar' %}
+            <div class="mb-3">
+              {% if field.name == 'display_email' %}
+                <div class="form-check mb-3">
+                  {{ field|add_class:"form-check-input" }}
+                  <label class="form-check-label" for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                  </label>
+                </div>
+
+              {% else %}
+                {{ field.label_tag }}
+                {{ field|add_class:"form-control bg-light" }}
+              {% endif %}
+              {% if field.errors %}
+                <div class="text-danger small">{{ field.errors|striptags }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+      </div>
+
+    </div>
+  </form>
+</div>
 {% endblock %}

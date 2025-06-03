@@ -1,8 +1,8 @@
 #posts/views.py
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse, HttpResponseForbidden
-from .models import Post, Comment
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
+from .models import Post, Comment, Advertisement
 from .forms import CommentForm, PostForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
@@ -13,6 +13,7 @@ from django.views.decorators.http import require_POST
 from subscriptions.models import Subscription
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from posts.templatetags import time_filters
+from django.db.models import Q
 
 
 # Классы для работы с Post
@@ -26,9 +27,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-
-from django.core.paginator import EmptyPage, PageNotAnInteger
-from django.shortcuts import redirect
 
 class PostListView(ListView):
     model = Post
@@ -56,7 +54,6 @@ class PostListView(ListView):
         return context
 
 
-
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
@@ -68,11 +65,11 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('posts:post_detail', kwargs={'slug': self.object.slug})  # ✅ Добавляем namespace
-      
-      
+
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    success_url = reverse_lazy('post_list')
+    success_url = reverse_lazy('posts:post_list')
     template_name = 'posts/post_confirm_delete.html'
 
     def test_func(self):
@@ -100,7 +97,8 @@ class PostDetailView(DetailView):
             comment.post = self.object
             comment.author = request.user
             comment.save()
-            return redirect('posts:post_list')
+            return redirect('posts:post_list') # после добавления комментария пользователь перенаправляется на список постов, а не остаётся на том же посте.
+            # return redirect('posts:post_detail', slug=self.object.slug) # после добавления комментария пользователь остается на этой же странице
 
         context = self.get_context_data()
         context['form'] = form
@@ -109,31 +107,27 @@ class PostDetailView(DetailView):
 
 @login_required
 @require_POST
-def like_post(request, slug):
-    if not request.user.is_authenticated:
-        return HttpResponseForbidden("You must be logged in to like a post.")
+def toggle_like(request, slug):
+    try:
+        post = get_object_or_404(Post, slug=slug)
+    except Post.DoesNotExist:
+        return JsonResponse({'error': 'Пост не найден'}, status=404)
 
-    post = get_object_or_404(Post, slug=slug)
-    user = request.user
-
-    if user in post.likes.all():
-        post.likes.remove(user)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
         liked = False
     else:
-        post.likes.add(user)
+        post.likes.add(request.user)
         liked = True
 
     return JsonResponse({
+        'success': True,
         'liked': liked,
-        'likes_count': post.likes.count()
+        'likes_count': post.likes.count(),
     })
-
 
 @require_POST
 def dislike_post(request, slug):
-    if not request.user.is_authenticated:
-        return HttpResponseForbidden("You must be logged in to dislike a post.")
-
     post = get_object_or_404(Post, slug=slug)
     user = request.user
 
@@ -143,11 +137,11 @@ def dislike_post(request, slug):
     else:
         post.dislikes.add(user)
         disliked = True
-        post.likes.remove(user)  # ❗ убираем лайк, если ставится дизлайк
 
     return JsonResponse({
+        'success': True,  # ✅ Добавляем статус success
         'disliked': disliked,
-        'dislikes_count': post.dislikes.count()
+        'dislikes_count': post.dislikes.count(),
     })
 
 
@@ -191,12 +185,9 @@ def archive_post(request, slug):
     return JsonResponse({'success': False})
 
 
-from django.shortcuts import render
-from posts.models import Post
-
 def home(request):
     # Выбираем 5 последних неархивированных постов, отсортированных по дате создания (от новых к старым)
-    latest_posts = Post.objects.filter(is_archived=False).order_by('-created_at')[:5]
+    latest_posts = Post.objects.filter(is_archived=False).order_by('-created_at')[:12]
     return render(request, 'home.html', {'latest_posts':  latest_posts})
 
 
@@ -209,5 +200,14 @@ def delete_post(request, slug):
             return JsonResponse({"success": True, "post_id": post.id, "message": "✅ Ваш пост успешно удалён!"})
 
     return JsonResponse({"success": False, "error": "❌ Ошибка удаления поста"})
+
+
+def search_results(request):
+    query = request.GET.get("q", "").strip()
+    posts = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query), is_archived=False)
+
+    return render(request, "posts/search_results.html", {"posts": posts, "query": query})
+
+
 
 

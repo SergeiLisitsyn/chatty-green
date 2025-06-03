@@ -127,7 +127,7 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
+# Environmentsучше
 .env
 .env.production
 .env.dev
@@ -174,3 +174,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+.env.production

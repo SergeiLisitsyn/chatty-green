@@ -1,6 +1,19 @@
 Chatty_green/
 ├── Dockerfile
 ├── Print_three_project.py
+├── add_ad_block.py
+├── ads/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── forms.py
+│   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_alter_advertisement_options_advertisement_video_and_more.py
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── urls.py
+│   └── views.py
+├── allfileshas.txt
 ├── chatty/
 │   ├── __init__.py
 │   ├── asgi.py
@@ -11,13 +24,20 @@ Chatty_green/
 ├── create_admin.py
 ├── db/
 │   └── Dockerfile
+├── db_dump.json
 ├── docker-compose.yml
 ├── entrypoint.sh
 ├── manage.py
 ├── media/
+│   ├── ads/
+│   │   ├── images/
+│   │   └── videos/
+│   ├── ads_images/
 │   ├── avatars/
 │   ├── post_images/
-│   └── test.txt
+│   ├── test.txt
+│   ├── uploaded_videos/
+│   └── video_thumbnails/
 ├── nginx/
 │   ├── Dockerfile
 │   └── nginx.conf
@@ -32,18 +52,25 @@ Chatty_green/
 │   │   ├── 0003_comment.py
 │   │   ├── 0004_alter_comment_options_post_likes.py
 │   │   ├── 0005_post_dislikes.py
+│   │   ├── 0006_post_created_at.py
+│   │   ├── 0007_post_is_archived_post_updated_at.py
+│   │   ├── 0008_advertisement_post_advertisement.py
+│   │   ├── 0008_alter_post_slug.py
+│   │   ├── 0009_merge_20250522_0025.py
+│   │   ├── 0010_alter_post_slug.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── templates/
 │   │   ├── include/
-│   │   │   ├── paginator.html
-│   │   │   └── post_preview.html
+│   │   │   └── paginator.html
 │   │   └── posts/
 │   │       ├── post_confirm_delete.html
 │   │       ├── post_detail.html
 │   │       ├── post_edit.html
 │   │       ├── post_form.html
-│   │       └── post_list.html
+│   │       ├── post_list.html
+│   │       ├── search_results.html
+│   │       └── share.html
 │   ├── templatetags/
 │   │   ├── __init__.py
 │   │   └── time_filters.py
@@ -52,7 +79,18 @@ Chatty_green/
 │   └── views.py
 ├── requirements.txt
 ├── static/
+│   ├── css/
+│   │   ├── ads.css
+│   │   ├── base.css
+│   │   ├── form_post.css
+│   │   ├── home.css
+│   │   ├── interaction-buttons.css
+│   │   ├── navbar.css
+│   │   ├── posts.css
+│   │   ├── registration.css
+│   │   └── videopost_detail.css
 │   ├── images/
+│   ├── js/
 │   └── test.txt
 ├── structure.txt
 ├── subscriptions/
@@ -61,30 +99,46 @@ Chatty_green/
 │   ├── apps.py
 │   ├── migrations/
 │   │   ├── 0001_initial.py
+│   │   ├── 0002_remove_subscription_temp_field.py
+│   │   ├── 0003_alter_subscription_options_and_more.py
 │   │   └── __init__.py
 │   ├── models.py
+│   ├── templates/
+│   │   └── subscriptions/
+│   │       ├── feed.html
+│   │       ├── followers.html
+│   │       └── following.html
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
 ├── templates/
+│   ├── ads/
+│   │   ├── ads_list.html
+│   │   └── advertisement_form.html
 │   ├── base.html
 │   ├── home.html
 │   ├── include/
 │   │   ├── footer.html
-│   │   └── navbar.html
+│   │   ├── navbar.html
+│   │   └── search_results.html
 │   ├── login.html
-│   ├── register.html
 │   ├── registration/
 │   │   └── login.html
 │   ├── welcome.html
 │   └── {% static 'images/
+├── tests/
+│   ├── test_post_create.py
+│   ├── test_post_update.py
+│   └── test_user_flow.py
 ├── users/
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
+│   ├── context_processors.py
 │   ├── forms.py
 │   ├── migrations/
 │   │   ├── 0001_initial.py
+│   │   ├── 0002_customuser_ban_reason_customuser_banned_until_and_more.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── signals.py
@@ -100,6 +154,7 @@ Chatty_green/
 │   │       ├── password_reset_confirm.html
 │   │       ├── password_reset_done.html
 │   │       ├── password_reset_form.html
+│   │       ├── privacy_policy.html
 │   │       ├── profile.html
 │   │       ├── register.html
 │   │       └── templatetags/
@@ -111,4 +166,32 @@ Chatty_green/
 ├── venv/
 │   ├── Include/
 │   ├── Scripts/
+├── videopost/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_remove_videopost_preview_image_and_more.py
+│   │   ├── 0003_alter_videopost_video_url.py
+│   │   ├── 0004_videocomment_parent.py
+│   │   ├── 0005_videopost_video_file.py
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── templates/
+│   │   └── videopost/
+│   │       ├── search_results.html
+│   │       ├── share.html
+│   │       ├── videopost_confirm_delete.html
+│   │       ├── videopost_detail.html
+│   │       ├── videopost_edit.html
+│   │       ├── videopost_form.html
+│   │       └── videopost_list.html
+│   ├── templatetags/
+│   │   ├── __init__.py
+│   │   └── youtube_tags.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
 └── wait-for-db.sh

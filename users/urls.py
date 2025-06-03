@@ -6,12 +6,13 @@ from . import views
 from .views import CustomLoginView
 
 from django.urls import reverse_lazy
+from .views import privacy_policy_view
 
 
 
 urlpatterns = [
     path('', views.welcome_view, name='welcome'),  # Приветственная страница
-    #path('home/', views.home_view, name='home'),  # Основная страница
+
     path('register/', views.register, name='register'),
     path('login/', CustomLoginView.as_view(template_name='users/login.html'), name='login'),  # используем кастомное представление
     path('logout/', auth_views.LogoutView.as_view(next_page=reverse_lazy('posts:post_list')), name='logout'),
@@ -23,6 +24,9 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('profile/<str:username>/edit/', views.edit_profile, name='edit_profile'),  # Добавлен путь для редактирования профиля
+    path("accounts/", include("allauth.urls")),  #  Подключаем авторизацию через email/Google
+    path('privacy-policy/', privacy_policy_view, name='privacy_policy'),
+
 
 
 ]

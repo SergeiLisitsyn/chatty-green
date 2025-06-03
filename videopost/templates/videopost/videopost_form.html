@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  {% if form.instance.pk %}
+    Редактировать видеопост
+  {% else %}
+    Создать видеопост
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>
+      {% if form.instance.pk %}Редактировать видеопост{% else %}Создать видеопост{% endif %}
+    </h2>
+
+    <form method="post" enctype="multipart/form-data" class="mt-3">
+      {% csrf_token %}
+
+      {# Ошибки формы #}
+      {% if form.errors %}
+        <div class="alert alert-danger">
+          <strong>Ошибка!</strong> Проверьте введённые данные.
+          <ul>
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li><strong>{{ field }}</strong>: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {# Заголовок #}
+      <div class="mb-3">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+      </div>
+
+      {# Описание видео #}
+      <div class="mb-3">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+      </div>
+
+      {# Поле для ссылки на видео (video_url) #}
+      <div class="mb-3">
+        {{ form.video_url.label_tag }}
+        {{ form.video_url }}
+        <small class="text-muted">🔗 Укажите ссылку на видео (YouTube, Vimeo и т. д.)</small>
+      </div>
+
+      {# Загрузка видеофайла (video_file) #}
+      <div class="mb-3">
+        {{ form.video_file.label_tag }}
+        {{ form.video_file }}
+        <small class="text-muted">📹 Рекомендуемый формат: MP4, AVI, MKV (до 500MB)</small>
+      </div>
+
+      {# Показ текущего видеофайла, если уже загружено #}
+      {% if form.instance.video_file %}
+        <div class="mb-3">
+          <label class="form-label">Текущее видео:</label><br>
+          <video width="480" controls>
+            <source src="{{ form.instance.video_file.url }}" type="video/mp4">
+            Ваш браузер не поддерживает воспроизведение видео.
+          </video>
+        </div>
+      {% endif %}
+
+      {# Загрузка превью-изображения (thumbnail) #}
+      <div class="mb-3">
+        {{ form.thumbnail.label_tag }}
+        {{ form.thumbnail }}
+      </div>
+
+      {# Возрастной ценз #}
+      <div class="mb-3">
+        {{ form.age_rating.label_tag }}
+        {{ form.age_rating }}
+        <small class="text-muted">🔞 Выберите возрастной рейтинг видео (0+, 6+, 12+, 18+)</small>
+      </div>
+
+      {# Подтверждение авторства контента #}
+      <div class="mb-3">
+        <label class="form-label">✅ Подтверждение авторства</label>
+        <input type="checkbox" name="ownership_confirmation" required>
+        <small class="text-muted">Я подтверждаю, что имею право публиковать это видео и музыку.</small>
+      </div>
+
+      {# Кнопки управления #}
+      <div class="d-flex justify-content-start mt-3">
+        <button type="submit" class="btn btn-primary me-2">💾 Сохранить</button>
+        <a href="{% url 'videopost:videopost_list' %}" class="btn btn-secondary">Отмена</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
