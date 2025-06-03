@@ -20,6 +20,7 @@ echo "=== Сбор статики ==="
 python manage.py collectstatic --no-input --clear
 
 echo "=== Запуск Gunicorn ==="
+PORT=${PORT:-8000} #  по умолчанию будет использоваться порт 8000, и ошибки не будет.
 exec gunicorn chatty.wsgi:application \
     --bind 0.0.0.0:$PORT \
     --workers 2 \
