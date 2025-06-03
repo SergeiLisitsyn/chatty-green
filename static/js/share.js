@@ -1,3 +1,4 @@
+//static/js/share.js
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".btn-share").forEach(button => {
     button.addEventListener("click", async function () {

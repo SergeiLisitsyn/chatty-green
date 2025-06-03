@@ -12,14 +12,59 @@
       <img src="{{ post.image.url }}" alt="Изображение поста" class="img-fluid my-3">
     {% endif %}
 
-    <p>Автор: <a href="{% url 'profile' username=post.author.username %}">{{ post.author.username|capfirst }}</a></p>
+<div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
 
-    <p><strong>Дата публикации:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
-    <p><strong>Создан:</strong> {{ post.created_at|ru_timesince }}</p>
+  <!-- Автор и подписка -->
+    <div class="d-flex align-items-center gap-2">
+      <p class="author-text mb-0">
+      Автор:
+      <a href="{% url 'profile' username=post.author.username %}" class="text-decoration-none">
+        {{ post.author.username|capfirst }}
+      </a>
+    </p>
 
-       <p>{{ post.text|linebreaks  }}</p>
+    {% if user.is_authenticated and user != post.author %}
+      {% if user in post.author.followers.all %}
+        <form method="post" action="{% url 'unsubscribe' post.author.username %}" class="mb-0">
+          {% csrf_token %}
+          <button class="btn btn-sm btn-outline-secondary" style="height: 32px;">Отписаться</button>
+        </form>
+      {% else %}
+        <form method="post" action="{% url 'subscribe' post.author.username %}" class="mb-0">
+          {% csrf_token %}
+          <button class="btn btn-sm btn-primary" style="height: 32px;">Подписаться</button>
+        </form>
+      {% endif %}
+    {% endif %}
+  </div>
 
-    <hr>
+  <!-- Лайки/дизлайки и дата -->
+  <div class="d-flex align-items-center gap-2">
+    <button class="btn btn-sm btn-outline-primary like-btn"
+            style="width: 60px; height: 32px !important;"
+            data-slug="{{ post.slug }}"
+            title="Нравится">
+      👍 {{ post.likes.count }}
+    </button>
+
+    <button class="btn btn-sm btn-outline-danger dislike-btn"
+            style="width: 60px; height: 32px !important;"
+            data-slug="{{ post.slug }}"
+            title="Не нравится">
+      👎 {{ post.dislikes.count }}
+    </button>
+
+    <!-- Дата -->
+    <p class="date-text mb-0 text-muted small ms-2">
+      <strong>Опубликовано:</strong> {{ post.publication_date|date:"d M Y H:i" }}
+    </p>
+  </div>
+
+</div>
+
+<p>{{ post.text|linebreaks }}</p>
+<hr>
+
 
     <!-- Кнопка редактирования (только для автора поста) -->
 
