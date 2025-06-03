@@ -24,6 +24,7 @@ ENV RUN_MIGRATIONS="false" \
 COPY . .
 
 # Если нужно собирать статику, раскомментируй:
-# RUN mkdir -p /static && python manage.py collectstatic --no-input
+RUN python manage.py collectstatic --noinput
 
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 ENTRYPOINT ["./entrypoint.sh"]
