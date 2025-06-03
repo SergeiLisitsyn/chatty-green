@@ -1,3 +1,5 @@
+# posts/templatetags/time_filters.py
+
 from django import template
 from django.utils import timezone
 from datetime import timedelta
@@ -35,4 +37,4 @@ def ru_timesince(value):
     elif diff < timedelta(days=2):
         return 'вчера'
     else:
-        return value.strftime('%d.%m.%Y')
+        return value.strftime('%d.%m.%Y %H:%M')

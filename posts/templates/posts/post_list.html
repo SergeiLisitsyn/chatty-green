@@ -1,4 +1,5 @@
 {# posts/templates/posts/post_list.html #}
+
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
@@ -7,10 +8,26 @@
 {% block title %}Посты{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/posts.css' %}">
+
 <div class="container mt-5">
+
+   <!-- Информационное сообщение для неаутентифицированных пользователей -->
+  {% if not user.is_authenticated %}
+  <div class="alert alert-primary alert-dismissible fade show mt-4" role="alert">
+    <i class="fas fa-info-circle me-2"></i>
+    Добро пожаловать! В настоящий момент эта страница доступна только для просмотра. Для доступа к полному функционалу сайта (добавление постов, видео, комментариев, лайков и многое другое) <a href="{% url 'login' %}" class="alert-link">войдите</a> или <a href="{% url 'register' %}" class="alert-link">зарегистрируйтесь</a>.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+  </div>
+{% endif %}
+
+  <!-- Заголовок страницы -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0">Список постов</h2>
+
   </div>
+
+  <!-- Кнопка создания поста (только для авторизованных пользователей) -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     {% if user.is_authenticated %}
 
@@ -21,15 +38,18 @@
 
        {% else %}
       <a href="{% url 'posts:post_create' %}" class="btn btn-success">➕ Новый пост</a>
-    {% endif %} {% endif %}
-  </div>
+    {% endif %}
+  {% endif %}
+</div>
 
+  <!-- Список постов -->
   {% if posts %}
     {% include "include/paginator.html" with page=page_obj %}
 
     <div class="list-group">
       {% for post in posts %}
         <div id="post-{{ post.id }}" class="list-group-item py-3 d-flex gap-3 post-card">
+          <!-- Превью изображения -->
           <div class="flex-shrink-0">
             {% if post.image %}
               <img src="{{ post.image.url }}" alt="Миниатюра" class="rounded" width="100" height="100" style="object-fit: cover;">
@@ -39,6 +59,7 @@
           </div>
 
           <div class="w-100">
+            <!-- Заголовок поста -->
             {% if post.slug %}
               <a href="{% url 'posts:post_detail' post.slug %}" class="h5 fw-bold text-decoration-none text-dark d-block">
                 {{ post.title|default:"(Без заголовка)" }}
@@ -47,89 +68,62 @@
               <span class="text-danger">Пост без slug: {{ post.title|default:"(Без заголовка)" }}</span>
             {% endif %}
 
+            <!-- Превью текста -->
             <p class="mb-2 text-muted small">
               {{ post.text|truncatewords:50 }}
             </p>
 
+         <!-- Блок кнопок действия -->
             <div class="d-flex justify-content-between text-muted small mt-2">
               <div class="d-flex gap-3 align-items-center">
                 {% if post.slug %}
-                  <span class="like-button" data-slug="{{ post.slug }}" style="cursor: pointer;">
+                  <!-- Лайк с подсказкой -->
+                  <span class="like-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Нравится">
                     👍 <span class="like-count">{{ post.likes.count }}</span>
                   </span>
-                  <span class="dislike-button" data-slug="{{ post.slug }}" style="cursor: pointer;">
+
+                  <!-- Дизлайк с подсказкой -->
+                  <span class="dislike-button" data-slug="{{ post.slug }}" style="cursor: pointer;" title="Не нравится">
                     👎 <span class="dislike-count">{{ post.dislikes.count }}</span>
                   </span>
-                  <a href="{% url 'posts:post_detail' post.slug %}" class="text-decoration-none text-muted">
-                    💬 {{ post.comments.count }}
-                  </a>
-                {% endif %}
+
+                    <!-- Иконка "Комментарии" с ссылкой на страницу поста -->
+                    <a href="{% url 'posts:post_detail' post.slug %}#comments" class="share-button" title="Комментарии">
+                      <img src="{% static 'images/chat_18866235.png' %}" alt="Комментарии" width="16" height="16">
+                    </a>
+
+                      <!-- Иконка "Поделиться" в Base64 -->
+                    <span class="share-button" data-slug="{{ post.slug }}" data-bs-toggle="modal" data-bs-target="#shareModal" style="cursor: pointer;" title="Поделиться">
+                      <img src="{% static 'images/share_8358780.png' %}" alt="Поделиться" width="16" height="16">
+                    </span>
+
+                    {% endif %}
+                  </div>
+               <!-- Дата и автор -->
+              <div class="post-meta text-muted small" style="font-size: 0.75rem; font-family: 'Tilda Sans', sans-serif;">
+                {{ post.created_at|ru_timesince }} • {{ post.author.username|capfirst }}
               </div>
-              <div>
-                {{ post.publication_date|date:"d M Y H:i" }} • {{ post.created_at|ru_timesince }} • {{ post.author.username }}
+                </div>
+
               </div>
             </div>
-          </div>
-        </div>
-      {% endfor %}
+          {% endfor %}
+
     </div>
 
     {% include "include/paginator.html" with page=page_obj %}
 
   {% else %}
-    <div class="alert alert-info mt-4" role="alert">
-      Пока нет опубликованных постов. Будьте первым!
-    </div>
+    <div class="alert alert-info mt-4" role="alert">Пока нет опубликованных постов. Будьте первым!</div>
   {% endif %}
 </div>
 {% endblock %}
 
 {% block extra_js %}
-{% if user.is_authenticated %}
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".delete-post").forEach(button => {
-      button.addEventListener("click", async function () {
-        const postId = this.dataset.id;
 
-        if (!confirm("Вы уверены, что хотите удалить этот пост?")) return;  // ✅ Подтверждение перед удалением
+  {% if user.is_authenticated %}
+    <script src="{% static 'js/likes.js' %}"></script>
+  {% endif %}
+{% include 'posts/share.html' %}
 
-        try {
-          const response = await fetch(`/posts/delete/${postId}/`, {
-            method: "POST",
-            headers: {
-              "X-CSRFToken": getCSRFToken(),
-              "X-Requested-With": "XMLHttpRequest",
-            },
-          });
-
-          const data = await response.json();
-
-          if (data.success) {
-            alert("✅ Пост успешно удалён!");
-            document.getElementById(`post-${data.post_id}`).remove();  // ✅ Удаляем пост из DOM
-          } else {
-            alert("❌ Ошибка при удалении поста!");
-          }
-        } catch (error) {
-          console.error("❌ Ошибка при удалении:", error);
-          alert("❌ Ошибка удаления поста.");
-        }
-      });
-    });
-  });
-
-  function getCSRFToken() {
-    let cookieValue = null;
-    document.cookie.split(";").forEach(cookie => {
-      const trimmed = cookie.trim();
-      if (trimmed.startsWith("csrftoken=")) {
-        cookieValue = decodeURIComponent(trimmed.split("=")[1]);
-      }
-    });
-    return cookieValue;
-  }
-</script>
-{% endif %}
 {% endblock %}
-

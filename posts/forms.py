@@ -1,8 +1,9 @@
 # posts/forms.py
+
 from django import forms
 from .models import Post
-
 from .models import Comment
+
 
 
 class PostForm(forms.ModelForm):
@@ -11,18 +12,19 @@ class PostForm(forms.ModelForm):
         fields = ['title', 'text', 'image']
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Заголовок поста'
+                'class': 'form-control post-title-input',
+                'placeholder': 'Заголовок поста',
             }),
             'text': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 5,
-                'placeholder': 'Текст поста'
+                'class': 'form-control post-textarea',
+                'rows': 12,
+                'placeholder': 'Текст поста',
             }),
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control'
             }),
         }
+
 
     def clean_title(self):
         title = self.cleaned_data.get('title')

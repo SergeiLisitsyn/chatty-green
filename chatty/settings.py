@@ -19,10 +19,6 @@ import dj_database_url
 import os
 from dotenv import load_dotenv
 
-if os.path.exists('.env'):
-    load_dotenv('.env')
-else:
-    print("ℹ️ .env файл не найден, используются переменные окружения")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,22 +44,18 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 # Настройки для Render
 ALLOWED_HOSTS = ['chatty-green.onrender.com', 'localhost']
 
-# Для HTTPS соединений
-CSRF_TRUSTED_ORIGINS = [
-    'https://chatty-green.onrender.com',
-    'https://*.onrender.com'
-]
-
-# Обязательные настройки для работы с cookies
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SAMESITE = 'Lax'
-#ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web']  # 'web' - имя сервиса в docker-compose
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web']  # 'web' - имя сервиса в docker-compose
 
 # Application definition
 
 INSTALLED_APPS = [
+    # Сторонние пакеты
+    'jazzmin',
+    'django_extensions',
+    'debug_toolbar',
+    'widget_tweaks',
+
+    # Django-приложения
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,8 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-
-
+    'social_django',
     'django.contrib.sites',
 
     'allauth',
@@ -83,8 +74,9 @@ INSTALLED_APPS = [
     # Наши приложения
     'users',
     'posts',
+    'ads',
     'subscriptions',
-    'widget_tweaks',
+    'videopost',
 ]
 
 SITE_ID = 1
@@ -155,10 +147,6 @@ DATABASES = {
     )
 }
 
-"""DATABASES['default']['OPTIONS'] = {
-    'sslmode': 'verify-full',
-    'sslrootcert': '/etc/ssl/certs/ca-certificates.crt'
-}"""
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -192,8 +180,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-#STATIC_URL = 'static/'
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
 STATICFILES_DIRS = [BASE_DIR / 'static']  # дополнительные папки со статикой
 
@@ -221,6 +208,67 @@ if not os.getenv('EMAIL_HOST_USER') or not os.getenv('EMAIL_HOST_PASSWORD'):
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+JAZZMIN_SETTINGS = {
+    "site_title": "Info to Chatty_green Admin",  # Заголовок административной панели
+    "site_header": "CHATTY: Admin",  # Заголовок окна браузера
+    "site_brand": "Info to Chatty",  # Бренд сайта
+    "welcome_sign": "Welcome to CHATTY: Admin",  # Приветственное сообщение
+    "copyright": "CHATTY GmbH",  # Информация о копирайте
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Support", "url": "https://google.com", "new_window": True},
+    ],
+    "usermenu_links": [
+        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+        {"model": "auth.user"}
+    ],
+    "show_sidebar": True,  # Показать боковую панель
+    "navigation_expanded": True,  # Развернуть навигацию
+    "hide_apps": [],  # Скрыть приложения
+    "hide_models": [],  # Скрыть модели
+    "default_icon_parents": "fas fa-chevron-circle-right",  # Иконка для родительских элементов
+    "default_icon_children": "fas fa-circle",  # Иконка для дочерних элементов
+    "related_modal_active": False,  # Включить модальные окна для связанных объектов
+    "custom_css": None,  # Пользовательский CSS
+    "custom_js": None,  # Пользовательский JS
+    "use_google_fonts_cdn": True,  # Использовать Google Fonts CDN
+    "show_ui_builder": False,  # Показать конструктор интерфейса
+}
+
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": True,
+    "brand_small_text": False,
+    "brand_colour": "navbar-warning",
+    "accent": "accent-lime",
+    "navbar": "navbar-info navbar-dark",
+    "no_navbar_border": True,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-pink",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": True,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": True,
+    "theme": "cyborg",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    },
+    "actions_sticky_top": False
+}
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -228,20 +276,70 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)
 
-# URL для входа
-#LOGIN_URL = 'home'  # Используем имя нашего URL-пути для входа на домашнюю страницу
-#LOGIN_REDIRECT_URL = '/home/' # Куда перенаправляет после успешного входа
-LOGIN_REDIRECT_URL = '/posts/'  # ✅ Гарантирует, что после входа пользователя отправят на /posts/
+# AUTHENTICATION
+AUTH_USER_MODEL = 'users.CustomUser'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    #'social_core.backends.telegram.TelegramOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# Настройки для Google
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+# Настройки для Telegram
+#SOCIAL_AUTH_TELEGRAM_BOT_TOKEN = 'ВАШ_TELEGRAM_BOT_TOKEN'
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = '/'  # Страница после входа
+LOGOUT_REDIRECT_URL = '/'  # Страница после выхода
+
+
 
 LOGOUT_REDIRECT_URL = '/posts/'
+
+SITE_ID = 1
+
+ACCOUNT_LOGIN_METHODS = ['username']
+ACCOUNT_SIGNUP_FIELDS = ['username*', 'email*', 'password1*', 'password2*']
+
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
+ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "/"
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_FORMS = {'signup': 'users.forms.CustomSignupForm'}
 
 
 LOGIN_URL = '/accounts/login/'  # Страница входа
 
-PORT = os.environ.get('PORT', '10000')
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['email', 'profile'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    },
+    'github': {
+        'SCOPE': ['user:email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    },
+}
 
 
+#SOCIALACCOUNT_LOGIN_ON_GET = True
 
+
+# SESSION CONFIGURATION
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 1209600
+SESSION_SAVE_EVERY_REQUEST = True
+
+# ENVIRONMENT VALIDATION
+if not os.getenv('EMAIL_HOST_USER') or not os.getenv('EMAIL_HOST_PASSWORD'):
+    raise ValueError("⚠️ Внимание: EMAIL_HOST_USER или EMAIL_HOST_PASSWORD не установлены! Проверьте файл .env.")
 
 
 

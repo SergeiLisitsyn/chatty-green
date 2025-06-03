@@ -1,0 +1,223 @@
+/* static/css/home.css */
+/* === ОСНОВНЫЕ СТИЛИ СТРАНИЦЫ === */
+
+/* Плавное появление страницы */
+@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
+body {
+  opacity: 0;                     /* Начальная прозрачность (невидимость) */
+  transition: opacity 2s ease-in; /* Плавное появление за 2 секунды */
+  font-family: "Tilda Sans", sans-serif; /* Основной шрифт */
+  font-size: 14px;                /* Базовый размер шрифта */
+}
+
+/* Класс для плавного появления */
+body.fade-in {
+  opacity: 1;                     /* Полная видимость */
+}
+
+/* === СТИЛИ БЛОКА ПРИВЕТСТВИЯ === */
+
+/* Заголовок приветствия */
+.welcome-message {
+  font-size: 32px;                /* Крупный размер шрифта */
+  font-weight: bold;              /* Жирное начертание */
+  color: #323333;                 /* Темно-серый цвет */
+  text-align: center;             /* Центрирование текста */
+  margin-bottom: 15px;            /* Отступ снизу */
+  text-shadow: 2px 2px 10px rgba(67, 67, 67, 0.3); /* Тень текста */
+}
+
+/* Описание чата */
+.chat-description {
+  font-family: 'Tilda Sans', sans-serif; /* Шрифт (дублирует базовый) */
+  font-size: 14px;              /* Размер шрифта */
+  font-weight: bold;            /* Жирное начертание */
+  text-transform: uppercase;    /* Верхний регистр */
+  text-align: center;           /* Центрирование */
+  color: #333;                  /* Цвет текста */
+}
+
+/* === СТИЛИ НОВОСТНОЙ ЛЕНТЫ === */
+
+/* Заголовок раздела новостей */
+.section-title {
+  font-family: "Tilda Sans Bold", sans-serif; /* Жирный шрифт */
+  font-size: 24px;                /* Размер заголовка */
+  font-weight: bold;              /* Жирное начертание */
+  color: #2c3e50;                 /* Цвет текста */
+  text-align: center;             /* Центрирование */
+  margin-bottom: 20px;            /* Отступ снизу */
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.05); /* Легкая тень */
+}
+
+/* Контейнер для новостей */
+.scrollable-news-container {
+  max-width: 900px;               /* Максимальная ширина */
+  margin: 0 auto;                 /* Центрирование */
+  padding: 20px;                  /* Внутренние отступы */
+  background-color: #ffffff;      /* Белый фон */
+  border-radius: 12px;            /* Скругленные углы */
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05); /* Тень */
+}
+
+/* Прокручиваемая область новостей */
+.scrollable-news {
+  max-height: 500px;              /* Максимальная высота */
+  overflow-y: auto;               /* Вертикальный скролл */
+  overflow-x: hidden;             /* Без горизонтального скролла */
+  padding-right: 10px;            /* Отступ для скроллбара */
+  background: transparent;        /* Прозрачный фон */
+}
+
+/* Карточка новости */
+.post-card {
+  background: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый */
+  padding: 15px;                 /* Внутренние отступы */
+  border-radius: 12px;           /* Скругленные углы */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Анимации */
+}
+
+/* Эффект при наведении на карточку */
+.post-card:hover {
+  transform: translateY(-5px);   /* Сдвиг вверх */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* Тень */
+}
+
+/* Информация о времени публикации */
+.time-info {
+  font-family: "Tilda Sans", sans-serif; /* Шрифт */
+  font-size: 11px;               /* Мелкий текст */
+  color: #323333;                /* Цвет текста */
+}
+
+/* Ссылка "Читать далее" */
+.read-more {
+  display: block;                /* Блочный элемент */
+  white-space: normal;           /* Перенос слов */
+  word-wrap: break-word;         /* Перенос длинных слов */
+}
+
+/* === СТИЛИ СКРОЛЛБАРА === */
+
+/* Полоса прокрутки */
+.scrollable-news::-webkit-scrollbar {
+  width: 8px;                    /* Ширина скроллбара */
+}
+
+/* Дорожка скроллбара */
+.scrollable-news::-webkit-scrollbar-track {
+  background: #f1f1f1;           /* Цвет фона */
+}
+
+/* Ползунок скроллбара */
+.scrollable-news::-webkit-scrollbar-thumb {
+  background: #888;              /* Цвет ползунка */
+  border-radius: 4px;            /* Скругление углов */
+}
+
+/* Ползунок при наведении */
+.scrollable-news::-webkit-scrollbar-thumb:hover {
+  background: #555;              /* Темнее при наведении */
+}
+
+/* === СТИЛИ РЕКЛАМНОГО БЛОКА === */
+
+/* Боковая панель с рекламой */
+.ad-sidebar {
+  position: fixed;               /* Фиксированное позиционирование */
+  top: 103px;                    /* Отступ сверху */
+  right: calc((67vw - 900px) / 2 + 2mm); /* Вычисляемый отступ справа */
+  width: 300px;                  /* Ширина блока */
+  max-width: 20vw;               /* Максимальная ширина */
+  z-index: 500;                  /* Уровень слоя */
+}
+
+/* Прокручиваемая область рекламы */
+.scrollable-ad {
+  max-height: 80vh;              /* Максимальная высота */
+  overflow-y: auto;              /* Вертикальный скролл */
+  padding-right: 6px;            /* Отступ для скроллбара */
+}
+
+/* Карточка рекламы */
+.ad-card {
+  display: none;                 /* По умолчанию скрыта */
+  background-color: #fefefe;     /* Цвет фона */
+  border: 1px solid #ccc;        /* Граница */
+  border-radius: 10px;           /* Скругление углов */
+  padding: 10px;                 /* Внутренние отступы */
+  box-sizing: border-box;        /* Учет padding в ширине */
+  transition: box-shadow 0.3s ease; /* Анимация тени */
+}
+
+/* Активная карточка рекламы */
+.ad-card.active {
+  display: block;                /* Показываем активную карточку */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
+}
+
+/* Эффект при наведении */
+.ad-card:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Усиленная тень */
+}
+
+/* Медиа-контент (изображения/видео) */
+.ad-media {
+  width: 100%;                   /* Полная ширина */
+  height: 200px;                 /* Фиксированная высота */
+  object-fit: cover;             /* Обрезка по размеру */
+  border-radius: 10px 10px 0 0;  /* Скругление верхних углов */
+  margin-bottom: 8px;            /* Отступ снизу */
+}
+
+/* Заголовок рекламы */
+.ad-title {
+  font-family: "Tilda Sans", sans-serif; /* Шрифт */
+  font-size: 1.1rem;             /* Размер текста */
+  font-weight: bold;             /* Жирное начертание */
+  margin-bottom: 0.3rem;         /* Отступ снизу */
+}
+
+/* Описание рекламы */
+.ad-description {
+  font-size: 0.9rem;             /* Размер текста */
+  color: #555;                   /* Цвет текста */
+  margin-bottom: 0.6rem;         /* Отступ снизу */
+}
+
+/* Кнопка "Подробнее" */
+.ad-read-more {
+  display: inline-block;         /* Строчно-блочный элемент */
+  padding: 6px 12px;             /* Внутренние отступы */
+  background-color: #007BFF;     /* Синий фон */
+  color: white;                  /* Белый текст */
+  text-decoration: none;         /* Без подчеркивания */
+  border-radius: 5px;            /* Скругление углов */
+  font-weight: bold;             /* Жирное начертание */
+  font-size: 14px;               /* Размер текста */
+  transition: background-color 0.3s ease; /* Анимация цвета */
+}
+
+/* Эффект при наведении на кнопку */
+.ad-read-more:hover {
+  background-color: #0056b3;     /* Темно-синий фон */
+}
+
+/* === ОБЩИЕ СТИЛИ === */
+
+/* Заголовки всех уровней */
+h1, h2, h3 {
+  font-family: "Tilda Sans Bold", sans-serif; /* Жирный шрифт */
+  font-size: 14px;                /* Размер текста */
+  color: #1a202c;
+}
+
+/* Основной контейнер контента */
+.main-content {
+  display: flex;                  /* Flex-раскладка */
+  align-items: flex-start;        /* Выравнивание по верху */
+  gap: 2mm;                       /* Расстояние между блоками */
+  max-width: 1200px;              /* Максимальная ширина */
+  margin: 0 auto;                 /* Центрирование */
+}
+

@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+{% block title %}Каталог постов Chatty-green{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4"> Каталог постов Chatty-green  </h1>
+  {% comment %} {% include "include/search_form.html" %} {% endcomment %}
+    <h1 class="text-center mb-4"></h1>
+
+    <div class="row">
+        {% comment %} {% include "include/paginator.html" with page=page_obj %} {% endcomment %}
+
+        {% for post in posts %}
+            {% include "include/post_preview.html" with post=post %}
+        {% endfor %}
+
+ {% include "include/paginator.html" with page=page_obj %}
+    </div>
+{% endblock %}

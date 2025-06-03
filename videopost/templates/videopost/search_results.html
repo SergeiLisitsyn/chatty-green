@@ -1,0 +1,25 @@
+<!-- videopost/templates/videopost/search_results.html -->
+
+{% extends "base.html" %}
+{% block title %}Результаты поиска{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>🔍 Результаты поиска для "{{ query }}"</h2>
+
+    {% if videopost %}
+        <ul class="list-group">
+            {% for videopost in videopost %}
+                <li class="list-group-item">
+                    <a href="{% url 'videopost:videopost_detail' videopost.slug %}" class="fw-bold">
+                        {{ videopost.title }}
+                    </a>
+                    <p class="small text-muted">{{ videopost.text|truncatewords:30 }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="alert alert-info">❌ Ничего не найдено.</p>
+    {% endif %}
+</div>
+{% endblock %}
