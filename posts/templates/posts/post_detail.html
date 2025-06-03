@@ -6,29 +6,29 @@
 {% block content %}
 
   <div class="container mt-4">
-    <h2>{{ post.title|default:"(Без заголовка)" }}</h2>
-    <p>Автор: <a href="{% url 'profile' username=post.author.username %}">{{ post.author.username|capfirst }}</a></p>
-
-    <p><strong>Дата публикации:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
-    <p><strong>Создан:</strong> {{ post.created_at|ru_timesince }}</p>
-
+<h2>{{ post.title|default:"(Без заголовка)" }}</h2>
     <!-- Проверяем, загружено ли изображение -->
     {% if post.image %}
       <img src="{{ post.image.url }}" alt="Изображение поста" class="img-fluid my-3">
     {% endif %}
 
-    <p>{{ post.text }}</p>
+    <p>Автор: <a href="{% url 'profile' username=post.author.username %}">{{ post.author.username|capfirst }}</a></p>
+
+    <p><strong>Дата публикации:</strong> {{ post.publication_date|date:"d M Y H:i" }}</p>
+    <p><strong>Создан:</strong> {{ post.created_at|ru_timesince }}</p>
+
+       <p>{{ post.text|linebreaks  }}</p>
 
     <hr>
 
     <!-- Кнопка редактирования (только для автора поста) -->
+
    {% if user == post.author %}
        <div class="d-flex gap-2 mt-3">
         <a href="{% url 'posts:post_update' post.slug %}" class="btn btn-sm btn-warning">✏️ Редактировать</a>
         <button class="btn btn-sm btn-danger" onclick="confirmDelete('{{ post.slug }}')">🗑️ Удалить</button>
   </div>
 {% endif %}
-
 
     <h3>Комментарии</h3>
     <ul>
@@ -69,6 +69,7 @@
 
 {% block extra_js %}
 <script>
+
   async function confirmDelete(slug) {
     const isConfirmed = confirm("Вы уверены, что хотите удалить этот пост?");
     if (!isConfirmed) return;
@@ -110,6 +111,7 @@
       if (trimmed.startsWith("csrftoken=")) {
         cookieValue = decodeURIComponent(trimmed.split("=")[1]);
       }
+
     });
     return cookieValue;
   }
@@ -123,5 +125,5 @@
 </script>
 
 
-
 {% endblock %}
+

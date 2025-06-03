@@ -13,6 +13,7 @@ Chatty_green/
 │   ├── models.py
 │   ├── urls.py
 │   └── views.py
+├── allfileshas.txt
 ├── chatty/
 │   ├── __init__.py
 │   ├── asgi.py
@@ -29,11 +30,14 @@ Chatty_green/
 ├── manage.py
 ├── media/
 │   ├── ads/
+│   │   ├── images/
 │   │   └── videos/
 │   ├── ads_images/
 │   ├── avatars/
 │   ├── post_images/
-│   └── test.txt
+│   ├── test.txt
+│   ├── uploaded_videos/
+│   └── video_thumbnails/
 ├── nginx/
 │   ├── Dockerfile
 │   └── nginx.conf
@@ -52,14 +56,13 @@ Chatty_green/
 │   │   ├── 0007_post_is_archived_post_updated_at.py
 │   │   ├── 0008_advertisement_post_advertisement.py
 │   │   ├── 0008_alter_post_slug.py
-│   │   ├── 0009_merge_20250523_1947.py
+│   │   ├── 0009_merge_20250522_0025.py
 │   │   ├── 0010_alter_post_slug.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── templates/
 │   │   ├── include/
-│   │   │   ├── paginator.html
-│   │   │   └── post_preview.html
+│   │   │   └── paginator.html
 │   │   └── posts/
 │   │       ├── post_confirm_delete.html
 │   │       ├── post_detail.html
@@ -79,10 +82,13 @@ Chatty_green/
 │   ├── css/
 │   │   ├── ads.css
 │   │   ├── base.css
+│   │   ├── form_post.css
 │   │   ├── home.css
 │   │   ├── interaction-buttons.css
 │   │   ├── navbar.css
-│   │   └── posts.css
+│   │   ├── posts.css
+│   │   ├── registration.css
+│   │   └── videopost_detail.css
 │   ├── images/
 │   ├── js/
 │   └── test.txt
@@ -118,7 +124,8 @@ Chatty_green/
 │   ├── login.html
 │   ├── registration/
 │   │   └── login.html
-│   └── welcome.html
+│   ├── welcome.html
+│   └── {% static 'images/
 ├── tests/
 │   ├── test_post_create.py
 │   ├── test_post_update.py
@@ -127,6 +134,7 @@ Chatty_green/
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
+│   ├── context_processors.py
 │   ├── forms.py
 │   ├── migrations/
 │   │   ├── 0001_initial.py
@@ -146,6 +154,7 @@ Chatty_green/
 │   │       ├── password_reset_confirm.html
 │   │       ├── password_reset_done.html
 │   │       ├── password_reset_form.html
+│   │       ├── privacy_policy.html
 │   │       ├── profile.html
 │   │       ├── register.html
 │   │       └── templatetags/
@@ -157,4 +166,32 @@ Chatty_green/
 ├── venv/
 │   ├── Include/
 │   ├── Scripts/
+├── videopost/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_remove_videopost_preview_image_and_more.py
+│   │   ├── 0003_alter_videopost_video_url.py
+│   │   ├── 0004_videocomment_parent.py
+│   │   ├── 0005_videopost_video_file.py
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── templates/
+│   │   └── videopost/
+│   │       ├── search_results.html
+│   │       ├── share.html
+│   │       ├── videopost_confirm_delete.html
+│   │       ├── videopost_detail.html
+│   │       ├── videopost_edit.html
+│   │       ├── videopost_form.html
+│   │       └── videopost_list.html
+│   ├── templatetags/
+│   │   ├── __init__.py
+│   │   └── youtube_tags.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
 └── wait-for-db.sh

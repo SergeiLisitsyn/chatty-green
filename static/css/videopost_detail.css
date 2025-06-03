@@ -1,0 +1,99 @@
+/* static/css/videopost_detail.css */
+
+/* --Настройка размеров player--*/
+@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
+
+.video-js {
+    width: 100% !important;
+    height: 500px !important;} /* Фиксируем высоту */
+
+/* 🔹 Общий контейнер для всех элементов */
+.d-flex.justify-content-between {
+    display: flex;
+    align-items: center; /* Выравнивание по вертикали */
+    gap: 20px; /* Расстояние между блоками */
+}
+
+/* 🔹 Стили для автора */
+.author-text {
+    font-size: 16px;
+    color: #333;
+}
+
+/* 🔹 Общий стиль для кнопок */
+.share-btn, .like-btn, .dislike-btn {
+    height: 32px; /* Уменьшенная высота */
+    width: 90px; /* Регулируемая ширина */
+    font-size: 12px; /* Меньший размер шрифта */
+    text-align: center;
+    padding: 4px 8px; /* Уменьшенные отступы */
+    border-radius: 4px; /* Скругление углов */
+    transition: background-color 0.3s;
+}
+
+/* 🔹 Стили для кнопки "Поделиться" */
+.share-btn {
+    background-color: #28a745; /* Зеленый */
+    color: white;
+}
+
+/* 🔹 Стили для кнопки "Лайк" */
+.like-btn {
+    background-color: #007bff; /* Синий */
+    color: white;
+}
+
+/* 🔹 Стили для кнопки "Дизлайк" */
+.dislike-btn {
+    background-color: #dc3545; /* Красный */
+    color: white;
+}
+
+/* 🔹 Эффекты наведения */
+.share-btn:hover {
+    background-color: #218838;
+}
+
+.like-btn:hover {
+    background-color: #0056b3;
+}
+
+.dislike-btn:hover {
+    background-color: #b02a37;
+}
+
+/* 🔹 Изменение цвета при клике */
+.share-btn:active {
+    background-color: #1e7e34;
+}
+
+.like-btn:active {
+    background-color: #004085;
+}
+
+.dislike-btn:active {
+    background-color: #802227;
+}
+
+.subscription-toggle {
+  width: 150px;
+}
+
+/*Стили кнопок подписаться/отписаться, дайк, дизлайк*/
+.subscribe-button,
+.like-btn,
+.dislike-btn {
+    width: 150px; /*ширина */
+    height: 32px !important; /*высота (строго) */
+    border-radius: .275rem; /*закругление краев кнопок */
+}
+
+video {
+    width: 45vw; /* % от ширины экрана встроенного videoplayer (не YouTube) */
+    height: auto;
+}
+
+.empty-description { /* Вставка пустой строки с настраиваемой высотой */
+    min-height: 8px; /* Минимальная высота блока */
+    display: block; /* Убеждаемся, что это блочный элемент */
+}

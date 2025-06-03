@@ -36,7 +36,7 @@
                     </div>
                   {% endif %}
                   <div>
-                    <a href="{% url 'profile' post.author.username %}" class="fw-semibold text-dark">{{ post.author.username }}</a><br>
+                    <a href="{% url 'profile' post.author.username %}" class="fw-semibold text-dark">{{ post.author.username|capfirst }}</a><br>
                     <small class="text-muted">{{ post.pub_date|date:"d.m.Y в H:i" }}</small>
                   </div>
                 </div>
@@ -148,8 +148,8 @@
                       </div>
                     {% endif %}
                     <div>
-                      <a href="{% url 'profile' subscription.author.username %}" class="text-dark fw-medium">{{ subscription.author.username }}</a><br>
-                      <small class="text-muted">@{{ subscription.author.username }}</small>
+                      <a href="{% url 'profile' subscription.author.username %}" class="text-dark fw-medium">{{ subscription.author.username|capfirst }}</a><br>
+                      <small class="text-muted">@{{ subscription.author.username|capfirst }}</small>
                     </div>
                   </div>
                 {% endfor %}

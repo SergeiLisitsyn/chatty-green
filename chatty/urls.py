@@ -4,11 +4,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import search_view, welcome, home
+from .views import search_view, welcome, home, search_results
 from posts.views import home  # импортируем наше представление
 from ads.views import home  # отсюда идет функция home()
 from users import views as users_views
 
+app_name = 'users'
 
 
 urlpatterns = [
@@ -24,7 +25,8 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')), # Стандартные маршруты аутентификации Django
     path('posts/', include('posts.urls', namespace='posts')),# Маршруты приложения "posts" (управление публикациями)
     path('subscriptions/', include('subscriptions.urls', namespace='subscriptions')),# Маршруты приложения "subscriptions" (подписки пользователей)
-    path('search/', search_view, name='search'),  #  Поиск публикаций (функция `search_results`)
+    path('search/', search_results, name='search'),  #  Поиск публикаций and videos(функция `search_results`)
+    path('videopost/', include('videopost.urls')),
     path('social-auth/', include('social_django.urls', namespace='social')),
 
 
