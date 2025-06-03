@@ -39,7 +39,6 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 # Настройки для Render
 ALLOWED_HOSTS = ['chatty-green.onrender.com', 'localhost']
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web']  # 'web' - имя сервиса в docker-compose
 
 # Application definition
 
