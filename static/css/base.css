@@ -242,7 +242,7 @@ a:hover {
 
 /* 🔹 Кнопки */
 .btn-primary, .btn-warning {
-    font-size: 12px; /* Уменьшаем размер */
+    font-size: 14px; /* Размер шрифта на кнопах btn-primary и btn-warning */
     padding: 8px 12px; /* Отступы */
 }
 
