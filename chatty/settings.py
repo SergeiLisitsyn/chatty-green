@@ -12,11 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-
-from django.urls import reverse_lazy
-import dj_database_url
-
-import os
 from dotenv import load_dotenv
 
 
@@ -194,14 +189,6 @@ EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']  # Обязательная пе
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']  # Используем основной пароль из .env
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)  # fallback на EMAIL_HOST_USER
 
-# Правильная валидация (используем os.getenv() напрямую)
-if not os.getenv('EMAIL_HOST_USER') or not os.getenv('EMAIL_HOST_PASSWORD'):
-    raise ValueError(
-        "Требуемые переменные окружения не найдены:\n"
-        f"EMAIL_HOST_USER: {'не установлен' if not os.getenv('EMAIL_HOST_USER') else 'OK'}\n"
-        f"EMAIL_HOST_PASSWORD: {'не установлен' if not os.getenv('EMAIL_HOST_PASSWORD') else 'OK'}\n"
-        "Проверьте файл .env в корне проекта"
-    )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -337,9 +324,6 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600
 SESSION_SAVE_EVERY_REQUEST = True
 
-# ENVIRONMENT VALIDATION
-if not os.getenv('EMAIL_HOST_USER') or not os.getenv('EMAIL_HOST_PASSWORD'):
-    raise ValueError("⚠️ Внимание: EMAIL_HOST_USER или EMAIL_HOST_PASSWORD не установлены! Проверьте файл .env.")
 
 
 
