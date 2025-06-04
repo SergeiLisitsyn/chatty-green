@@ -39,6 +39,12 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 # Настройки для Render
 ALLOWED_HOSTS = ['chatty-green.onrender.com', 'localhost']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://chatty-green.onrender.com',
+    'https://*.onrender.com',
+]
+
+
 
 # Application definition
 
