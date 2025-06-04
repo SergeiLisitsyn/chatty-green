@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'widget_tweaks',
+    'storages'
 
     # Django-приложения
     'django.contrib.admin',
@@ -162,6 +163,8 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
 STATICFILES_DIRS = [BASE_DIR / 'static']  # дополнительные папки со статикой
 
+
+
 # Email settings (после загрузки переменных окружения)
 # Email configuration (adapted for existing .env)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -239,8 +242,21 @@ JAZZMIN_UI_TWEAKS = {
     "actions_sticky_top": False
 }
 
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = f'https://chatty-green.s3.amazonaws.com/static/'
+
+# Кастомное хранилище для медиа
+from storages.backends.s3boto3 import S3Boto3Storage
+
+class MediaStorage(S3Boto3Storage):
+    location = 'media'
+    file_overwrite = False
+
+DEFAULT_FILE_STORAGE = 'ваш_проект.storage_backends.MediaStorage'
 
 # Создаем папку media если не существует
 if not os.path.exists(MEDIA_ROOT):
@@ -298,6 +314,8 @@ SOCIALACCOUNT_PROVIDERS = {
     },
 }
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
 #SOCIALACCOUNT_LOGIN_ON_GET = True
 
