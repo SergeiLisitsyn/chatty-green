@@ -1,3 +1,4 @@
+# -- chatty/settings.py
 """
 Django settings for chatty project.
 
@@ -12,48 +13,43 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+
 from dotenv import load_dotenv
+from django.conf.global_settings import AUTHENTICATION_BACKENDS
+from django.urls import reverse_lazy
 
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-
+# Определяем базовую директорию проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / '.env')  # Явное указание пути
+
+# Загружаем переменные окружения из `.env`
+load_dotenv(BASE_DIR / '.env')
+
+# Проверка наличия `.env`
 
 env_path = BASE_DIR / '.env'
-if not env_path.exists():
-    print(f"\n⚠️ Внимание: файл .env не найден по пути: {env_path}\n")
+#if not env_path.exists():
+#    print(f"\n⚠️ Внимание: файл .env не найден по пути: {env_path}\n")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =  os.getenv('SECRET_KEY')  # Обязательно через переменные окружения!
+SECRET_KEY = 'django-insecure-n=s5kr%x^h$7ur^*wwt6skj&pn$wm49##$9a)prz8_nv4nd09t'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Настройки для Render
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = True
 
-# Настройки для Render
-ALLOWED_HOSTS = ['chatty-green.onrender.com', 'localhost']
+INTERNAL_IPS = [ '127.0.0.1', ]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://chatty-green.onrender.com',
-    'https://*.onrender.com',
-]
-
-
-
-# Application definition
-
+# APPLICATIONS
 INSTALLED_APPS = [
     # Сторонние пакеты
     'jazzmin',
     'django_extensions',
     'debug_toolbar',
     'widget_tweaks',
+    'storages'
 
     # Django-приложения
     'django.contrib.admin',
@@ -66,13 +62,15 @@ INSTALLED_APPS = [
     'social_django',
     'django.contrib.sites',
 
+    # Аутентификация
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
 
-    # Наши приложения
+
+    # Мои приложения
     'users',
     'posts',
     'ads',
@@ -80,8 +78,7 @@ INSTALLED_APPS = [
     'videopost',
 ]
 
-SITE_ID = 1
-
+# MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -92,9 +89,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-
 ]
 
+# URL & TEMPLATES
 ROOT_URLCONF = 'chatty.urls'
 
 TEMPLATES = [
@@ -110,60 +107,39 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
-            'libraries': {},
-            'builtins': [],
+                'users.context_processors.socialaccount_providers',
+                # добавляем наш процессор
+                ],
+                'libraries': {},
+                'builtins': [],
+
         },
     },
 ]
 
 WSGI_APPLICATION = 'chatty.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-EXTERNAL_DATABASE_URL = 'postgresql://chatty:MYdDv1BXL73NYPygEMBeEihX6EerpXio@dpg-d0ul5me3jp1c738csh9g-a/chattydb_3ygp'
-"""DATABASES = {
+# DATABASE
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',  # Или ваше имя БД
-        'USER': 'postgres',
-        'PASSWORD': 'password',  # Замените на реальный пароль
-        'HOST': 'postgres.oregon-postgres.render.com',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-            'sslrootcert': '/etc/ssl/certs/ca-certificates.crt',  # Стандартный путь
-            'options': '-c statement_timeout=5000'  # Таймаут 5 сек
-        },
-        'CONN_MAX_AGE': 300,  # Поддержка постоянных соединений
+        'NAME': os.getenv('PG_NAME', ''),
+        'USER': os.getenv('PG_USER', ''),
+        'PASSWORD': os.getenv('PG_PASSWORD', ''),
+        'HOST': os.getenv('PG_HOST', ''),
+        'PORT': os.getenv('PG_PORT', ''),
+        'OPTIONS': {'client_encoding': 'UTF8'},
     }
-}"""
-import dj_database_url
-
-DATABASES = {
-    'default': dj_database_url.config(
-        conn_max_age=600,
-        conn_health_checks=True,
-        ssl_require=True  # Автоматически подставит правильные настройки
-    )
 }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # Authentication
@@ -175,7 +151,9 @@ AUTH_USER_MODEL = 'users.CustomUser'
 LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'UTC'
 USE_I18N = True
+
 USE_L10N = True  # включить локализацию чисел и дат
+
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -184,6 +162,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
 STATICFILES_DIRS = [BASE_DIR / 'static']  # дополнительные папки со статикой
+
+
 
 # Email settings (после загрузки переменных окружения)
 # Email configuration (adapted for existing .env)
@@ -262,8 +242,21 @@ JAZZMIN_UI_TWEAKS = {
     "actions_sticky_top": False
 }
 
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = f'https://chatty-green.s3.amazonaws.com/static/'
+
+# Кастомное хранилище для медиа
+from storages.backends.s3boto3 import S3Boto3Storage
+
+class MediaStorage(S3Boto3Storage):
+    location = 'media'
+    file_overwrite = False
+
+DEFAULT_FILE_STORAGE = 'ваш_проект.storage_backends.MediaStorage'
 
 # Создаем папку media если не существует
 if not os.path.exists(MEDIA_ROOT):
@@ -321,6 +314,8 @@ SOCIALACCOUNT_PROVIDERS = {
     },
 }
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
 #SOCIALACCOUNT_LOGIN_ON_GET = True
 

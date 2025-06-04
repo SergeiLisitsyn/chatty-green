@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import search_view, welcome, home, search_results
+from .views import search_view, welcome, home, search_results,  HealthCheckView
 from posts.views import home  # импортируем наше представление
 from ads.views import home  # отсюда идет функция home()
 from users import views as users_views
@@ -13,6 +13,7 @@ app_name = 'users'
 
 
 urlpatterns = [
+    path('health-check/', HealthCheckView.as_view(), name='health_check'), # вьюха без дангных из БД служит для проверки работы приложения
     path('admin/', admin.site.urls), #Панель администратора Djan
     path('profile/<str:username>/', users_views.profile, name='profile'),
     path('', welcome, name='welcome'),  # сначала приветствие
