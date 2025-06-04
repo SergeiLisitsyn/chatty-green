@@ -272,7 +272,7 @@ class MediaStorage(S3Boto3Storage):
     location = 'media'
     file_overwrite = False
 
-DEFAULT_FILE_STORAGE = 'ваш_проект.storage_backends.MediaStorage'
+DEFAULT_FILE_STORAGE = 'chatty.storage_backends.MediaStorage'
 
 # Создаем папку media если не существует
 if not os.path.exists(MEDIA_ROOT):
