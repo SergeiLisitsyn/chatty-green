@@ -27,14 +27,14 @@ load_dotenv(BASE_DIR / '.env')
 # Проверка наличия `.env`
 
 env_path = BASE_DIR / '.env'
-if not env_path.exists():
-    print(f"\n⚠️ Внимание: файл .env не найден по пути: {env_path}\n")
+#if not env_path.exists():
+#    print(f"\n⚠️ Внимание: файл .env не найден по пути: {env_path}\n")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n=s5kr%x^h$7ur^*wwt6skj&pn$wm49##$9a)prz8_nv4nd09t'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -171,14 +171,6 @@ EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']  # Обязательная пе
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']  # Используем основной пароль из .env
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)  # fallback на EMAIL_HOST_USER
 
-# Правильная валидация (используем os.getenv() напрямую)
-if not os.getenv('EMAIL_HOST_USER') or not os.getenv('EMAIL_HOST_PASSWORD'):
-    raise ValueError(
-        "Требуемые переменные окружения не найдены:\n"
-        f"EMAIL_HOST_USER: {'не установлен' if not os.getenv('EMAIL_HOST_USER') else 'OK'}\n"
-        f"EMAIL_HOST_PASSWORD: {'не установлен' if not os.getenv('EMAIL_HOST_PASSWORD') else 'OK'}\n"
-        "Проверьте файл .env в корне проекта"
-    )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -328,10 +320,6 @@ SOCIALACCOUNT_PROVIDERS = {
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600
 SESSION_SAVE_EVERY_REQUEST = True
-
-# ENVIRONMENT VALIDATION
-if not os.getenv('EMAIL_HOST_USER') or not os.getenv('EMAIL_HOST_PASSWORD'):
-    raise ValueError("⚠️ Внимание: EMAIL_HOST_USER или EMAIL_HOST_PASSWORD не установлены! Проверьте файл .env.")
 
 
 
