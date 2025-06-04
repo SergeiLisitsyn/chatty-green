@@ -34,25 +34,13 @@ env_path = BASE_DIR / '.env'
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-n=s5kr%x^h$7ur^*wwt6skj&pn$wm49##$9a)prz8_nv4nd09t'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 INTERNAL_IPS = [ '127.0.0.1', ]
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://chatty-green.onrender.com',
-    'https://*.onrender.com',
-]
-
-ALLOWED_HOSTS = [
-    'chatty-green.onrender.com',
-    '.onrender.com',  # Для всех поддоменов render.com
-    'localhost',      # Для локальной разработки
-    '127.0.0.1',      # Для локальной разработки
-]
 
 # APPLICATIONS
 INSTALLED_APPS = [
@@ -297,22 +285,7 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_FORMS = {'signup': 'users.forms.CustomSignupForm'}
 
 
-# SOCIAL ACCOUNT Вариант от Оли
-# SOCIALACCOUNT_PROVIDERS = {
-#     'google': {
-#          'APP': {  # Удалите или закомментируйте этот блок!
-#              'client_id': os.getenv('GOOGLE_CLIENT_ID', ""),
-#              'secret': os.getenv('GOOGLE_CLIENT_SECRET', ""),
-#              'key': '',
-#          },
-#         'SCOPE': ['email', 'profile'],
-#         'AUTH_PARAMS': {'access_type': 'online'},
-#     },
-#     'github': {
-#         'SCOPE': ['user:email'],
-#         'AUTH_PARAMS': {'access_type': 'online'},
-#     },
-# }
+LOGIN_URL = '/accounts/login/'  # Страница входа
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -336,15 +309,13 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 
 
-# Проверка загрузки переменных окружения
-print("\n=== Email Configuration ===")
-print(f"EMAIL_HOST: {EMAIL_HOST}")
-print(f"EMAIL_PORT: {EMAIL_PORT}")
-print(f"EMAIL_USE_TLS: {EMAIL_USE_TLS}")
-print(f"EMAIL_HOST_USER: {EMAIL_HOST_USER or 'не установлен'}")
-print(f"EMAIL_HOST_PASSWORD: {'установлен' if EMAIL_HOST_PASSWORD else 'не установлен'}")
-print(f"DEFAULT_FROM_EMAIL: {DEFAULT_FROM_EMAIL}")
-print("=========================\n")
 
-print(repr(os.getenv("PG_NAME")))
-print(repr(os.getenv("PG_PASSWORD")))
+# Проверка загрузки переменных окружения
+# print("\n=== Email Configuration ===")
+# print(f"EMAIL_HOST: {EMAIL_HOST}")
+# print(f"EMAIL_PORT: {EMAIL_PORT}")
+# print(f"EMAIL_USE_TLS: {EMAIL_USE_TLS}")
+# print(f"EMAIL_HOST_USER: {EMAIL_HOST_USER or 'не установлен'}")
+# print(f"EMAIL_HOST_PASSWORD: {'установлен' if EMAIL_HOST_PASSWORD else 'не установлен'}")
+# print(f"DEFAULT_FROM_EMAIL: {DEFAULT_FROM_EMAIL}")
+# print("=========================\n")

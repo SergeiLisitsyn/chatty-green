@@ -1,30 +1,23 @@
-# Dockerfile
+
 FROM python:3.12-slim
 
 WORKDIR /app
 
-# Системные пакеты
-RUN apt-get update && apt-get install -y \
-        netcat-openbsd gcc libpq-dev && apt-get clean
+# Установка зависимостей (включая netcat)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    netcat-openbsd \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-# Python-зависимости
+# Копируем зависимости первыми (для кэширования)
 COPY requirements.txt .
-RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt gunicorn  # Явно добавляем gunicorn!
 
-# Скрипты
-COPY entrypoint.sh wait-for-db.sh ./
-RUN chmod +x entrypoint.sh wait-for-db.sh
-
-# --- переменная окружения для этапа build ---
-ENV RUN_MIGRATIONS="false" \
-    DOCKERIZED=1 \
-    PYTHONUNBUFFERED=1
-
-# Код проекта
+# Копируем остальные файлы
 COPY . .
 
-# Если нужно собирать статику, раскомментируй:
-#RUN python manage.py collectstatic --noinput
+# Делаем скрипты исполняемыми
+RUN chmod +x entrypoint.sh wait-for-db.sh
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-ENTRYPOINT ["./entrypoint.sh"]
+CMD ["./entrypoint.sh"]
