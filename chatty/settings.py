@@ -262,7 +262,7 @@ JAZZMIN_UI_TWEAKS = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+"""STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_URL = f'https://chatty-green.s3.amazonaws.com/static/'
 
 # Кастомное хранилище для медиа
@@ -277,7 +277,7 @@ DEFAULT_FILE_STORAGE = 'chatty.storage_backends.MediaStorage'
 # Создаем папку media если не существует
 if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)
-
+"""
 # AUTHENTICATION
 AUTH_USER_MODEL = 'users.CustomUser'
 
