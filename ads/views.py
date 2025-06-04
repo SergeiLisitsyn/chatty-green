@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import AdvertisementForm
 
+
 def home(request):
     latest_posts = Post.objects.filter(is_archived=False).order_by('-created_at')[:12]
     ads = Advertisement.objects.filter(is_active=True).order_by('-created_at')[:6]
