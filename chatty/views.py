@@ -3,6 +3,16 @@ from posts.models import Post
 from django.db.models import Q
 
 from videopost.models import VideoPost
+from django.http import JsonResponse
+from django.views import View
+
+class HealthCheckView(View):
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({
+            'status': 'ok',
+            'service': 'Django Application',
+            'version': '1.0.0'
+        }, status=200)
 
 
 def welcome(request):
