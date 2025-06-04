@@ -42,6 +42,18 @@ DEBUG = True
 
 INTERNAL_IPS = [ '127.0.0.1', ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://chatty-green.onrender.com',
+    'https://*.onrender.com',
+]
+
+ALLOWED_HOSTS = [
+    'chatty-green.onrender.com',
+    '.onrender.com',  # Для всех поддоменов render.com
+    'localhost',      # Для локальной разработки
+    '127.0.0.1',      # Для локальной разработки
+]
+
 # APPLICATIONS
 INSTALLED_APPS = [
     # Сторонние пакеты
