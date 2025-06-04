@@ -17,6 +17,8 @@ import os
 from dotenv import load_dotenv
 from django.conf.global_settings import AUTHENTICATION_BACKENDS
 from django.urls import reverse_lazy
+import dj_database_url
+
 
 # Определяем базовую директорию проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -142,6 +144,9 @@ DATABASES = {
         'OPTIONS': {'client_encoding': 'UTF8'},
     }
 }
+
+
+DATABASES['default'] = dj_database_url.parse(os.environ['DATABASE_URL'], conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
