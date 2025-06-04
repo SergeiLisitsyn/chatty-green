@@ -34,7 +34,7 @@ env_path = BASE_DIR / '.env'
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n=s5kr%x^h$7ur^*wwt6skj&pn$wm49##$9a)prz8_nv4nd09t'
+SECRET_KEY =  os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -42,6 +42,17 @@ DEBUG = True
 
 INTERNAL_IPS = [ '127.0.0.1', ]
 
+ALLOWED_HOSTS = [
+    'chatty-green.onrender.com',
+    '.onrender.com',  # Для всех поддоменов render.com
+    'localhost',      # Для локальной разработки
+    '127.0.0.1',      # Для локальной разработки
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://chatty-green.onrender.com',
+    'https://*.onrender.com',
+]
 # APPLICATIONS
 INSTALLED_APPS = [
     # Сторонние пакеты
