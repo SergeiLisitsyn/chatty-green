@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'widget_tweaks',
-    'storages'
+    'storages',
 
     # Django-приложения
     'django.contrib.admin',
