@@ -1,3 +1,5 @@
+# chatty/views.py
+
 from django.shortcuts import render
 from posts.models import Post
 from django.db.models import Q

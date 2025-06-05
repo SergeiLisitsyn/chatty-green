@@ -14,7 +14,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.views.decorators.http import require_GET
 # from .models import Subscription
-
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+import json
 
 class VideoPostCreateView(LoginRequiredMixin, CreateView):
     model = VideoPost
@@ -294,14 +299,6 @@ def reply_comment(request, comment_id):
     )
 
     return redirect(parent_comment.post.get_absolute_url())
-
-from django.core.mail import send_mail
-from django.conf import settings
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponseBadRequest
-from django.views.decorators.http import require_POST
-import json
-
 
 @require_POST
 @login_required

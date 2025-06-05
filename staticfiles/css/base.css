@@ -19,7 +19,7 @@ body {
 /* Контейнер контента главной страницы !!!!!!!!!!! */
 .content-wrapper.first-page {
     width: calc(100% - 20mm);                         /* Отступ по краям */
-    background: rgba(255, 255, 255, 0.8);             /* Светлый фон с ПРОЗРАЧНОСТЬЮ */
+    background: rgba(255, 255, 255, 0.9);             /* Светлый фон с ПРОЗРАЧНОСТЬЮ */
     min-height: 800px;                                /* Минимальная высота */
     backdrop-filter: blur(10px);                      /* Эффект размытия */
     -webkit-backdrop-filter: blur(10px);              /* Поддержка Safari */
@@ -33,7 +33,7 @@ body {
 /* Контейнер для остальных страниц */
 .content-wrapper.other-page {
     width: calc(100% - 20mm);
-    background: rgba(245, 245, 245, 0.8);
+    background: rgba(245, 245, 245, 0.9);
     min-height: 800px;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -242,7 +242,7 @@ a:hover {
 
 /* 🔹 Кнопки */
 .btn-primary, .btn-warning {
-    font-size: 14px; /* Размер шрифта на кнопках (Tilda Sans 14px) не менять !!!!*/
+    font-size: 14px; /* Размер шрифта на кнопах btn-primary и btn-warning */
     padding: 8px 12px; /* Отступы */
 }
 

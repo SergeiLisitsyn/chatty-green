@@ -1,3 +1,5 @@
+<!-- templates/home.html -->
+
 {% extends "base.html" %}
 {% load static %}
 {% load time_filters %}
@@ -112,7 +114,7 @@
     setInterval(() => {
       currentIndex = (currentIndex + 1) % ads.length;  // Цикл по рекламе
       showAd(currentIndex);                             // Показать следующую рекламу
-    }, 3000);                                          // Интервал 3 секунды
+    }, 5000);                                          // Интервал 5 секунд
 
     showAd(currentIndex);                              // Показать первую рекламу при загрузке
   });
