@@ -341,7 +341,22 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600
 SESSION_SAVE_EVERY_REQUEST = True
 
+# AWS S3 Configuration
+AWS_ACCESS_KEY_ID = 'AKIARHNQEDZEIP3N3I7L'  # Ваш AWS_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY = '5AlTw1p6XCh5dJAyXO3DuWFME2WfwVj7rYtHIU2y'
+AWS_STORAGE_BUCKET_NAME = 'chatty-green'
+AWS_S3_REGION_NAME = 'eu-north-1'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_DEFAULT_ACL = 'public-read'  # Файлы будут доступны публично
+AWS_QUERYSTRING_AUTH = False  # Отключает подпись URL (для статики)
+AWS_S3_FILE_OVERWRITE = False  # Не перезаписывать файлы с одинаковым именем
 
+# Настройки для медиафайлов
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 
 # Проверка загрузки переменных окружения
