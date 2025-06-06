@@ -13,6 +13,7 @@ from django.contrib.auth import get_user_model
 from unidecode import unidecode
 import uuid
 from django.utils.timezone import now
+from storages.backends.s3boto3 import S3Boto3Storage
 
 
 User = get_user_model()
@@ -22,7 +23,7 @@ class Post(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     text = models.TextField()
-    image = models.ImageField(upload_to='post_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='post_images/')
     publication_date = models.DateTimeField(auto_now_add=True)  # Дата публикации
     created_at = models.DateTimeField(auto_now_add=True)  # Дата создания
     updated_at = models.DateTimeField(auto_now=True)  # Дата последнего обновления
@@ -45,6 +46,10 @@ class Post(models.Model):
                 slug = f"{original_slug[:45 - len(suffix)]}{suffix}"
                 counter += 1
             self.slug = slug
+        storage = S3Boto3Storage()
+        if self.image:
+            # Сохраняем файл через storage
+            self.image.name = storage.save(f'post_images/{self.image.name}', self.image.file)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
