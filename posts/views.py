@@ -14,6 +14,19 @@ from subscriptions.models import Subscription
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from posts.templatetags import time_filters
 from django.db.models import Q
+import logging
+from django.core.files.storage import default_storage
+
+logger = logging.getLogger(__name__)
+
+def upload_to_s3(file):
+    try:
+        file_path = default_storage.save(f"uploads/{file.name}", file)
+        logger.info(f"Файл успешно загружен: {file_path}")
+        return file_path
+    except Exception as e:
+        logger.error(f"Ошибка загрузки в S3: {e}", exc_info=True)
+        return None
 
 
 # Классы для работы с Post
@@ -25,7 +38,12 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        if form.instance.image:
+            logger.info(f"Файл загружен: {form.instance.image.url}")
+        else:
+            logger.error("Ошибка загрузки изображения")
+        return response
 
 
 class PostListView(ListView):
