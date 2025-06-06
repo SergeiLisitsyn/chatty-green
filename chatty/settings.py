@@ -259,25 +259,6 @@ JAZZMIN_UI_TWEAKS = {
 }
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-"""STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = f'https://chatty-green.s3.amazonaws.com/static/'
-
-# Кастомное хранилище для медиа
-from storages.backends.s3boto3 import S3Boto3Storage
-
-class MediaStorage(S3Boto3Storage):
-    location = 'media'
-    file_overwrite = False
-
-DEFAULT_FILE_STORAGE = 'chatty.storage_backends.MediaStorage'
-
-# Создаем папку media если не существует
-if not os.path.exists(MEDIA_ROOT):
-    os.makedirs(MEDIA_ROOT)
-"""
 # AUTHENTICATION
 AUTH_USER_MODEL = 'users.CustomUser'
 
@@ -355,9 +336,9 @@ AWS_QUERYSTRING_AUTH = False  # Отключает подпись URL (для с
 AWS_S3_FILE_OVERWRITE = False  # Не перезаписывать файлы с одинаковым именем
 AWS_S3_ADDRESSING_STYLE = "virtual"
 
-# Настройки для медиафайлов
+# Настройки для медиафайлов (загружаемых пользователями)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/
 
 
 # Проверка загрузки переменных окружения
