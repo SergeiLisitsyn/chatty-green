@@ -16,6 +16,7 @@ from posts.templatetags import time_filters
 from django.db.models import Q
 import logging
 from django.core.files.storage import default_storage
+from botocore.exceptions import ClientError
 
 logger = logging.getLogger(__name__)
 
@@ -83,6 +84,13 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('posts:post_detail', kwargs={'slug': self.object.slug})  # ✅ Добавляем namespace
+
+    def form_valid(self, form):
+            try:
+                return super().form_valid(form)
+            except ClientError as e:
+                form.add_error(None, f"S3 Error: {e.response['Error']['Message']}")
+                return self.form_invalid(form)
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
