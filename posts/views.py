@@ -17,17 +17,22 @@ from django.db.models import Q
 import logging
 from django.core.files.storage import default_storage
 from botocore.exceptions import ClientError
+from django.core.files.base import ContentFile
+from storages.backends.s3boto3 import S3Boto3Storage
+
+def upload_file(request):
+    if request.method == 'POST':
+        storage = S3Boto3Storage()
+        file = request.FILES['file']
+        
+        # Сохранение без ACL
+        file_name = storage.save(f'media/{file.name}', ContentFile(file.read()))
+        
+        # Получение URL
+        file_url = storage.url(file_name)
+        return JsonResponse({'url': file_url})
 
 logger = logging.getLogger(__name__)
-
-def upload_to_s3(file):
-    try:
-        file_path = default_storage.save(f"uploads/{file.name}", file)
-        logger.info(f"Файл успешно загружен: {file_path}")
-        return file_path
-    except Exception as e:
-        logger.error(f"Ошибка загрузки в S3: {e}", exc_info=True)
-        return None
 
 
 # Классы для работы с Post
