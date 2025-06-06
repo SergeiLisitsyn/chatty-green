@@ -175,10 +175,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
-STATICFILES_DIRS = [BASE_DIR / 'static']  # дополнительные папки со статикой
-
 
 
 # Email settings (после загрузки переменных окружения)
@@ -337,8 +333,25 @@ AWS_S3_FILE_OVERWRITE = False  # Не перезаписывать файлы с
 AWS_S3_ADDRESSING_STYLE = "virtual"
 
 # Настройки для медиафайлов (загружаемых пользователями)
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+STORAGES = {
+    "default": {  # Для медиафайлов (S3)
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            "location": "media",  # Папка в S3 бакете
+            "file_overwrite": False,
+        },
+    },
+    "staticfiles": {  # Для статики (оставляем на Render)
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+# URL (важно!)
+STATIC_URL = '/static/'  # Остаётся на Render
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'  # S3
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
+STATICFILES_DIRS = [BASE_DIR / 'static']  # дополнительные папки со статикой
 
 
 # Проверка загрузки переменных окружения
