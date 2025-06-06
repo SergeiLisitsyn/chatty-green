@@ -353,6 +353,7 @@ AWS_S3_OBJECT_PARAMETERS = {
 AWS_DEFAULT_ACL = 'public-read'  # Файлы будут доступны публично
 AWS_QUERYSTRING_AUTH = False  # Отключает подпись URL (для статики)
 AWS_S3_FILE_OVERWRITE = False  # Не перезаписывать файлы с одинаковым именем
+AWS_S3_ADDRESSING_STYLE = "virtual"
 
 # Настройки для медиафайлов
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
