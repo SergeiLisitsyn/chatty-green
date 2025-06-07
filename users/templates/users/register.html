@@ -19,9 +19,9 @@
         <div class="card-body text-center">
           <p class="fw-bold">Текущий аватар</p>
           <img id="avatarPreview"
-               src="/media/avatars/default.png"
+               src="{{ MEDIA_URL }}avatars/default.png"
                alt="Аватар"
-               class="iimg-fluid rounded-circle mb-3 avatar-frame"
+               class="img-fluid rounded-circle mb-3 avatar-frame"
                style="max-width: 200px;">
           <div class="mt-2">
             {# Скрытый input для выбора файла, с явным id="avatar-input" #}
@@ -53,7 +53,7 @@
               <div class="col">
                 <label class="form-label">Email</label>
                 <!-- {{ form.email.label_tag }} -->
-                {{ form.email|add_class:"form-control bg-light"|attr:"placeholder:name@exemple.com" }}
+                {{ form.email|add_class:"form-control bg-light"|attr:"placeholder:name@example.com" }}
               </div>
               <div class="col">
                 <label class="form-label">Контакты</label>
@@ -153,7 +153,7 @@
           reader.readAsDataURL(file);
 
           // 2) И сразу отправляем форму, чтобы сохранить аватар
-          form.submit();
+          //form.submit();
         }
       });
     }
