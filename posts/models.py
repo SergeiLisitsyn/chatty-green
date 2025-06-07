@@ -58,7 +58,7 @@ class Post(models.Model):
         s3_storage = S3Storage()
         if self.image:
             # Сохраняем файл через storage
-            s3_storage.upload_file(self.image, settings.AWS_STORAGE_BUCKET_NAME, f"media/post_images/{self.image}")
+            s3_storage.upload_file(f'{self.image}', settings.AWS_STORAGE_BUCKET_NAME, f"media/post_images/{self.image}")
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
