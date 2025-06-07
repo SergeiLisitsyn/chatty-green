@@ -339,14 +339,18 @@ AWS_S3_ADDRESSING_STYLE = "virtual"
 
 # Настройки для медиафайлов (загружаемых пользователями)
 STORAGES = {
-    "default": {  # Для медиафайлов (S3)
+    "default": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
         "OPTIONS": {
-            "location": "media",  # Папка в S3 бакете
+            "location": "media",
             "file_overwrite": False,
+            "default_acl": "public-read",  # Явно указываем ACL
+            "bucket_name": AWS_STORAGE_BUCKET_NAME,
+            "region_name": AWS_S3_REGION_NAME,
+            "custom_domain": AWS_S3_CUSTOM_DOMAIN,
         },
     },
-    "staticfiles": {  # Для статики (оставляем на Render)
+    "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
