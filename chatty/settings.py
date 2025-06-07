@@ -331,14 +331,14 @@ AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazo
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
-AWS_DEFAULT_ACL = 'public-read'  # Файлы будут доступны публично
+AWS_DEFAULT_ACL = None  # Файлы будут доступны публично
 AWS_QUERYSTRING_AUTH = False  # Отключает подпись URL (для статики)
 AWS_S3_FILE_OVERWRITE = False  # Не перезаписывать файлы с одинаковым именем
 AWS_S3_ADDRESSING_STYLE = "virtual"
 
 # Настройки для медиафайлов (загружаемых пользователями)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 
 # Проверка загрузки переменных окружения
