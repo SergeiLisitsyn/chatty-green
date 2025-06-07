@@ -373,7 +373,7 @@ print("Bucket location:", s3.get_bucket_location(Bucket=settings.AWS_STORAGE_BUC
 # Включение детального лога boto3# дополнительные папки со статикой
 
 
- Проверка загрузки переменных окружения
+#Проверка загрузки переменных окружения
 print(f"AWS_ACCESS_KEY_ID: {AWS_ACCESS_KEY_ID}")
 print(f"AWS_SECRET_ACCESS_KEY: {AWS_SECRET_ACCESS_KEY}")
 # print(f"EMAIL_PORT: {EMAIL_PORT}")
