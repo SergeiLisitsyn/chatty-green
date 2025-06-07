@@ -56,6 +56,16 @@ class Post(models.Model):
 
         super().save(*args, **kwargs)  # Сначала сохраняем объект, чтобы файл появился в системе
 
+        if self.image:
+            s3_storage = S3Storage()
+            s3_storage.client.upload_fileobj(
+                self.image.file,  # Передаём объект файла, а не путь
+                settings.AWS_STORAGE_BUCKET_NAME,
+                f"media/post_images/{self.image.name}"  # Указываем путь в S3
+            )
+
+        print(f"Файл загружен в S3: s3://{settings.AWS_STORAGE_BUCKET_NAME}/media/post_images/{self.image.name}")
+
         if self.image:  # Загружаем файл в S3 БЕЗ ACL
             s3_storage = S3Storage()
             s3_storage.client.upload_fileobj(

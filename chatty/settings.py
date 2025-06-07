@@ -333,7 +333,7 @@ AWS_S3_ENDPOINT_URL = f"https://s3.{AWS_S3_REGION_NAME}.amazonaws.com"
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
-AWS_DEFAULT_ACL = 'public-read'  # Файлы будут доступны публично
+#AWS_DEFAULT_ACL = 'public-read'  # Файлы будут доступны публично
 AWS_QUERYSTRING_AUTH = False  # Отключает подпись URL (для статики)
 AWS_S3_FILE_OVERWRITE = False  # Не перезаписывать файлы с одинаковым именем
 AWS_S3_SIGNATURE_VERSION = 's3v4'  # обязательная версия подписи
