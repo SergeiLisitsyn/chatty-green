@@ -42,12 +42,10 @@ class Post(models.Model):
     is_archived = models.BooleanField(default=False)
     advertisement = models.ForeignKey(Advertisement, on_delete=models.SET_NULL, null=True, blank=True)  # Рекламный блок
 
-
     def save(self, *args, **kwargs):
         if not self.slug:
-            transliterated_title = unidecode(self.title)  # Конвертируем кириллицу в латиницу
-            slug = slugify(transliterated_title)  # Генерируем slug
-            slug = slug[:45]  # Обрезаем для корректности
+            transliterated_title = unidecode(self.title)
+            slug = slugify(transliterated_title)[:45]
             counter = 1
             original_slug = slug
             while Post.objects.filter(slug=slug).exists():
@@ -55,11 +53,18 @@ class Post(models.Model):
                 slug = f"{original_slug[:45 - len(suffix)]}{suffix}"
                 counter += 1
             self.slug = slug
-        s3_storage = S3Storage()
-        if self.image:
-            # Сохраняем файл через storage
-            s3_storage.upload_file(f'{self.image}', settings.AWS_STORAGE_BUCKET_NAME, f"media/post_images/{self.image}")
-        super().save(*args, **kwargs)
+
+        super().save(*args, **kwargs)  # Сначала сохраняем объект, чтобы файл появился в системе
+
+        if self.image:  # Теперь файл точно сохранён, можно загружать в S3
+            s3_storage = S3Storage()
+            s3_storage.client.upload_fileobj(
+                self.image.file,  # Передаём файловый объект
+                settings.AWS_STORAGE_BUCKET_NAME,
+                f"media/post_images/{self.image.name}"
+            )
+
+        print(f"Файл успешно загружен: s3://{settings.AWS_STORAGE_BUCKET_NAME}/media/post_images/{self.image.name}")
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'slug': self.slug})
