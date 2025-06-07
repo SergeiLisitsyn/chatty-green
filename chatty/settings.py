@@ -22,15 +22,7 @@ import boto3
 import logging
 from botocore.client import Config
 
-s3 = boto3.client(
-    's3',
-    aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-    region_name=settings.AWS_S3_REGION_NAME,
-    config=Config(signature_version='s3v4')
-)
-print("Bucket location:", s3.get_bucket_location(Bucket=settings.AWS_STORAGE_BUCKET_NAME))
-# Включение детального лога boto3
+
 boto3.set_stream_logger('botocore', logging.DEBUG)
 
 # Определяем базовую директорию проекта
@@ -369,12 +361,21 @@ STATIC_URL = '/static/'  # Остаётся на Render
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'  # S3
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
-STATICFILES_DIRS = [BASE_DIR / 'static']  # дополнительные папки со статикой
+STATICFILES_DIRS = [BASE_DIR / 'static']  
+s3 = boto3.client(
+    's3',
+    aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+    region_name=settings.AWS_S3_REGION_NAME,
+    config=Config(signature_version='s3v4')
+)
+print("Bucket location:", s3.get_bucket_location(Bucket=settings.AWS_STORAGE_BUCKET_NAME))
+# Включение детального лога boto3# дополнительные папки со статикой
 
 
-# Проверка загрузки переменных окружения
-# print("\n=== Email Configuration ===")
-# print(f"EMAIL_HOST: {EMAIL_HOST}")
+ Проверка загрузки переменных окружения
+print(f"AWS_ACCESS_KEY_ID: {AWS_ACCESS_KEY_ID}")
+print(f"AWS_SECRET_ACCESS_KEY: {AWS_SECRET_ACCESS_KEY}")
 # print(f"EMAIL_PORT: {EMAIL_PORT}")
 # print(f"EMAIL_USE_TLS: {EMAIL_USE_TLS}")
 # print(f"EMAIL_HOST_USER: {EMAIL_HOST_USER or 'не установлен'}")
