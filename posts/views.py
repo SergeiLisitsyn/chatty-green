@@ -17,33 +17,11 @@ from django.db.models import Q
 import logging
 from django.core.files.storage import default_storage
 from botocore.exceptions import ClientError
-import boto3
-from django.conf import settings
+from django.core.files.base import ContentFile
+from storages.backends.s3boto3 import S3Boto3Storage
+
 
 logger = logging.getLogger(__name__)
-
-# your_project/services/s3_storage.py
-
-
-class S3Storage:
-    def __init__(self):
-        self.client = boto3.client(
-            "s3",
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            region_name=settings.AWS_S3_REGION_NAME,
-            endpoint_url=f"https://s3.{settings.AWS_S3_REGION_NAME}.amazonaws.com"
-        )
-
-    def upload_file(self, local_path, bucket_name, s3_path):
-        """Загружает файл в S3"""
-        self.client.upload_file(local_path, bucket_name, s3_path)
-        print(f"Файл загружен: s3://{bucket_name}/{s3_path}")
-
-# Использование:
-s3_storage = S3Storage()
-s3_storage.upload_file("path/to/local_file.txt", settings.AWS_STORAGE_BUCKET_NAME, "uploads/new_file.txt")
-
 
 
 # Классы для работы с Post
