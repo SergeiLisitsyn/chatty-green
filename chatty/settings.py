@@ -329,6 +329,7 @@ AWS_SECRET_ACCESS_KEY = '5AlTw1p6XCh5dJAyXO3DuWFME2WfwVj7rYtHIU2y'
 AWS_STORAGE_BUCKET_NAME = 'chatty-green'
 AWS_S3_REGION_NAME = 'eu-north-1'
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
+AWS_S3_ENDPOINT_URL = f"https://s3.{AWS_S3_REGION_NAME}.amazonaws.com"
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
@@ -349,6 +350,7 @@ STORAGES = {
             "bucket_name": AWS_STORAGE_BUCKET_NAME,
             "region_name": AWS_S3_REGION_NAME,
             "custom_domain": AWS_S3_CUSTOM_DOMAIN,
+            "endpoint_url": f"https://s3.{AWS_S3_REGION_NAME}.amazonaws.com",
         },
     },
     "staticfiles": {
@@ -362,14 +364,9 @@ MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'  # S3
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
 STATICFILES_DIRS = [BASE_DIR / 'static']  
-s3 = boto3.client(
-    's3',
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    region_name=AWS_S3_REGION_NAME,
-    config=Config(signature_version='s3v4')
-)
-print("Bucket location:", s3.get_bucket_location(Bucket=AWS_STORAGE_BUCKET_NAME))
+DEFAULT_FILE_STORAGE = "chatty.custom_storages.CustomS3Storage"
+
+
 # Включение детального лога boto3# дополнительные папки со статикой
 
 
