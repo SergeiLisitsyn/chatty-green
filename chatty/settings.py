@@ -18,7 +18,11 @@ from dotenv import load_dotenv
 from django.conf.global_settings import AUTHENTICATION_BACKENDS
 from django.urls import reverse_lazy
 import dj_database_url
+import boto3
+import logging
 
+# Включение детального лога boto3
+boto3.set_stream_logger('botocore', logging.DEBUG)
 
 # Определяем базовую директорию проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
