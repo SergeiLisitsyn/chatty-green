@@ -346,7 +346,6 @@ STORAGES = {
         "OPTIONS": {
             "location": "media",
             "file_overwrite": False,
-            "default_acl": "public-read",  # Явно указываем ACL
             "bucket_name": AWS_STORAGE_BUCKET_NAME,
             "region_name": AWS_S3_REGION_NAME,
             "custom_domain": AWS_S3_CUSTOM_DOMAIN,
