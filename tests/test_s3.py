@@ -8,7 +8,7 @@ class S3StorageTests(TestCase):
         """Тест загрузки файла в S3 и чтения метаданных"""
         # 1. Тест загрузки файла
         test_content = b"Test content from Django"
-        file_path = "media/test_django.txt"
+        file_path = "test_django.txt"
 
         # Сохраняем файл
         saved_path = default_storage.save(file_path, ContentFile(test_content))
