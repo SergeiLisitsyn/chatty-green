@@ -21,7 +21,7 @@ from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.urls import reverse_lazy
-
+from django.conf import settings
 
 def welcome_view(request):
     return render(request, 'welcome.html')  # Загружаем welcome.html
@@ -43,6 +43,11 @@ def register(request):
             return redirect('profile', username=user.username)
     else:
         form = CustomUserCreationForm()
+
+    context = {
+        'form': form,
+        'MEDIA_URL': settings.MEDIA_URL,  # передаём MEDIA_URL в шаблон
+    }
     return render(request, 'users/register.html', {'form': form})
 
 

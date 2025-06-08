@@ -1,4 +1,4 @@
-# -- chatty/settings.py
+# -- chatty-green/settings.py
 """
 Django settings for chatty project.
 
@@ -42,7 +42,8 @@ env_path = BASE_DIR / '.env'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY =  os.environ.get('SECRET_KEY')
-
+if not SECRET_KEY:
+    raise ValueError("⚠️ SECRET_KEY is not set in the environment!")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -138,21 +139,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'chatty.wsgi.application'
 
 # DATABASE
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('PG_NAME', ''),
+#         'USER': os.getenv('PG_USER', ''),
+#         'PASSWORD': os.getenv('PG_PASSWORD', ''),
+#         'HOST': os.getenv('PG_HOST', ''),
+#         'PORT': os.getenv('PG_PORT', ''),
+#         'OPTIONS': {'client_encoding': 'UTF8'},
+#     }
+# }
+# DATABASES['default'] = dj_database_url.parse(os.environ['DATABASE_URL'], conn_max_age=600)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('PG_NAME', ''),
-        'USER': os.getenv('PG_USER', ''),
-        'PASSWORD': os.getenv('PG_PASSWORD', ''),
-        'HOST': os.getenv('PG_HOST', ''),
-        'PORT': os.getenv('PG_PORT', ''),
-        'OPTIONS': {'client_encoding': 'UTF8'},
-    }
+    'default': dj_database_url.config(
+        default=os.environ['DATABASE_URL'],
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
-
-
-DATABASES['default'] = dj_database_url.parse(os.environ['DATABASE_URL'], conn_max_age=600)
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -164,7 +169,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Authentication
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser' # дважды указана переменная
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -261,7 +266,7 @@ JAZZMIN_UI_TWEAKS = {
 
 
 # AUTHENTICATION
-AUTH_USER_MODEL = 'users.CustomUser'
+# AUTH_USER_MODEL = 'users.CustomUser'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
@@ -276,7 +281,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 # Настройки для Telegram
 #SOCIAL_AUTH_TELEGRAM_BOT_TOKEN = 'ВАШ_TELEGRAM_BOT_TOKEN'
 
-LOGIN_URL = 'login'
+# LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = '/'  # Страница после входа
 LOGOUT_REDIRECT_URL = '/'  # Страница после выхода
@@ -301,16 +306,50 @@ ACCOUNT_FORMS = {'signup': 'users.forms.CustomSignupForm'}
 
 LOGIN_URL = '/accounts/login/'  # Страница входа
 
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': ['email', 'profile'],
+#         'AUTH_PARAMS': {'access_type': 'online'},
+#     },
+#
+#     'github': {
+#         'SCOPE': ['user:email'],
+#         'AUTH_PARAMS': {'access_type': 'online'},
+#     },
+# }
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'SCOPE': ['email', 'profile'],
-        'AUTH_PARAMS': {'access_type': 'online'},
+        'APP': {
+            'client_id': 'ВАШ_CLIENT_ID_ОТ_GOOGLE',
+            'secret': 'ВАШ_CLIENT_SECRET_ОТ_GOOGLE',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
     },
+
     'github': {
-        'SCOPE': ['user:email'],
-        'AUTH_PARAMS': {'access_type': 'online'},
+        'APP': {
+            'client_id': 'ВАШ_CLIENT_ID_ОТ_GITHUB',
+            'secret': 'ВАШ_CLIENT_SECRET_ОТ_GITHUB',
+            'key': ''
+        },
+        'SCOPE': [
+            'user',
+            'user:email',
+        ],
+        'AUTH_PARAMS': {
+            'allow_signup': 'true',
+        },
     },
 }
+
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
@@ -324,10 +363,10 @@ SESSION_COOKIE_AGE = 1209600
 SESSION_SAVE_EVERY_REQUEST = True
 
 # AWS S3 Configuration
-AWS_ACCESS_KEY_ID = 'AKIARHNQEDZEIP3N3I7L'  # Ваш AWS_ACCESS_KEY
-AWS_SECRET_ACCESS_KEY = '5AlTw1p6XCh5dJAyXO3DuWFME2WfwVj7rYtHIU2y'
-AWS_STORAGE_BUCKET_NAME = 'chatty-green'
-AWS_S3_REGION_NAME = 'eu-north-1'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
 AWS_S3_ENDPOINT_URL = f"https://s3.{AWS_S3_REGION_NAME}.amazonaws.com"
 AWS_S3_OBJECT_PARAMETERS = {

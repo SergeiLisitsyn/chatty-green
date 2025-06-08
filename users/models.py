@@ -1,17 +1,15 @@
-# Create your models here.
-#users/models.py
-from django.contrib.auth.models import AbstractUser, User
+# users/models.py
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-# from django.contrib.auth.models import User
+from django.core.files.storage import default_storage
 from django.utils import timezone
 from PIL import Image
-import os
+from io import BytesIO
+from django.core.files.base import ContentFile
 from chatty import settings
-
 
 def avatar_upload_path(instance, filename):
     return f'avatars/user_{instance.user.id}/{filename}'
-
 
 class UserProfile(models.Model):
     user = models.OneToOneField(
@@ -26,36 +24,39 @@ class UserProfile(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        # Уменьшаем размер аватара при сохранении
-        if self.user.avatar and self.user.avatar.url:
-            img_path = self.user.avatar.path
-            img = Image.open(img_path)
-            if img.height > 300 or img.width > 300:
-                output_size = (300, 300)
-                img.thumbnail(output_size)
-                img.save(img_path)
+        # Проверяем, существует ли аватар в S3
+        if self.user.avatar and default_storage.exists(self.user.avatar.name):
+            # Открываем файл из S3
+            with default_storage.open(self.user.avatar.name, 'rb') as f:
+                img = Image.open(f)
+                img.load()  # Загружаем изображение в память
 
+            # Уменьшаем изображение, если оно слишком большое
+            if img.height > 200 or img.width > 200:
+                output_size = (200, 200)
+
+                img.thumbnail(output_size)
+
+                # Создаём новый файл с изменённым изображением
+                img_io = BytesIO()
+                img_format = img.format if img.format else 'JPEG'
+                img.save(img_io, format=img_format)
+                img_content = ContentFile(img_io.getvalue(), name=self.user.avatar.name)
+
+                # Сохраняем изменённый аватар обратно в S3 без вызова save модели
+                self.user.avatar.save(self.user.avatar.name, img_content, save=False)
+                super().save(*args, **kwargs)
 
 class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', default='avatars/default.png')
     bio = models.TextField(blank=True, verbose_name="О себе")
     contacts = models.CharField(max_length=255, blank=True, verbose_name="Контакты")
-    # Поле для выбора отображения email; по умолчанию скрытый
     display_email = models.BooleanField(default=False, verbose_name="Показывать мой email")
 
-    # Новые поля для бана
+    # Поля для бана
     is_banned = models.BooleanField(default=False, verbose_name="Забанен")
     ban_reason = models.TextField(blank=True, null=True, verbose_name="Причина бана")
     banned_until = models.DateTimeField(blank=True, null=True, verbose_name="Забанен до")
-
-
-    # Новые поля для бана
-    is_banned = models.BooleanField(default=False, verbose_name="Забанен")
-    ban_reason = models.TextField(blank=True, null=True, verbose_name="Причина бана")
-    banned_until = models.DateTimeField(blank=True, null=True, verbose_name="Забанен до")
-
 
     def __str__(self):
         return self.username
-
-
