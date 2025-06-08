@@ -358,7 +358,7 @@ STORAGES = {
 
 # URL (важно!)
 STATIC_URL = '/static/'  # Остаётся на Render
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'  # S3
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}'  # S3
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
 STATICFILES_DIRS = [BASE_DIR / 'static']  
