@@ -58,20 +58,14 @@ class Post(models.Model):
 
         if self.image:
             s3_storage = S3Storage()
-            s3_storage.client.upload_fileobj(
-                self.image.file,  # Передаём объект файла, а не путь
-                settings.AWS_STORAGE_BUCKET_NAME,
-                f"media/post_images/{self.image.name}"  # Указываем путь в S3
-            )
-
-        print(f"Файл загружен в S3: s3://{settings.AWS_STORAGE_BUCKET_NAME}/media/post_images/{self.image.name}")
-
-        if self.image:  # Загружаем файл в S3 БЕЗ ACL
-            s3_storage = S3Storage()
-            s3_storage.client.upload_fileobj(
-                self.image.file,  # Передаём объект файла, а не путь
-                settings.AWS_STORAGE_BUCKET_NAME,
-                f"media/post_images/{self.image.name}"
+    
+            # Открываем файл в режиме чтения
+            self.image.open()
+    
+            s3_storage.client.put_object(
+                Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+                Key=f"media/post_images/{self.image.name}",
+                Body=self.image.file.read()  # Передаём бинарные данные, а не `S3File`
             )
 
         print(f"Файл загружен в S3: s3://{settings.AWS_STORAGE_BUCKET_NAME}/media/post_images/{self.image.name}")
