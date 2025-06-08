@@ -64,11 +64,12 @@ class Post(models.Model):
     
             s3_storage.client.put_object(
                 Bucket=settings.AWS_STORAGE_BUCKET_NAME,
-                Key=f"media/post_images/{self.image.name}",
+                Key=f"media/{self.image.name}",
                 Body=self.image.file.read()  # Передаём бинарные данные, а не `S3File`
             )
 
-        print(f"Файл загружен в S3: s3://{settings.AWS_STORAGE_BUCKET_NAME}/media/post_images/{self.image.name}")
+        print(f"Файл загружен в S3: s3://{settings.AWS_STORAGE_BUCKET_NAME}/media/{self.image.name}")
+        print(f"self.image.name = {self.image.name}!!!***")
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'slug': self.slug})
