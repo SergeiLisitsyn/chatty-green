@@ -64,7 +64,7 @@ class Post(models.Model):
     
             s3_storage.client.put_object(
                 Bucket=settings.AWS_STORAGE_BUCKET_NAME,
-                Key=f"media/{self.image.name}",
+                Key=f"{self.image.name}",
                 Body=self.image.file.read()  # Передаём бинарные данные, а не `S3File`
             )
 
