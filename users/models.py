@@ -7,6 +7,9 @@ from django.utils import timezone
 from PIL import Image
 import os
 from chatty import settings
+import requests
+from PIL import Image
+from io import BytesIO
 
 
 def avatar_upload_path(instance, filename):
