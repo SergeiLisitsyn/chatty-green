@@ -18,7 +18,12 @@ from dotenv import load_dotenv
 from django.conf.global_settings import AUTHENTICATION_BACKENDS
 from django.urls import reverse_lazy
 import dj_database_url
+import boto3
+import logging
+from botocore.client import Config
 
+
+boto3.set_stream_logger('botocore', logging.DEBUG)
 
 # Определяем базовую директорию проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -363,10 +368,11 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
+AWS_S3_ENDPOINT_URL = f"https://s3.{AWS_S3_REGION_NAME}.amazonaws.com"
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
-AWS_DEFAULT_ACL = None # 'public-read'  # Файлы будут доступны публично
+#AWS_DEFAULT_ACL = 'public-read'  # Файлы будут доступны публично
 AWS_QUERYSTRING_AUTH = False  # Отключает подпись URL (для статики)
 AWS_S3_FILE_OVERWRITE = False  # Не перезаписывать файлы с одинаковым именем
 AWS_S3_SIGNATURE_VERSION = 's3v4'  # обязательная версия подписи
@@ -374,29 +380,30 @@ AWS_S3_ADDRESSING_STYLE = "virtual"
 
 # Настройки для медиафайлов (загружаемых пользователями)
 STORAGES = {
-    "default": {  # Для медиафайлов (S3)
+    "default": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
         "OPTIONS": {
-            "location": "media",  # Папка в S3 бакете
             "file_overwrite": False,
+            "bucket_name": AWS_STORAGE_BUCKET_NAME,
+            "region_name": AWS_S3_REGION_NAME,
+            "custom_domain": AWS_S3_CUSTOM_DOMAIN,
+            "endpoint_url": f"https://s3.{AWS_S3_REGION_NAME}.amazonaws.com",
         },
     },
-    "staticfiles": {  # Для статики (оставляем на Render)
+    "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
 # URL (важно!)
 STATIC_URL = '/static/'  # Остаётся на Render
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'  # S3
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}'  # S3
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
-STATICFILES_DIRS = [BASE_DIR / 'static']  # дополнительные папки со статикой
+STATICFILES_DIRS = [BASE_DIR / 'static']  
 
 
-# Проверка загрузки переменных окружения
-# print("\n=== Email Configuration ===")
-# print(f"EMAIL_HOST: {EMAIL_HOST}")
+#Проверка загрузки переменных окружения
 # print(f"EMAIL_PORT: {EMAIL_PORT}")
 # print(f"EMAIL_USE_TLS: {EMAIL_USE_TLS}")
 # print(f"EMAIL_HOST_USER: {EMAIL_HOST_USER or 'не установлен'}")

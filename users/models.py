@@ -34,6 +34,7 @@ class UserProfile(models.Model):
             # Уменьшаем изображение, если оно слишком большое
             if img.height > 200 or img.width > 200:
                 output_size = (200, 200)
+
                 img.thumbnail(output_size)
 
                 # Создаём новый файл с изменённым изображением

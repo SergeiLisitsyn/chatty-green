@@ -1,22 +1,31 @@
 # posts/models.py
 from django.db import models
 from django.utils.text import slugify
-from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
-
 from ads.models import Advertisement
-
-from posts.templatetags import time_filters
 from django.contrib.auth import get_user_model
 from unidecode import unidecode
-import uuid
-from django.utils.timezone import now
-from storages.backends.s3boto3 import S3Boto3Storage
+import boto3
+from django.conf import settings
 
+class S3Storage:
+    def __init__(self):
+        self.client = boto3.client(
+            "s3",
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            region_name=settings.AWS_S3_REGION_NAME,
+            endpoint_url=f"https://s3.{settings.AWS_S3_REGION_NAME}.amazonaws.com"
+        )
+
+    def upload_file(self, local_path, bucket_name, s3_path):
+        """Загружает файл в S3"""
+        self.client.upload_file(local_path, bucket_name, s3_path)
+        print(f"Файл загружен: s3://{bucket_name}/{s3_path}")
 
 User = get_user_model()
+
 
 
 class Post(models.Model):
@@ -33,12 +42,10 @@ class Post(models.Model):
     is_archived = models.BooleanField(default=False)
     advertisement = models.ForeignKey(Advertisement, on_delete=models.SET_NULL, null=True, blank=True)  # Рекламный блок
 
-
     def save(self, *args, **kwargs):
         if not self.slug:
-            transliterated_title = unidecode(self.title)  # Конвертируем кириллицу в латиницу
-            slug = slugify(transliterated_title)  # Генерируем slug
-            slug = slug[:45]  # Обрезаем для корректности
+            transliterated_title = unidecode(self.title)
+            slug = slugify(transliterated_title)[:45]
             counter = 1
             original_slug = slug
             while Post.objects.filter(slug=slug).exists():
@@ -46,11 +53,23 @@ class Post(models.Model):
                 slug = f"{original_slug[:45 - len(suffix)]}{suffix}"
                 counter += 1
             self.slug = slug
-        storage = S3Boto3Storage()
+
+        super().save(*args, **kwargs)  # Сначала сохраняем объект, чтобы файл появился в системе
+
         if self.image:
-            # Сохраняем файл через storage
-            self.image.name = storage.save(f'post_images/{self.image.name}', self.image.file)
-        super().save(*args, **kwargs)
+            s3_storage = S3Storage()
+    
+            # Открываем файл в режиме чтения
+            self.image.open()
+    
+            s3_storage.client.put_object(
+                Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+                Key=f"{self.image.name}",
+                Body=self.image.file.read()  # Передаём бинарные данные, а не `S3File`
+            )
+
+        print(f"Файл загружен в S3: s3://{settings.AWS_STORAGE_BUCKET_NAME}/{self.image.name}")
+        print(f"self.image.name = {self.image.name}!!!***")
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'slug': self.slug})
