@@ -57,12 +57,6 @@ class CustomUser(AbstractUser):
     banned_until = models.DateTimeField(blank=True, null=True, verbose_name="Забанен до")
 
 
-    # Новые поля для бана
-    is_banned = models.BooleanField(default=False, verbose_name="Забанен")
-    ban_reason = models.TextField(blank=True, null=True, verbose_name="Причина бана")
-    banned_until = models.DateTimeField(blank=True, null=True, verbose_name="Забанен до")
-
-
     def __str__(self):
         return self.username
 
