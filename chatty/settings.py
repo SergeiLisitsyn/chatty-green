@@ -344,7 +344,6 @@ STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
         "OPTIONS": {
-            "location": "media",
             "file_overwrite": False,
             "bucket_name": AWS_STORAGE_BUCKET_NAME,
             "region_name": AWS_S3_REGION_NAME,
@@ -363,15 +362,9 @@ MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'  # S3
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
 STATICFILES_DIRS = [BASE_DIR / 'static']  
-DEFAULT_FILE_STORAGE = "chatty.custom_storages.CustomS3Storage"
-
-
-# Включение детального лога boto3# дополнительные папки со статикой
 
 
 #Проверка загрузки переменных окружения
-print(f"AWS_ACCESS_KEY_ID: {AWS_ACCESS_KEY_ID}")
-print(f"AWS_SECRET_ACCESS_KEY: {AWS_SECRET_ACCESS_KEY}")
 # print(f"EMAIL_PORT: {EMAIL_PORT}")
 # print(f"EMAIL_USE_TLS: {EMAIL_USE_TLS}")
 # print(f"EMAIL_HOST_USER: {EMAIL_HOST_USER or 'не установлен'}")
