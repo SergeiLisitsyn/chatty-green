@@ -28,7 +28,7 @@ class UserProfile(models.Model):
 
         # Уменьшаем размер аватара при сохранении
         if self.user.avatar and self.user.avatar.url:
-            img_path = self.user.avatarю.url
+            img_path = self.user.avatar.url
             img = Image.open(img_path)
             if img.height > 300 or img.width > 300:
                 output_size = (300, 300)
