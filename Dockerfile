@@ -11,13 +11,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Копируем зависимости первыми (для кэширования)
 COPY requirements.txt .
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt gunicorn  # Явно добавляем gunicorn!
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt  #
 
 # Копируем остальные файлы
 COPY . .
 
 # Делаем скрипты исполняемыми
 RUN chmod +x entrypoint.sh wait-for-db.sh
-
+EXPOSE 8000
 CMD ["./entrypoint.sh"]

@@ -20,26 +20,21 @@ services:
       timeout: 5s
       retries: 10
 
-
   web:
-    image: chatty_green_web:latest      # <-- добавили
     build: .
     container_name: web
-    command: >
-      sh -c "python manage.py migrate &&
-      python manage.py collectstatic --no-input --clear &&
-      gunicorn chatty.wsgi:application --bind 0.0.0.0:10000"
     ports:
-      - "10000:10000"  # Исправленный порт
+      - "8000:8000"
     depends_on:
       - db
     env_file:
       - .env
     environment:
-      - DOCKERIZED=1        # <-- добавляем
+      - DOCKERIZED=1
     volumes:
       - .:/app
       - media_volume:/media
+
   tests:
     build: .
     command: >
