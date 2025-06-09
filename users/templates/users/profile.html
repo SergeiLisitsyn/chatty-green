@@ -11,7 +11,7 @@
     <!-- Левая колонка: аватар + основная информация + навигация -->
     <div class="col-md-3 text-center">
   <img
-    src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
+    src="{% if profile_user.avatar %}{{ profile_user.avatar.url }}{% else %}{% static 'avatars/default.png' %}{% endif %}"
     alt="Аватар"
     class="rounded-circle mb-3 avatar-frame"
     style="width: 200px; height: 200px; object-fit: cover;"
