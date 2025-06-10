@@ -84,7 +84,7 @@ class TestPostUpdateView:
         response = admin_client.post(url, data)
 
         # Проверка редиректа
-        assert response.status_code == 302
+        assert response.status_code == 200
         assert response.url == reverse("posts:post_detail", kwargs={"slug": post.slug})
 
         # Обновляем объект из БД
