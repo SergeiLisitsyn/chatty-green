@@ -76,7 +76,7 @@ def profile(request, username):
         author=profile_user,
         is_archived=False
     ).order_by('-publication_date')[:6]
-
+    print(f'AVATAR  = {profile_user.avatar.url}')
     context = {
         'profile_user': profile_user,
         'is_subscribed': is_subscribed,
