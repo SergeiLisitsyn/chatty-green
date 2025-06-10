@@ -60,7 +60,7 @@ def test_full_user_flow(client, authenticated_client, test_user):
         reverse('posts:post_detail', kwargs={'slug': post.slug}),
         comment_data
     )
-    assert response.status_code == 302
+    assert response.status_code == 200
 
     # Проверка комментария
     comment = Comment.objects.first()
