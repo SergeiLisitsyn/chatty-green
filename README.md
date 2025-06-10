@@ -38,55 +38,198 @@ Django"...
 ```
 # Chatty_green
 ```
-Обновленная и упрощенная схема проекта
+Обновленная  схема проекта
+"C:\Users\Iron Mask\AppData\Local\Programs\Python\Python313\python.exe" "C:\Users\Iron Mask\Chatty_green\Print_three_project.py" 
+СТРУКТУРА ПРОЕКТА:
 Chatty_green/
-├── chatty/                          # Django-проект
+├── Dockerfile
+├── Print_three_project.py
+├── add_ad_block.py
+├── ads/
 │   ├── __init__.py
-│   ├── settings.py                  # Настройки (будет разделение на base/dev/prod)
-│   ├── urls.py                      # Корневой роутинг
+│   ├── admin.py
+│   ├── forms.py
+│   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_alter_advertisement_options_advertisement_video_and_more.py
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── urls.py
+│   └── views.py
+├── allfileshas.txt
+├── chatty/
+│   ├── __init__.py
 │   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── views.py
 │   └── wsgi.py
-│
-├── core/                            # Общие компоненты
-│   ├── templates/                   # Базовые шаблоны (base.html, 404.html и др.)
-│   ├── static/                      # Общие CSS, JS, изображения
-│   ├── utils.py                     # Вспомогательные функции
-│   └── views.py                     # Статические страницы (о проекте, ошибки)
-│
-├── users/                           # Пользователи
-│   ├── models.py                    # Модель профиля
-│   ├── forms.py                     # Регистрация, логин, редактирование
-│   ├── views.py                     # Регистрация, логин, профиль
-│   ├── urls.py
-│   ├── templates/users/             # Шаблоны профиля, формы и т.д.
-│   └── admin.py
-│
-├── posts/                           # Посты и комментарии
-│   ├── models.py                    # Post, Comment, Like
-│   ├── forms.py                     # Форма создания поста, комментария
-│   ├── views.py                     # CRUD-представления
-│   ├── urls.py
-│   ├── templates/posts/            # Шаблоны для постов и ленты
-│   └── admin.py
-│
-├── subscriptions/                  # Подписки
-│   ├── models.py                    # Subscription
-│   ├── views.py                     # Подписка/отписка
-│   ├── urls.py
-│   └── templates/subscriptions/    # Шаблоны подписок
-│
-├── templates/                      # Глобальные шаблоны (если не в app)
-│   └── base.html
-│
+├── create_admin.py
+├── db/
+│   └── Dockerfile
+├── db_dump.json
+├── docker-compose.yml
+├── entrypoint.sh
 ├── manage.py
+├── media/
+│   ├── ads/
+│   │   ├── images/
+│   │   └── videos/
+│   ├── ads_images/
+│   ├── avatars/
+│   ├── post_images/
+│   ├── uploaded_videos/
+│   └── video_thumbnails/
+├── nginx/
+│   ├── Dockerfile
+│   └── nginx.conf
+├── posts/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── templates/
+│   │   ├── include/
+│   │   │   └── paginator.html
+│   │   └── posts/
+│   │       ├── post_confirm_delete.html
+│   │       ├── post_detail.html
+│   │       ├── post_edit.html
+│   │       ├── post_form.html
+│   │       ├── post_list.html
+│   │       ├── search_results.html
+│   │       └── share.html
+│   ├── templatetags/
+│   │   ├── __init__.py
+│   │   └── time_filters.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── requirements.txt
+├── static/
+│   ├── css/
+│   │   ├── ads.css
+│   │   ├── base.css
+│   │   ├── form_post.css
+│   │   ├── home.css
+│   │   ├── interaction-buttons.css
+│   │   ├── navbar.css
+│   │   ├── posts.css
+│   │   ├── registration.css
+│   │   └── videopost_detail.css
+│   ├── images/
+│   ├── js/
+│   └── test.txt
+├── structure.txt
+├── subscriptions/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_remove_subscription_temp_field.py
+│   │   ├── 0003_alter_subscription_options_and_more.py
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── templates/
+│   │   └── subscriptions/
+│   │       ├── feed.html
+│   │       ├── followers.html
+│   │       └── following.html
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── templates/
+│   ├── ads/
+│   │   ├── ads_list.html
+│   │   └── advertisement_form.html
+│   ├── base.html
+│   ├── home.html
+│   ├── include/
+│   │   ├── footer.html
+│   │   ├── navbar.html
+│   │   └── search_results.html
+│   ├── login.html
+│   ├── registration/
+│   │   └── login.html
+│   └── welcome.html
+├── tests/
+│   ├── test_post_create.py
+│   ├── test_post_update.py
+│   └── test_user_flow.py
+├── users/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── context_processors.py
+│   ├── forms.py
+│   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_customuser_ban_reason_customuser_banned_until_and_more.py
+│   │   ├── 0003_customuser_display_email.py
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── signals.py
+│   ├── templates/
+│   │   ├── __init__.py
+│   │   └── users/
+│   │       ├── __init__.py
+│   │       ├── change_password.html
+│   │       ├── edit_profile.html
+│   │       ├── login.html
+│   │       ├── logout.html
+│   │       ├── password_reset_complete.html
+│   │       ├── password_reset_confirm.html
+│   │       ├── password_reset_done.html
+│   │       ├── password_reset_form.html
+│   │       ├── privacy_policy.html
+│   │       ├── profile.html
+│   │       ├── register.html
+│   │       └── templatetags/
+│   │           ├── __init__.py
+│   │           └── form_filters.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
 ├── venv/
-├── requirements.txt                # Зависимости
-├── .env                            # Переменные окружения
-└── docker/                         # Docker конфигурации
-    ├── Dockerfile
-    ├── docker-compose.yml
-    └── nginx/
-        └── default.conf
+│   ├── Include/
+│   ├── Scripts/
+├── videopost/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_remove_videopost_preview_image_and_more.py
+│   │   ├── 0003_alter_videopost_video_url.py
+│   │   ├── 0004_videocomment_parent.py
+│   │   ├── 0005_videopost_video_file.py
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── templates/
+│   │   └── videopost/
+│   │       ├── search_results.html
+│   │       ├── share.html
+│   │       ├── videopost_confirm_delete.html
+│   │       ├── videopost_detail.html
+│   │       ├── videopost_edit.html
+│   │       ├── videopost_form.html
+│   │       └── videopost_list.html
+│   ├── templatetags/
+│   │   ├── __init__.py
+│   │   └── youtube_tags.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+└── wait-for-db.sh
+
+Process finished with exit code 0
+
 ```
 # Связи между приложениями:
 
@@ -656,8 +799,9 @@ chmod +x deploy.sh
 
 Запуск 
 ./deploy.sh
+
+# Создание тестов.
 ```
-# Создание тестов. 
 Созданы тесты для тестирования создания и редактирования постов (post_create, post_update ) и
 Интеграционные тесты: регистрация → пост → комментарий в одном файле тестируется цепочка действий:
 регистрация пользователя, создание поста, добавление комментария, отображение поста.
@@ -666,7 +810,5 @@ chmod +x deploy.sh
 docker-compose build а затем запустить тесты
 docker-compose run --rm tests.
 После прохождения тестов контейнер с тестами удалится и можно работать с проектом.
-
- 'Изменил содержание папки media/upload_files, удалил все видео файлы'
-
-Проверка на обновление базовой ветки merge_dev
+```
+ 
