@@ -1,9 +1,14 @@
 <! --posts/templates/posts/post_detail.html -->
 
 {% extends 'base.html' %}
+{% load static %}  <!-- ✅ Добавляем static-теги -->
 {% load time_filters %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
+
+{% block scripts %}
+  <script src="{% static 'subscriptions/js/subscriptions.js' %}"></script>
+{% endblock %}
 
   <div class="container mt-4">
 <h2>{{ post.title|default:"(Без заголовка)" }}</h2>

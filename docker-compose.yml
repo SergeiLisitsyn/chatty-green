@@ -45,7 +45,8 @@ services:
     environment:
       - DOCKERIZED=1        # <-- добавляем
     volumes:
-      - .:/app
+      - ./static:/app/static
+      - ./staticfiles:/app/staticfiles
       - media_volume:/media
   tests:
     build: .
@@ -64,7 +65,8 @@ services:
       - RUN_MIGRATIONS=true  # Разрешаем миграции для тестов
     entrypoint: [ ]  # Переопределяем entrypoint из Dockerfile
     volumes:
-      - .:/app
+    - ./static:/app/static
+    - ./staticfiles:/app/staticfiles
     env_file: # <-- добавьте это!
       - .env
 
