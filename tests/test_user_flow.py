@@ -38,6 +38,7 @@ def test_full_user_flow(client, authenticated_client, test_user):
         'password2': 'testpass123',
     }
     response = client.post(reverse('login'), registration_data)
+    
     assert response.status_code == 302  # Проверка редиректа после регистрации
 
     # Шаг 2: Создание поста
@@ -46,13 +47,15 @@ def test_full_user_flow(client, authenticated_client, test_user):
         'text': 'This is test post content'
     }
     response = authenticated_client.post(reverse('posts:post_create'), post_data)
-    assert response.status_code == 302
-
-    # Проверка создания поста
+    
+        # Проверка создания поста
     post = Post.objects.first()
     assert post is not None
     assert post.title == 'Test Post Title'
     assert post.author == test_user
+    assert response.status_code == 302
+
+
 
     # Шаг 3: Добавление комментария
     comment_data = {'text': 'Great post!'}
