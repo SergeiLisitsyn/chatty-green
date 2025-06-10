@@ -171,35 +171,30 @@
   });
 </script>
 <script>
-  document.querySelectorAll('.subscribe-button').forEach(button => {
+  document.querySelectorAll('.like-btn, .dislike-btn').forEach(button => {
     button.addEventListener('click', async () => {
-      const username = button.getAttribute('data-username');
+      const slug = button.getAttribute('data-slug');
+      const action = button.classList.contains('like-btn') ? 'like' : 'dislike';
 
       try {
-        const response = await fetch(`/subscriptions/toggle/${username}/`, {  // Исправленный путь
+        const response = await fetch(`/posts/${slug}/${action}/`, {
           method: 'POST',
           headers: {
             'X-CSRFToken': getCSRFToken(),
             'X-Requested-With': 'XMLHttpRequest',
-          }
+          },
         });
-
         const data = await response.json();
-        console.log("✅ Ответ сервера:", data);
 
         if (data.success) {
-          // Меняем текст кнопки
-          button.textContent = data.is_subscribed ? "Отписаться" : "Подписаться";
-
-          // Переключаем стили кнопки
-          button.classList.toggle('btn-primary', !data.is_subscribed);
-          button.classList.toggle('btn-outline-secondary', data.is_subscribed);
+          const container = button.parentElement;
+          container.querySelector('.like-count').textContent = data.likes_count;
+          container.querySelector('.dislike-count').textContent = data.dislikes_count;
         } else {
-          alert("❌ Ошибка подписки: " + data.message);
+          alert('Ошибка при отправке лайка/дизлайка');
         }
       } catch (error) {
-        console.error("❌ Ошибка запроса:", error);
-        alert("❌ Ошибка сети.");
+        alert('Ошибка сети');
       }
     });
   });
@@ -215,6 +210,7 @@
     return cookieValue;
   }
 </script>
+
 
 
 
