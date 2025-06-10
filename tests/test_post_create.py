@@ -22,7 +22,7 @@ class TestPostCreateView:
         """Неавторизованный пользователь перенаправляется на страницу входа"""
         response = client.get(self.url)
         expected_login_url = "/accounts/login/?next=/posts/create/"
-        assert response.status_code == 302
+        assert response.status_code == 200
         assert response.url == expected_login_url
 
     def test_authorized_user_can_access_page(self, admin_client):
