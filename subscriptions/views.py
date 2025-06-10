@@ -9,7 +9,7 @@ from django.db import IntegrityError
 from django.db.models import Count, Exists, OuterRef
 from posts.models import Post
 from .models import Subscription
-
+from pprint import pprint
 
 User = get_user_model()
 
@@ -21,6 +21,10 @@ class SubscriptionToggleView(LoginRequiredMixin, View):
     """
 
     def post(self, request, username):
+        print("\n--- HEADERS ---")
+        pprint(dict(request.headers))
+        print("--- COOKIES ---")
+        pprint(request.COOKIES)
         # Получаем автора, на которого подписываемся или от которого отписываемся
         author = get_object_or_404(User, username=username)
 

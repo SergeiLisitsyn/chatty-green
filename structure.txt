@@ -48,16 +48,6 @@ Chatty_green/
 │   ├── forms.py
 │   ├── migrations/
 │   │   ├── 0001_initial.py
-│   │   ├── 0002_post_title.py
-│   │   ├── 0003_comment.py
-│   │   ├── 0004_alter_comment_options_post_likes.py
-│   │   ├── 0005_post_dislikes.py
-│   │   ├── 0006_post_created_at.py
-│   │   ├── 0007_post_is_archived_post_updated_at.py
-│   │   ├── 0008_advertisement_post_advertisement.py
-│   │   ├── 0008_alter_post_slug.py
-│   │   ├── 0009_merge_20250522_0025.py
-│   │   ├── 0010_alter_post_slug.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── templates/
@@ -124,8 +114,7 @@ Chatty_green/
 │   ├── login.html
 │   ├── registration/
 │   │   └── login.html
-│   ├── welcome.html
-│   └── {% static 'images/
+│   └── welcome.html
 ├── tests/
 │   ├── test_post_create.py
 │   ├── test_post_update.py
@@ -139,6 +128,7 @@ Chatty_green/
 │   ├── migrations/
 │   │   ├── 0001_initial.py
 │   │   ├── 0002_customuser_ban_reason_customuser_banned_until_and_more.py
+│   │   ├── 0003_customuser_display_email.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── signals.py

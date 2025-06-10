@@ -2,7 +2,7 @@
 /* ===== ОСНОВНЫЕ СТИЛИ НАВБАРА ===== */
 
 /* Класс для основного фона навбара */
-@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
+
 .custom-gray {
     background-color: #2e2e2e !important; /* Темно-серый цвет фона ________ НЕ МЕНЯТЬ!!!!________*/
     min-height: 56px; /* Минимальная высота навбара */
@@ -275,12 +275,3 @@
 }
 
 /* Стили для футера */
-footer {
-    font-family: 'Tilda Sans', Arial, sans-serif;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.9) !important;
-    background-color: rgb(7, 7, 7, 0.7);
-    padding: 20px;
-    text-align: center;
-    margin-top: 40px; /* Отступ сверху */
-}

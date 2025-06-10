@@ -1,6 +1,6 @@
 /* static/css/ads.css */
 /* Подключаем шрифт Tilda Sans (предполагается, что он уже подключён в проекте через @font-face или ссылку) */
-@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
+
 body, .comment-box {
     font-family: 'Tilda Sans', sans-serif; /* Основной шрифт для всего блока */
     font-size: 12px;                       /* Размер основного текста */

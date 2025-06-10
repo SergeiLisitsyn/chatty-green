@@ -1,5 +1,4 @@
 /* static/css/registration.css */
-@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
 
 body {
   font-family: 'Rubik', sans-serif;
@@ -20,7 +19,7 @@ h2,
 h4,
 .label-heading {
     color: #007bff;             /* Синий цвет заголовков */
-    font-family: 'TildaSans', sans-serif;
+    font-family: 'Tilda Sans', sans-serif;
     font-size: 14px;
     font-weight: bold;          /* Жирный шрифт */
     text-transform: uppercase;

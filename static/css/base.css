@@ -1,6 +1,6 @@
 /* static/css/base.css */
 /* === БАЗОВЫЙ СТИЛЬ САЙТА === */
-@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
+
 body {
     background-image: url("../images/background.jpg"); /* Фоновое изображение (исправлено название) */
     background-size: cover;                           /* Растягиваем фон на весь экран */
@@ -161,10 +161,12 @@ h2 {
 /* Нижний колонтитул */
 footer {
     background-color: rgba(0, 0, 0, 0.6);
-    color: white;
+    /* color: white !important; */
     padding: 20px;
-    text-align: center;
     font-size: 14px;
+    font-weight: bold;
+    color: #f4f4f4;
+    text-align: center;
     position: relative;
     width: 100%;
     margin-top: auto;
@@ -230,7 +232,7 @@ footer {
 /* 🔹 Основная информация пользователя */
 p {
     font-size: 14px; /* Размер шрифта в поле ввода текста поста и другие поля */
-    color: rgb(68, 68, 69); /* Чуть темнее */
+    color: rgb(68, 68, 69) !important; /* Чуть темнее */
 }
 
 /* 🔹 Стили ссылок */

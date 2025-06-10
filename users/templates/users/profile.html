@@ -10,12 +10,13 @@
   <div class="row">
     <!-- Левая колонка: аватар + основная информация + навигация -->
     <div class="col-md-3 text-center">
-  <img
-    src="{% if user.avatar %}{{ user.avatar.url }}{% else %}/media/avatars/default.png{% endif %}"
-    alt="Аватар"
-    class="rounded-circle mb-3 avatar-frame"
-    style="width: 200px; height: 200px; object-fit: cover;"
-  >
+        <img
+          src="{% if profile_user.avatar %}{{ profile_user.avatar.url }}{% else %}{% static 'avatars/default.png' %}{% endif %}"
+          alt="Аватар"
+          class="rounded-circle mb-3 avatar-frame"
+          style="width: 200px; height: 200px; object-fit: cover;"
+        >
+
 
   {% if request.user == profile_user or profile_user.display_email %}
     <p><strong>Email:</strong> {{ profile_user.email }}</p>
@@ -59,13 +60,16 @@
         <strong>Подписок:</strong> {{ profile_user.subscriptions.count|default:"0" }}
       </p>
 
+      {% if request.user == profile_user %}
       <!-- Навигация подписок -->
-      <p class="mt-2">
-        <a href="{% url 'subscriptions:feed' %}">Лента</a> |
-        <a href="{% url 'subscriptions:followers' profile_user.username %}">Подписчики</a> |
-        <a href="{% url 'subscriptions:following' profile_user.username %}">Подписки</a>
-      </p>
+          <p class="mt-2">
+            <a href="{% url 'subscriptions:feed' %}">Лента</a> |
+            <a href="{% url 'subscriptions:followers' profile_user.username %}">Подписчики</a> |
+            <a href="{% url 'subscriptions:following' profile_user.username %}">Подписки</a>
+          </p>
+         {% endif %}
     </div>
+
 
     <!-- Правая колонка: карточки Статей и Видео -->
 

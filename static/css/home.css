@@ -2,7 +2,6 @@
 /* === ОСНОВНЫЕ СТИЛИ СТРАНИЦЫ === */
 
 /* Плавное появление страницы */
-@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
 body {
   opacity: 0;                     /* Начальная прозрачность (невидимость) */
   transition: opacity 2s ease-in; /* Плавное появление за 2 секунды */
