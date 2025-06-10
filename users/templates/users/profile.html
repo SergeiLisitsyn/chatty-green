@@ -16,8 +16,7 @@
     class="rounded-circle mb-3 avatar-frame"
     style="width: 200px; height: 200px; object-fit: cover;"
   >
-  <p>  {{ user.avatar.url}} </p>
-  <p>  {{ profile_user.avatar.url}} </p>   
+   
   {% if request.user == profile_user or profile_user.display_email %}
     <p><strong>Email:</strong> {{ profile_user.email }}</p>
   {% endif %}
