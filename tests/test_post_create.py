@@ -63,7 +63,8 @@ class TestPostCreateView:
     def test_success_url_after_creation(self, admin_client):
         """Проверка корректного success_url"""
         data = {"title": "Dummy", "text": "TestText"}
-        response = admin_client.post(self.url, data)
+        #response = admin_client.post(self.url, data)
+        response = admin_client.post(self.url, data, follow=True)  # Add follow=True
         assert response.url == reverse("posts:post_list")
 
     def test_title_length_validation(self, admin_client):
@@ -101,6 +102,8 @@ class TestPostCreateView:
         """Тест авто генерации slug при создании поста"""
         data = {"title": "Test Post Title", "text": "TestText"}
         admin_client.post(self.url, data)
+            # Verify exactly one post was created
+        assert Post.objects.count() == 1
         post = Post.objects.first()
         assert post.slug == 'test-post-title'
 
@@ -170,18 +173,28 @@ class TestPostCreateView:
         data = {"title": 'Test Title', "text": "TestText"}
         slugs = []
         for i in range(5):
-            admin_client.post(self.url, data)
-        posts = Post.objects.all()
-        for post in posts:
-            slugs.append(post.slug)
+            #admin_client.post(self.url, data)
+            response = admin_client.post(self.url, data)
+            assert response.status_code == 302
+            slugs.append(Post.objects.latest('id').slug)
+
+        # Verify we have 5 posts
+        assert Post.objects.count() == 5
+    
+        # Verify slugs
+        assert slugs == ['test-title', 'test-title-1', 'test-title-2', 'test-title-3', 'test-title-4']
+            
+        #posts = Post.objects.all()
+        #for post in posts:
+        #    slugs.append(post.slug)
 
         # Проверяем уникальность всех slug
-        assert len(set(slugs)) == 5
+       # assert len(set(slugs)) == 5
 
         # Проверяем паттерн slug
-        assert slugs[0] == 'test-title'
-        assert slugs[1] == 'test-title-1'
-        assert slugs[2] == 'test-title-2'
-        assert slugs[3] == 'test-title-3'
-        assert slugs[4] == 'test-title-4'
+       # assert slugs[0] == 'test-title'
+       # assert slugs[1] == 'test-title-1'
+       # assert slugs[2] == 'test-title-2'
+       # assert slugs[3] == 'test-title-3'
+       # assert slugs[4] == 'test-title-4'
 
