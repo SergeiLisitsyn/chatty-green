@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0007_post_is_archived_post_updated_at'),
+        ('posts', '0001_initial'),
     ]
 
     operations = [
