@@ -6,8 +6,21 @@ from django.utils.text import slugify
 from django.utils import timezone
 import datetime
 from posts.models import Post
+import pytest
+from django.test import Client
+from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+@pytest.fixture
+def test_user(db):
+    return User.objects.create_user(username="testuser", password="testpass123")
+
+@pytest.fixture
+def authenticated_client(test_user):
+    client = Client()
+    client.login(username="testuser", password="testpass123")
+    return client
 
 
 @pytest.mark.django_db
