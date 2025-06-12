@@ -18,7 +18,6 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         if hasattr(instance, 'profile'):
             instance.profile.save()
 
-
 @receiver(post_save, sender=CustomUser)
 def unban_user(sender, instance, **kwargs):
     if instance.is_banned and now() >= instance.banned_until:

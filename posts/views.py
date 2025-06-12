@@ -192,7 +192,7 @@ class FeedView(LoginRequiredMixin, ListView):
         # Получаем список авторов, на которых подписан текущий пользователь
         subscribed_authors = Subscription.objects.filter(subscriber=self.request.user).values_list('author', flat=True)
         # Фильтруем посты только от этих авторов
-        return Post.objects.filter(author__in=subscribed_authors).order_by('-publication_date')
+        return Post.objects.filter(author__in=subscribed_authors).select_related("author").order_by('-publication_date')
 
 
 def archive_post(request, slug):

@@ -1,32 +1,56 @@
-
 {% extends "base.html" %}
-{% load socialaccount %}
+{% load static socialaccount %}
 
+{% block title %}Вход - Chatty{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/registration.css' %}">
+
 <div class="container mt-5">
-    <h2 class="mb-4">Вход в аккаунт</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-action flex-grow-1">Войти</button>
-    </form>
+    <h1 class="text-center">Вход в аккаунт</h1>
+    <div class="d-flex justify-content-center">
+        <form method="post" class="w-50 p-4 border rounded bg-light">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Логин</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Введите логин" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Пароль</label>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Введите пароль" required>
+                    <span class="input-group-text" onclick="togglePassword()" style="cursor: pointer;">
+                        👁️
+                    </span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-action flex-grow-1 w-100">Войти</button>
 
-     <!-- Блок для соц. входа -->
-  <div class="social-login">
-      <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google">
-        <i class="fab fa-google"></i> Быстрая регистрация через Google
-      </a>
+       <!-- Блок для соц. входа -->
+            <!-- Быстрая регистрация через Google -->
+            <div class="text-center mt-4">
+              <p class="text-muted">или</p>
+              <a href="{% url 'social:begin' 'google-oauth2' %}" class="google-btn btn w-100">
+                <strong>Регистрация через</strong>&nbsp;
+                <img src="{% static 'images/Google1.png' %}" alt="Google Logo" class="google-image">
+              </a>
+            </div>
 
+                <!-- <a href="{% url 'social:begin' 'telegram' %}" class="btn btn-telegram">Вход через Telegram</a> -->
+            </div>
 
-      <!-- Включите другую ссылку для Telegram, если она вам нужна и функция реализована -->
-      <!-- <a href="{% url 'social:begin' 'telegram' %}" class="btn btn-telegram">Вход через Telegram</a> -->
-   </div>
-
-    <p class="mt-3">Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
-    <p class="mt-3">
-    <a href="{% url 'password_reset' %}">Забыли пароль?</a>
-</p>
-
+            <p class="mt-3 text-center">
+                Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a><br>
+                <a href="{% url 'password_reset' %}">Забыли пароль?</a>
+            </p>
+        </form>
+    </div>
 </div>
+
+<script>
+function togglePassword() {
+    const passwordInput = document.getElementById("password");
+    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+}
+</script>
 {% endblock %}

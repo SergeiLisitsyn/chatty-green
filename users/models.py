@@ -26,7 +26,7 @@ class UserProfile(models.Model):
     def __str__(self):
         return f'Профиль пользователя {self.user.username}'
 
-    def save(self, *args, **kwargs):
+    def save_old(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
         # Уменьшаем размер аватара при сохранении
@@ -42,7 +42,22 @@ class UserProfile(models.Model):
                 output_size = (300, 300)
                 img.thumbnail(output_size)
                 img.save(img_url)
-
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+    
+        # Проверяем, есть ли загруженный аватар
+        if self.user.avatar:
+            try:
+                img = Image.open(self.user.avatar)
+                if img.height > 300 or img.width > 300:
+                    output_size = (300, 300)
+                    img.thumbnail(output_size)
+    
+                    # Перезаписываем изображение в S3
+                    img.save(self.user.avatar.path)
+            except Exception as e:
+                print(f"Ошибка обработки изображения: {e}")
 
 class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', default='avatars/default.png')
