@@ -1,6 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
+from django.utils.timezone import now
 from .models import UserProfile, CustomUser
 
 User = settings.AUTH_USER_MODEL  # Используем кастомную модель пользователя
