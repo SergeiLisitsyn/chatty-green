@@ -32,10 +32,13 @@
     {% if user.is_authenticated %}
 
        {% if request.user.is_banned %}
-                  <p><strong>Ваш профиль заблокирован!</strong></p>
-                  <p><strong>Причина банна:</strong> {{request.user.ban_reason}}</p>
-                  <p><strong>Срок банна до:</strong> {{request.user.banned_until}}</p>
-
+            <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Здравствуйте, уважаемый   Пользователь!  К сожалению , мы вынуждены были временно закрыть  доступ к Вашему профилю, согласно Правил сайта. Поверьте  - мы тоже расстроены</strong> 
+                <p><strong>Причина:</strong> {{ request.user.ban_reason }}</p>
+                <p><strong>Но  Вы не расстраивайтесь,  все функции сайта будут Вам доступны вновь:</strong> {{ request.user.banned_until }}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+              </div>
        {% else %}
       <a href="{% url 'posts:post_create' %}" class="btn btn-success">➕ Новый пост</a>
     {% endif %}
