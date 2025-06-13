@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+se<!DOCTYPE html>
 <! --posts/templates/posts/post_detail.html -->
 
 {% extends 'base.html' %}
@@ -99,7 +99,7 @@
             <p><strong>Но  Вы не расстраивайтесь,  все функции сайта будут Вам доступны вновь:</strong> {{ request.user.banned_until }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
           </div>
-      {% endif %}
+      {% else %}
 <div class="comment-box p-3">
     <form method="post" class="d-flex flex-column gap-2">
         {% csrf_token %}
@@ -110,7 +110,7 @@
         </div>
     </form>
 </div>
-      
+     {% endif %} 
 {% else %}
     <p class="text-danger">Пожалуйста, <a href="{% url 'login' %}">войдите</a>, чтобы оставить комментарий.</p>
     <a href="{% url 'posts:post_list' %}" class="btn btn-action mt-3">Назад</a>
