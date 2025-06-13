@@ -70,6 +70,23 @@ services:
     env_file: # <-- добавьте это!
       - .env
 
+  postojka:
+    build:
+      context: ./postojka
+    container_name: postojka
+    ports:
+      - "8002:8000"
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - PG_NAME=postgres
+      - PG_USER=postgres
+      - PG_PASSWORD=password
+      - DB_HOST=db
+      - DB_PORT=5432
+    env_file:
+      - .env
 
 #  nginx:
 #    build:

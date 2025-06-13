@@ -1,8 +1,7 @@
 #posts/views.py
-
+import requests
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
-from .models import Post, Comment, Advertisement
 from .forms import CommentForm, PostForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
@@ -12,10 +11,10 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from subscriptions.models import Subscription
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from posts.templatetags import time_filters
+from .templatetags import time_filters
 from django.db.models import Q
 from django.shortcuts import render
-from posts.models import Post
+from .models import Post, Comment, Advertisement
 
 # Классы для работы с Post
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -208,6 +207,32 @@ def search_results(request):
     posts = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query), is_archived=False)
 
     return render(request, "posts/search_results.html", {"posts": posts, "query": query})
+
+
+class RecommendedPostsView(ListView):
+    template_name = 'posts/search_results.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        user = self.request.user
+        text = self.request.GET.get("q", "").strip()
+        print(f'Текст запроса: {text}')
+        try:
+            response = requests.post(
+                "http://postojka:8000/recommend",
+                json={"text": text, "top_k": 5},
+                timeout=5
+                )
+            if response.ok:
+                data = response.json().get("recommended", [])
+                ids = [item["post_id"] for item in data if item["score"] >= 0.58 ]
+                posts = Post.objects.filter(id__in=ids)
+                print(f'Recomended posts: {posts}')
+                return posts
+        except requests.RequestException:
+            pass
+
+        return Post.objects.none()
 
 
 
