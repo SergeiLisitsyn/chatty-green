@@ -1,6 +1,6 @@
 /* static/css/base.css */
 /* === БАЗОВЫЙ СТИЛЬ САЙТА === */
-@import url('https://fonts.googleapis.com/css2?family=Tilda+Sans:wght@400;600&display=swap');
+
 body {
     background-image: url("../images/background.jpg"); /* Фоновое изображение (исправлено название) */
     background-size: cover;                           /* Растягиваем фон на весь экран */
@@ -19,7 +19,7 @@ body {
 /* Контейнер контента главной страницы !!!!!!!!!!! */
 .content-wrapper.first-page {
     width: calc(100% - 20mm);                         /* Отступ по краям */
-    background: rgba(255, 255, 255, 0.8);             /* Светлый фон с ПРОЗРАЧНОСТЬЮ */
+    background: rgba(255, 255, 255, 0.9);             /* Светлый фон с ПРОЗРАЧНОСТЬЮ */
     min-height: 800px;                                /* Минимальная высота */
     backdrop-filter: blur(10px);                      /* Эффект размытия */
     -webkit-backdrop-filter: blur(10px);              /* Поддержка Safari */
@@ -33,7 +33,7 @@ body {
 /* Контейнер для остальных страниц */
 .content-wrapper.other-page {
     width: calc(100% - 20mm);
-    background: rgba(245, 245, 245, 0.8);
+    background: rgba(245, 245, 245, 0.9);
     min-height: 900px;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -161,10 +161,12 @@ h2 {
 /* Нижний колонтитул */
 footer {
     background-color: rgba(0, 0, 0, 0.6);
-    color: white;
+    /* color: white !important; */
     padding: 20px;
-    text-align: center;
     font-size: 14px;
+    font-weight: bold;
+    color: #f4f4f4;
+    text-align: center;
     position: relative;
     width: 100%;
     margin-top: auto;
@@ -230,7 +232,7 @@ footer {
 /* 🔹 Основная информация пользователя */
 p {
     font-size: 14px; /* Размер шрифта в поле ввода текста поста и другие поля */
-    color: rgb(68, 68, 69); /* Чуть темнее */
+    color: rgb(68, 68, 69) !important; /* Чуть темнее */
 }
 
 /* 🔹 Стили ссылок */
@@ -242,7 +244,7 @@ a:hover {
 
 /* 🔹 Кнопки */
 .btn-primary, .btn-warning {
-    font-size: 12px; /* Уменьшаем размер */
+    font-size: 14px; /* Размер шрифта на кнопах btn-primary и btn-warning */
     padding: 8px 12px; /* Отступы */
 }
 
@@ -298,4 +300,3 @@ a:hover {
     white-space: nowrap !important;     /* Предотвращаем перенос строк внутри (на всякий случай) */
     border: 0 !important;               /* Убираем границы, если они есть */
 }
-
