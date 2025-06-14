@@ -225,7 +225,7 @@ def search_results(request):
 
     return render(request, "posts/search_results.html", {"posts": posts, "query": query})
 
-class RecommendedPostsView(ListView):
+class RecommendedPostsByPromtView(ListView):
   template_name = 'posts/search_results.html'
   context_object_name = 'posts'
 
@@ -250,5 +250,27 @@ class RecommendedPostsView(ListView):
 
     return Post.objects.none()
 
+class RecommendedPostsByLikesView(ListView):
+    template_name = 'posts/search_results.html'
+    context_object_name = 'posts'
 
+    def get_queryset(self):
+        user = self.request.user
+        liked_posts = Post.objects.filter(likes__user=user)[:5]
+        text = " ".join(post.content for post in liked_posts)
+
+        try:
+            response = requests.post(
+                "http://postojka:8000/recommend",
+                json={"text": text, "top_k": 5},
+                timeout=5
+            )
+            if response.ok:
+                data = response.json().get("recommended", [])
+                ids = [item["post_id"] for item in data]
+                return Post.objects.filter(id__in=ids)
+        except requests.RequestException:
+            pass
+
+        return Post.objects.none()
 

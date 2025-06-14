@@ -5,7 +5,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import welcome, HealthCheckView
-from posts.views import RecommendedPostsView  # импортируем наше представление
+from posts.views import RecommendedPostsByPromtView  # импортируем наше представление
 from ads.views import home  # отсюда идет функция home()
 from users import views as users_views
 
@@ -25,7 +25,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')), # Стандартные маршруты аутентификации Django
     path('posts/', include('posts.urls', namespace='posts')),# Маршруты приложения "posts" (управление публикациями)
     path('subscriptions/', include('subscriptions.urls', namespace='subscriptions')),# Маршруты приложения "subscriptions" (подписки пользователей)
-    path('search/', RecommendedPostsView.as_view(), name='search'),  #  Поиск публикаций and videos(функция `search_results`)  #  Поиск публикаций and videos(функция `search_results`)
+    path('search/', RecommendedPostsByPromtView.as_view(), name='search'),  #  Поиск публикаций and videos(функция `search_results`)  #  Поиск публикаций and videos(функция `search_results`)
     path('videopost/', include('videopost.urls')),
     path('social-auth/', include('social_django.urls', namespace='social')),
 
