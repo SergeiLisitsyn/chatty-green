@@ -235,14 +235,14 @@ class RecommendedPostsByPromtView(ListView):
     print(f'Текст запроса: {text}')
     try:
       response = requests.post(
-            "http://postojka:8000/recommend",
+            "http://postojka:10000/recommend",
              json={"text": text, "top_k": 5},
              timeout=5
       )
       if response.ok:
           data = response.json().get("recommended", [])
           ids = [item["post_id"] for item in data if item["score"] >= 0.59]
-          posts = Post.objects.filter(id__in=ids)
+          posts = Post.objects.filter(id__in=ids).exclude(author=user) # recommended posts exclude user's posts
           print(f'Recomended posts: {posts}')
           return posts
     except requests.RequestException:
@@ -256,12 +256,12 @@ class RecommendedPostsByLikesView(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        liked_posts = Post.objects.filter(likes__user=user)[:5]
+        liked_posts = Post.objects.filter(likes=user)[:5]
         text = " ".join(post.content for post in liked_posts)
 
         try:
             response = requests.post(
-                "http://postojka:8000/recommend",
+                "http://postojka:10000/recommend",
                 json={"text": text, "top_k": 5},
                 timeout=5
             )
