@@ -1,3 +1,4 @@
+se<!DOCTYPE html>
 <! --posts/templates/posts/post_detail.html -->
 
 {% extends 'base.html' %}
@@ -6,9 +7,6 @@
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
 
-{% block scripts %}
-  <script src="{% static 'subscriptions/js/subscriptions.js' %}"></script>
-{% endblock %}
 
   <div class="container mt-4">
 <h2>{{ post.title|default:"(Без заголовка)" }}</h2>
@@ -43,22 +41,22 @@
         </button>
       {% endif %}
     </div>
+        <!-- Лайки и дизлайки -->
+        <div style="display: flex; justify-content: center; gap: 3mm;">
+          <button class="btn btn-sm btn-outline-primary like-btn"
+                  style="width: 60px; height: 32px !important;"
+                  data-slug="{{ post.slug }}"
+                  title="Нравится">
+            👍 <span class="like-count">{{ post.likes.count }}</span>
+          </button>
 
-<div style="display: flex; justify-content: center; gap: 3mm;">
-  <button class="btn btn-sm btn-outline-primary like-btn"
-          style="width: 60px; height: 32px !important;"
-          data-slug="{{ post.slug }}"
-          title="Нравится">
-    👍 <span class="like-count">{{ post.likes.count }}</span>
-  </button>
-
-  <button class="btn btn-sm btn-outline-danger dislike-btn"
-          style="width: 60px; height: 32px !important;"
-          data-slug="{{ post.slug }}"
-          title="Не нравится">
-    👎 <span class="dislike-count">{{ post.dislikes.count }}</span>
-  </button>
-</div>
+          <button class="btn btn-sm btn-outline-danger dislike-btn"
+                  style="width: 60px; height: 32px !important;"
+                  data-slug="{{ post.slug }}"
+                  title="Не нравится">
+            👎 <span class="dislike-count">{{ post.dislikes.count }}</span>
+          </button>
+        </div>
 
 
     <!-- Дата -->
@@ -93,14 +91,14 @@
 
  <h4>Оставить комментарий:</h4>
 {% if user.is_authenticated %}
-      {% if user.is_banned %}
-            <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
-              <i class="fas fa-exclamation-triangle me-2"></i>
-              <strong>Здравствуйте, уважаемый   Пользователь!  К сожалению , мы вынуждены были временно закрыть  доступ к Вашему профилю, согласно Правил сайта. Поверьте  - мы тоже расстроены</strong> 
-              <p><strong>Причина:</strong> {{ request.user.ban_reason }}</p>
-              <p><strong>Но  Вы не расстраивайтесь,  все функции сайта будут Вам доступны вновь:</strong> {{ request.user.banned_until }}</p>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
-            </div>
+      {% if request.user.is_banned %}
+          <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Здравствуйте, уважаемый   Пользователь!  К сожалению , мы вынуждены были временно закрыть  доступ к Вашему профилю, согласно Правил сайта. Поверьте  - мы тоже расстроены</strong> 
+            <p><strong>Причина:</strong> {{ request.user.ban_reason }}</p>
+            <p><strong>Но  Вы не расстраивайтесь,  все функции сайта будут Вам доступны вновь:</strong> {{ request.user.banned_until }}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+          </div>
       {% else %}
 <div class="comment-box p-3">
     <form method="post" class="d-flex flex-column gap-2">
@@ -112,36 +110,41 @@
         </div>
     </form>
 </div>
-      {% endif %}
+     {% endif %} 
 {% else %}
     <p class="text-danger">Пожалуйста, <a href="{% url 'login' %}">войдите</a>, чтобы оставить комментарий.</p>
     <a href="{% url 'posts:post_list' %}" class="btn btn-action mt-3">Назад</a>
 {% endif %}
-
-
   </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/subscriptions.js' %}"></script>
 {% endblock %}
 
 {% block extra_js %}
 <script>
 
   async function confirmDelete(slug) {
-    const isConfirmed = confirm("Вы уверены, что хотите удалить этот пост?");
+        // Показываем диалоговое окно подтверждения
+      const isConfirmed = confirm("Вы уверены, что хотите удалить этот пост?");
     if (!isConfirmed) return;
 
     try {
+        // Отправляем POST-запрос на сервер для архивации видеопоста
       const response = await fetch(`/posts/${slug}/archive/`, {
-        method: "POST",
+        method: "POST",   // Используем POST-метод
         headers: {
-          "X-CSRFToken": getCSRFToken(),
-          "X-Requested-With": "XMLHttpRequest",
+          "X-CSRFToken": getCSRFToken(),            // Добавляем CSRF-токен для защиты от подделки запросов
+          "X-Requested-With": "XMLHttpRequest",     // Пометка AJAX-запроса
         },
       });
-
+       // Парсим JSON-ответ от сервера
       const data = await response.json();
-      console.log("✅ Ответ сервера:", data);
+          console.log("✅ Ответ сервера:", data);  // Логируем ответ для отладки
 
       if (data.success) {
+          // При успешном удалении показываем уведомление и перенаправляем
         alert("✅ Ваш пост успешно удалён!");
 
         // Удаляем пост из DOM
@@ -149,11 +152,12 @@
         if (postElement) postElement.remove();
 
         // Перенаправляем на список постов
-        window.location.href = "/posts/";
+        window.location.href = "/posts/";       // Редирект на список видеопостов
       } else {
-        alert("❌ Ошибка удаления поста.");
+        alert("❌ Ошибка удаления поста.");     // Сервер вернул ошибку
       }
     } catch (error) {
+        // Обработка ошибок сети или парсинга
       console.error("❌ Ошибка при удалении:", error);
       alert("❌ Ошибка при удалении поста.");
     }
@@ -202,7 +206,7 @@
           alert('Ошибка при отправке лайка/дизлайка');
         }
       } catch (error) {
-        alert('Ошибка сети');
+        alert('Войдите или зарегистрируйтесь');
       }
     });
   });
@@ -218,8 +222,5 @@
     return cookieValue;
   }
 </script>
-
-
-
 
 {% endblock %}

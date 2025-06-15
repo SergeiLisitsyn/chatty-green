@@ -18,14 +18,38 @@
                     <div class="col-md-6 mb-4">
                         <div class="post-card h-100 p-3">
                             <div class="d-flex align-items-center">
-                                {% if subscription.author.avatar %}
-                                    <img src="{{ subscription.author.avatar.url }}" alt="{{ subscription.author.username }}"
-                                         class="post-avatar me-3">
-                                {% else %}
-                                    <div class="avatar-placeholder me-3">
-                                        <span>{{ subscription.author.username|first|upper }}</span>
-                                    </div>
-                                {% endif %}
+        {% if subscription.author.avatar %}
+            <img src="{{ subscription.author.avatar.url }}" alt="{{ subscription.author.username }}"
+                 class="me-3"
+                 style="
+                    width: 120px;
+                    height: 120px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    border: 2px solid #ddd;
+                    overflow: hidden;
+                    display: inline-block;
+                    flex-shrink: 0;
+                 ">
+        {% else %}
+            <div class="me-3 d-flex align-items-center justify-content-center"
+                 style="
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                    background-color: #f0f0f0;
+                    border: 2px solid #ddd;
+                    font-size: 48px;
+                    font-weight: bold;
+                    color: #666;
+                    overflow: hidden;
+                    display: inline-block;
+                    flex-shrink: 0;
+                 ">
+                <span>{{ subscription.author.username|first|upper }}</span>
+            </div>
+        {% endif %}
+
 
                                 <div class="flex-grow-1">
                                     <h5 class="post-author-name mb-0">

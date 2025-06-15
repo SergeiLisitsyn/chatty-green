@@ -1,5 +1,8 @@
 # subscriptions/views.py
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
@@ -13,7 +16,7 @@ from pprint import pprint
 
 User = get_user_model()
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriptionToggleView(LoginRequiredMixin, View):
     """
     Представление для подписки/отписки от пользователя.
@@ -76,7 +79,7 @@ class SubscriptionToggleView(LoginRequiredMixin, View):
                 'status': 'success',
                 'is_subscribed': is_subscribed,
                 'message': message,
-                'subscribers_count': author.subscribers.count()
+                'subscribers_count': author.followers.count(),
             })
         else:
             # Для обычного запроса перенаправляем  на профиль
@@ -162,3 +165,29 @@ class FeedView(LoginRequiredMixin, ListView):
             num_comments=Count('comments', distinct=True),
             num_likes=Count('likes', distinct=True)
         ).order_by('-publication_date')
+
+
+@login_required
+def toggle_subscription(request, username):
+    target_user = get_object_or_404(User, username=username)
+
+    if target_user == request.user:
+        return JsonResponse({'error': 'Нельзя подписаться на самого себя'}, status=400)
+
+    subscription, created = Subscription.objects.get_or_create(
+        subscriber=request.user,
+        author=target_user
+    )
+
+    if not created:
+        subscription.delete()
+        is_subscribed = False
+    else:
+        is_subscribed = True
+
+    subscribers_count = Subscription.objects.filter(author=target_user).count()
+
+    return JsonResponse({
+        'is_subscribed': is_subscribed,
+        'subscribers_count': subscribers_count,
+    })

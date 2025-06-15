@@ -47,10 +47,8 @@ def register(request):
 
 
 def profile(request, username):
-    # Получаем объект пользователя, чей профиль хотим показать
     profile_user = get_object_or_404(CustomUser, username=username)
 
-    # Вычисляем статус подписки: если залогиненный пользователь подписан на профиль profile_user
     is_subscribed = False
     if request.user.is_authenticated and request.user != profile_user:
         is_subscribed = Subscription.objects.filter(
@@ -58,31 +56,36 @@ def profile(request, username):
             author=profile_user
         ).exists()
 
-    # Получаем последние посты profile_user с аннотациями подсчётов лайков и комментариев
     posts_query = Post.objects.filter(author=profile_user)
     user_posts = posts_query.annotate(
         likes_count=Count('likes', distinct=True),
         comments_count=Count('comments', distinct=True)
     ).order_by('-publication_date')[:4]
 
-    # Определяем ID постов, которые лайкнул текущий пользователь
     user_liked_posts = []
     if request.user.is_authenticated:
         liked_post_ids = posts_query.filter(likes=request.user).values_list('id', flat=True)
         user_liked_posts = list(liked_post_ids)
 
-    # 👇 Добавляем видео — последние 3 или сколько нужно
     user_videos = VideoPost.objects.filter(
         author=profile_user,
         is_archived=False
     ).order_by('-publication_date')[:6]
-    print(f'AVATAR  = {profile_user.avatar.url}')
+
+    # Получаем подписчиков и подписки
+    followers = Subscription.objects.filter(author=profile_user)
+    subscriptions = Subscription.objects.filter(subscriber=profile_user)
+
     context = {
         'profile_user': profile_user,
         'is_subscribed': is_subscribed,
         'user_posts': user_posts,
         'user_liked_posts': user_liked_posts,
         'user_videos': user_videos,
+        'followers': followers,
+        'subscriptions': subscriptions,
+        'followers_count': followers.count(),
+        'subscriptions_count': subscriptions.count(),
     }
     return render(request, 'users/profile.html', context)
 
@@ -168,5 +171,3 @@ class LoggingPasswordResetConfirmView(PasswordResetConfirmView):
 
 def privacy_policy_view(request):
         return render(request, 'users/privacy_policy.html')
-
-

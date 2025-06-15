@@ -14,7 +14,7 @@ class Subscription(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='subscribers',
+        related_name='followers',
         verbose_name="Автор"
     )
     created_at = models.DateTimeField(

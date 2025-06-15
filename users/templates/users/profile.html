@@ -33,6 +33,7 @@
             <p><strong>Но  Вы не расстраивайтесь,  все функции сайта будут Вам доступны вновь:</strong> {{ request.user.banned_until }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
           </div>
+
         {% else %}
           <a href="{% url 'edit_profile' username=profile_user.username %}" class="btn btn-primary mb-2 w-100">
             Редактировать профиль
@@ -41,22 +42,19 @@
             Сменить пароль
           </a>
         {% endif %}
-      {% else %}
-        <form class="d-inline w-100 mb-3" method="post" action="{% url 'subscriptions:toggle' profile_user.username %}">
-          {% csrf_token %}
-          <button
-            type="submit"
-            class="btn btn-sm btn-outline-primary subscribe-button d-flex align-items-center justify-content-center"
-            style="width: 150px; height: 32px; border-radius: .375rem;"
-            data-username="{{ profile_user.username }}"
-          >
-            {% if is_subscribed %}
-              <i class="fa-solid fa-user-minus me-1 text-warning"></i> Отписаться
             {% else %}
-              <i class="fa-solid fa-user-plus me-1 text-warning"></i> Подписаться
-            {% endif %}
-          </button>
-        </form>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-primary subscribe-button d-flex align-items-center justify-content-center w-100 mb-3"
+          style="width: 150px; height: 32px; border-radius: .375rem;"
+          data-username="{{ profile_user.username }}"
+        >
+          {% if is_subscribed %}
+            <i class="fa-solid fa-user-minus me-1 text-warning"></i> Отписаться
+          {% else %}
+            <i class="fa-solid fa-user-plus me-1 text-warning"></i> Подписаться
+          {% endif %}
+        </button>
       {% endif %}
 
       <p class="mt-3 mb-1">
@@ -141,5 +139,5 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="{% static 'subscriptions/js/subscriptions.js' %}"></script>
+  <script src="{% static 'js/subscriptions.js' %}"></script>
 {% endblock %}
