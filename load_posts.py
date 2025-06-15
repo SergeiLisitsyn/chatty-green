@@ -1,6 +1,6 @@
 import json
 import psycopg2
-from config import settings
+from Chatty_green.config import settings
 
 
 def get_posts_from_db():
