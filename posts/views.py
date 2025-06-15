@@ -14,8 +14,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 import logging
 from botocore.exceptions import ClientError
-from django.core.files.base import ContentFile
-from storages.backends.s3boto3 import S3Boto3Storage
+
 
 
 logger = logging.getLogger(__name__)
@@ -274,3 +273,11 @@ class RecommendedPostsByLikesView(ListView):
 
         return Post.objects.none()
 
+
+
+def postojka_health(request):
+    try:
+        response = requests.get("http://postojka:10000/health", timeout=5)
+        return JsonResponse(response.json(), status=response.status_code)
+    except requests.RequestException as e:
+        return JsonResponse({"status": "error", "message": str(e)}, status=500)

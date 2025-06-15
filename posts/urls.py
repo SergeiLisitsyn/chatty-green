@@ -2,7 +2,7 @@
 
 from django.urls import path
 from . import views
-from .views import PostListView, archive_post, search_results, RecommendedPostsByLikesView
+from .views import PostListView, archive_post, search_results, RecommendedPostsByLikesView, postojka_health
 
 app_name = 'posts'
 
@@ -20,7 +20,8 @@ urlpatterns = [
 
     path('id/<int:pk>/', views.PostDetailViewId.as_view(), name='post_detail_id'),  # Детали поста по ID
     path("search/", search_results, name="search"),  # Поиск
-    path('posts/<slug:slug>/', views.PostDetailView.as_view(), name='post_detail')
+    path('posts/<slug:slug>/', views.PostDetailView.as_view(), name='post_detail'),
+    path("api/postojka/health/", postojka_health, name="postojka_health")
 
 ]
 
