@@ -31,4 +31,5 @@ COPY data/ ./data/
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "python check_db_connection.py &&  uvicorn", "app:app", "--host", "0.0.0.0", "--port", "10000"]
+CMD ["sh", "-c", "python check_db_connection.py && uvicorn app:app --host 0.0.0.0 --port 10000"]
+
