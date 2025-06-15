@@ -257,7 +257,7 @@ class RecommendedPostsByLikesView(ListView):
     def get_queryset(self):
         user = self.request.user
         liked_posts = Post.objects.filter(likes=user)[:5]
-        text = " ".join(post.content for post in liked_posts)
+        text = " ".join(post.text for post in liked_posts)
 
         try:
             response = requests.post(
