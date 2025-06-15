@@ -1,0 +1,27 @@
+services:
+  postojka:
+    build:
+      context: .
+    container_name: postojka
+    ports:
+      - "10002:10000"
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  db:
+    image: postgres:15
+    container_name: db
+    environment:
+      PG_NAME: chattydb_v1
+      PG_USER: chattydb_v1_user
+      POSTGRES_PASSWORD: cd4gpaNSyycyHFqJrXXTdqfeg7pZQeg
+    volumes:
+      - postojka_pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+volumes:
+  postojka_pgdata:

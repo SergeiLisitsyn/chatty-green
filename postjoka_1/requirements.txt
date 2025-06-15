@@ -1,0 +1,9 @@
+fastapi
+psycopg2-binary
+uvicorn
+sentence-transformers
+torch==2.2.0+cpu
+faiss-cpu
+numpy<2.0
+pydantic-settings
+
