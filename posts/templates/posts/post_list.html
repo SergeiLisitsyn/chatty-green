@@ -38,6 +38,7 @@
 
        {% else %}
       <a href="{% url 'posts:post_create' %}" class="btn btn-success">➕ Новый пост</a>
+      <a href="{% url 'posts:recommended' %}" class="btn btn-success">рекомендованные по лайкам посты</a>
     {% endif %}
   {% endif %}
 </div>

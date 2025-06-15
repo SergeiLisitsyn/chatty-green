@@ -2,7 +2,7 @@
 
 from django.urls import path
 from . import views
-from .views import PostListView, archive_post, search_results
+from .views import PostListView, archive_post, search_results, RecommendedPostsByLikesView
 
 app_name = 'posts'
 
@@ -13,7 +13,7 @@ urlpatterns = [
     path('<slug:slug>/edit/', views.PostUpdateView.as_view(), name='post_update'),  # Редактирование поста
     path('<slug:slug>/delete/', views.PostDeleteView.as_view(), name='post_delete'),  # Удаление поста
     path('<slug:slug>/archive/', archive_post, name='archive_post'),  # Архивирование поста
-    # path('<int:post_id>/like/', views.toggle_like, name='like_post'),  # ✅ Исправлено
+    path('recommended', RecommendedPostsByLikesView.as_view(), name='recommended'),
 
     path('<slug:slug>/like/', views.toggle_like, name='like_post'),  # Лайк поста (только по slug)
     path('<slug:slug>/dislike/', views.dislike_post, name='dislike_post'),  # Дизлайк поста

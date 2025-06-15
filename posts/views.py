@@ -209,30 +209,57 @@ def search_results(request):
     return render(request, "posts/search_results.html", {"posts": posts, "query": query})
 
 
-class RecommendedPostsView(ListView):
+class RecommendedPostsByPromtView(ListView):
+  """ Function recommends posts using users inputted prompt """
+  template_name = 'posts/search_results.html'
+  context_object_name = 'posts'
+
+  def get_queryset(self):
+    user = self.request.user
+    text = self.request.GET.get("q", "").strip() # inputted prompt
+    try:
+      response = requests.post(  #created request to API POSTOJKA
+            "http://postojka:8000/recommend",
+             json={"text": text, "top_k": 5},
+             timeout=5
+      )
+      if response.ok:
+          data = response.json().get("recommended", []) # result of response
+          ids = [item["post_id"] for item in data if item["score"] >= 0.59]  # item["score"] >= 0.59 is selected manually, not optimized automatically.
+          posts = Post.objects.filter(id__in=ids).exclude(author= user)
+          return posts
+    except requests.RequestException:
+        pass
+
+    return Post.objects.none()
+
+class RecommendedPostsByLikesView(ListView):
+    """ Function recommends posts using liked by user posts """
     template_name = 'posts/search_results.html'
     context_object_name = 'posts'
 
     def get_queryset(self):
         user = self.request.user
-        text = self.request.GET.get("q", "").strip()
-        print(f'Текст запроса: {text}')
+        liked_posts = Post.objects.filter(likes= user)[:5] # are used only 5 first posts.
+        liked_posts_ids = [post.pk for post in liked_posts]
+        text = " ".join(post.text for post in liked_posts)
+
         try:
             response = requests.post(
                 "http://postojka:8000/recommend",
                 json={"text": text, "top_k": 5},
                 timeout=5
-                )
+            )
             if response.ok:
                 data = response.json().get("recommended", [])
-                ids = [item["post_id"] for item in data if item["score"] >= 0.58 ]
-                posts = Post.objects.filter(id__in=ids)
-                print(f'Recomended posts: {posts}')
-                return posts
+                ids = [item["post_id"] for item in data if item["score"] > 0.5 and # item["score"] is selected manually
+                                                          item["post_id"] not in liked_posts_ids] # excludes liked posts
+                return Post.objects.filter(id__in=ids)
         except requests.RequestException:
             pass
 
         return Post.objects.none()
+
 
 
 
