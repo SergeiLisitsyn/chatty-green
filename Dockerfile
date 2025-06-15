@@ -25,6 +25,7 @@ WORKDIR /app
 COPY --from=builder /install /usr/local
 COPY app.py ./app.py
 COPY config.py ./config.py
+COPY check_db_connection.py ./check_db_connection.py
 COPY load_posts.py ./load_posts.py
 COPY data/ ./data/
 
