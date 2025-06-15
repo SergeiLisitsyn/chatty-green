@@ -72,7 +72,7 @@ def recommend_posts(request: RecommendRequest):
 @app.post("/reindex")
 def reindex():
     global index, post_ids
-    posts = load_posts()
+    posts =  get_posts_from_db()
     post_ids = list(posts.keys())
     texts = list(posts.values())
 
