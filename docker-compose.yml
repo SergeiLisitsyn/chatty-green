@@ -61,6 +61,21 @@ services:
     env_file: # <-- добавьте это!
       - .env
 
+  postojka:
+    build:
+      context: ./postojka
+    container_name: postojka
+    ports:
+      - "10002:10000"
+    restart: always
+    environment:
+      - PG_NAME=chattydb_v1
+      - PG_USER=chattydb_v1_user
+      - PG_PASSWORD=cd4gpaNSyycyHFqJrXXTdqfeg7pZQeg
+      - DB_HOST=dpg-d0vutevdiees73f95v70-a
+      - DB_PORT=5432
+    env_file:
+      - .env
 
 #  nginx:
 #    build:
