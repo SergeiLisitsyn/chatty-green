@@ -673,7 +673,7 @@ docker-compose run --rm tests.
 
 ## ⚠ Уведомление о нарушении авторских прав
 
-Данный проект является копией оригинального проекта [AFZhuk63/chatty-green](https://github.com/AFZhuk63/chatty_green),  
+Данный проект является копией оригинального проекта [AFZhuk63/chatty_green](https://github.com/AFZhuk63/chatty_green),  
 разработанного Anatoliy Zhuk. Нарушены авторские права, удалены коммиты и метаданные других участников.  
 Проект защищён лицензией: [LICENSE](https://github.com/AFZhuk63/chatty_green/blob/main/LICENSE)
 
