@@ -1,45 +1,14 @@
 # docker-compose.yml
 
 services:
-  db:
-    build: ./db
-    container_name: db
-    env_file:
-      - .env
-    environment:
-      - POSTGRES_DB=${PG_NAME}
-      - POSTGRES_USER=${PG_USER}
-      - POSTGRES_PASSWORD=${PG_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5435:5432"
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${PG_USER} -d ${PG_NAME}" ]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
-  psql:
-    image: postgres:13-alpine
-    container_name: psql
-    depends_on:
-      - db
-    env_file:
-      - .env
-    command: sh -c "exec psql -h ${PG_HOST} -p ${PG_PORT} -U ${PG_USER} -d ${PG_NAME}"
-    tty: true
-
-
   web:
-    image: chatty_green_web:latest      # <-- добавили
     build: .
     container_name: web
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - nginx
     env_file:
       - .env
     environment:
@@ -48,27 +17,6 @@ services:
       - ./static:/app/static
       - ./staticfiles:/app/staticfiles
       - media_volume:/media
-  tests:
-    build: .
-    command: >
-      sh -c "python manage.py check &&
-             pytest /app/tests/"
-    depends_on:
-      - web
-      - db
-
-    environment:
-      - DJANGO_SETTINGS_MODULE=chatty.settings
-      - PYTHONUNBUFFERED=1
-      - DB_HOST=db
-      - DB_PORT=5432
-      - RUN_MIGRATIONS=true  # Разрешаем миграции для тестов
-    entrypoint: [ ]  # Переопределяем entrypoint из Dockerfile
-    volumes:
-    - ./static:/app/static
-    - ./staticfiles:/app/staticfiles
-    env_file: # <-- добавьте это!
-      - .env
 
   postojka:
     build:
@@ -80,10 +28,10 @@ services:
     depends_on:
       - db
     environment:
-      - PG_NAME=postgres
-      - PG_USER=postgres
-      - PG_PASSWORD=password
-      - DB_HOST=db
+      - PG_NAME=chatty_db
+      - PG_USER=chatty
+      - PG_PASSWORD=chatty_db
+      - DB_HOST=host.docker.internal
       - DB_PORT=5432
     env_file:
       - .env
@@ -100,6 +48,5 @@ services:
       - "80:80"
 
 volumes:
-  postgres_data:
   media_volume:
 

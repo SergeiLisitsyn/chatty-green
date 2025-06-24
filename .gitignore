@@ -179,3 +179,8 @@ cython_debug/
 *.avi
 *.mkv
 *.webm
+
+# Django static/media (если загружаются на S3)
+static/
+staticfiles/
+media/
