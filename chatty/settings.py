@@ -297,23 +297,6 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_FORMS = {'signup': 'users.forms.CustomSignupForm'}
 
 
-# SOCIAL ACCOUNT Вариант от Оли
-# SOCIALACCOUNT_PROVIDERS = {
-#     'google': {
-#          'APP': {  # Удалите или закомментируйте этот блок!
-#              'client_id': os.getenv('GOOGLE_CLIENT_ID', ""),
-#              'secret': os.getenv('GOOGLE_CLIENT_SECRET', ""),
-#              'key': '',
-#          },
-#         'SCOPE': ['email', 'profile'],
-#         'AUTH_PARAMS': {'access_type': 'online'},
-#     },
-#     'github': {
-#         'SCOPE': ['user:email'],
-#         'AUTH_PARAMS': {'access_type': 'online'},
-#     },
-# }
-
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': ['email', 'profile'],
@@ -334,22 +317,43 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600
 SESSION_SAVE_EVERY_REQUEST = True
 
-# ENVIRONMENT VALIDATION
-"""if not os.getenv('EMAIL_HOST_USER') or not os.getenv('EMAIL_HOST_PASSWORD'):
-    raise ValueError("⚠️ Внимание: EMAIL_HOST_USER или EMAIL_HOST_PASSWORD не установлены! Проверьте файл .env.")
-"""
+# AWS S3 Configuration
+AWS_ACCESS_KEY_ID = 'AKIARHNQEDZEIP3N3I7L'  # Ваш AWS_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY = '5AlTw1p6XCh5dJAyXO3DuWFME2WfwVj7rYtHIU2y'
+AWS_STORAGE_BUCKET_NAME = 'chatty-green'
+AWS_S3_REGION_NAME = 'eu-north-1'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
+AWS_S3_ENDPOINT_URL = f"https://s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+#AWS_DEFAULT_ACL = 'public-read'  # Файлы будут доступны публично
+AWS_QUERYSTRING_AUTH = False  # Отключает подпись URL (для статики)
+AWS_S3_FILE_OVERWRITE = False  # Не перезаписывать файлы с одинаковым именем
+AWS_S3_SIGNATURE_VERSION = 's3v4'  # обязательная версия подписи
+AWS_S3_ADDRESSING_STYLE = "virtual"
 
+# Настройки для медиафайлов (загружаемых пользователями)
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            "file_overwrite": False,
+            "bucket_name": AWS_STORAGE_BUCKET_NAME,
+            "region_name": AWS_S3_REGION_NAME,
+            "custom_domain": AWS_S3_CUSTOM_DOMAIN,
+            "endpoint_url": f"https://s3.{AWS_S3_REGION_NAME}.amazonaws.com",
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
-# Проверка загрузки переменных окружения
-print("\n=== Email Configuration ===")
-print(f"EMAIL_HOST: {EMAIL_HOST}")
-print(f"EMAIL_PORT: {EMAIL_PORT}")
-print(f"EMAIL_USE_TLS: {EMAIL_USE_TLS}")
-print(f"EMAIL_HOST_USER: {EMAIL_HOST_USER or 'не установлен'}")
-print(f"EMAIL_HOST_PASSWORD: {'установлен' if EMAIL_HOST_PASSWORD else 'не установлен'}")
-print(f"DEFAULT_FROM_EMAIL: {DEFAULT_FROM_EMAIL}")
-print("=========================\n")
+# URL (важно!)
+STATIC_URL = '/static/'  # Остаётся на Render
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'  # S3
 
-print(repr(os.getenv("PG_NAME")))
-print(repr(os.getenv("PG_PASSWORD")))
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
+STATICFILES_DIRS = [BASE_DIR / 'static']
 

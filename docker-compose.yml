@@ -88,16 +88,16 @@ services:
     env_file:
       - .env
 
-#  nginx:
-#    build:
-#      context: ./nginx      # берёт nginx/Dockerfile и nginx.conf
-#    container_name: nginx
-#    depends_on:
-#      - web
-#    volumes:
-#      - media_volume:/media
-#    ports:
-#      - "80:80"
+  nginx:
+    build:
+      context: ./nginx      # берёт nginx/Dockerfile и nginx.conf
+    container_name: nginx
+    depends_on:
+      - web
+    volumes:
+      - media_volume:/media
+    ports:
+      - "80:80"
 
 volumes:
   postgres_data:
