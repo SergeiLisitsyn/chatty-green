@@ -1,0 +1,35 @@
+  
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="text-danger">Ошибка входа через Google</h2>
+    <p>Что-то пошло не так. Вот отладочная информация:</p>
+
+    <h5 class="mt-4">📦 GET параметры</h5>
+    <pre>{{ get|safe|json_script:"get-data" }}</pre>
+
+    <h5 class="mt-4">📦 POST параметры</h5>
+    <pre>{{ post|safe|json_script:"post-data" }}</pre>
+
+    <h5 class="mt-4">🧠 Session</h5>
+    <pre>{{ session|safe|json_script:"session-data" }}</pre>
+
+    <h5 class="mt-4">👤 User</h5>
+    {% if user %}
+      <pre>{{ user }}</pre>
+    {% else %}
+      <p><em>Пользователь не авторизован</em></p>
+    {% endif %}
+
+    <h5 class="mt-4">🔒 Cookies</h5>
+    <pre>{{ cookies|safe|json_script:"cookies-data" }}</pre>
+
+    <h5 class="mt-4">🌐 HTTP-заголовки</h5>
+    <pre>{{ meta|safe|json_script:"meta-data" }}</pre>
+
+    <hr>
+    <a href="{% url 'login' %}" class="btn btn-primary mt-3">Попробовать снова</a>
+  </div>
+
+{% endblock %}

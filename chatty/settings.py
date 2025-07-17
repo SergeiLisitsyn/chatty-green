@@ -349,3 +349,5 @@ STATIC_URL = 'https://chatty-green.s3.amazonaws.com/static/'# серверная
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # для collectstatic
 STATICFILES_DIRS = [BASE_DIR / 'static']  # дополнительные папки со статикой
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+

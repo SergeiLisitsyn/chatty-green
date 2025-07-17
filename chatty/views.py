@@ -3,6 +3,7 @@
 from django.shortcuts import render
 from posts.models import Post
 from django.db.models import Q
+from django.http import JsonResponse
 
 def welcome(request):
     """Отображает страницу приветствия (welcome.html)."""
@@ -43,4 +44,20 @@ def search_view(request):
     results = Post.objects.filter(Q(title__icontains=query) | Q(text__icontains=query)) if query else None
     return render(request, 'include/search_results.html', {'results': results})
 
+
+def login_error(request):
+    context = {
+        'session': dict(request.session),
+        'get': dict(request.GET),
+        'post': dict(request.POST),
+        'user': request.user if request.user.is_authenticated else None,
+        'path': request.path,
+        'method': request.method,
+        'cookies': request.COOKIES,
+        'meta': {
+            key: value for key, value in request.META.items()
+            if key.startswith('HTTP_') or key in ('REMOTE_ADDR', 'REQUEST_METHOD')
+        }
+    }
+    return render(request, 'login-error.html', context)
 

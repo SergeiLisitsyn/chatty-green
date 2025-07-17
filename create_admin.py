@@ -3,7 +3,7 @@ import os
 import django
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chatty.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chatty.settings.base')
 
 
 django.setup()  # Сначала вызываем настройку Django, только потом импорты моделей!

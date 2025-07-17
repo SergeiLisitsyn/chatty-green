@@ -2,7 +2,14 @@ from .base import *
 import dj_database_url
 
 DEBUG = False
-ALLOWED_HOSTS = ['chatty-green.com', 'www.chatty-green.com']
+ALLOWED_HOSTS = [
+    '.localhost',
+    '127.0.0.1',
+    '[::1]',
+    '193.181.208.18',
+    'chatty-green.com',  # 👈 обязательно
+    'www.chatty-green.com',  # если есть поддомен
+] 
 
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'

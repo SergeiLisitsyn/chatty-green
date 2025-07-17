@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import welcome
+from .views import welcome, login_error
 from posts.views import  RecommendedPostsByPromtView  # импортируем наше представление
 from ads.views import home  # отсюда идет функция home()
 from users import views as users_views
@@ -28,7 +28,7 @@ urlpatterns = [
     path('search/', RecommendedPostsByPromtView.as_view(), name='search'),  #  Поиск публикаций and videos(функция `search_results`)
     path('videopost/', include('videopost.urls')),
     path('social-auth/', include('social_django.urls', namespace='social')),
-
+    path('login-error/', login_error, name='login_error'),
 
 
 ]

@@ -4,37 +4,36 @@ services:
   web:
     build: .
     container_name: web
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=chatty.settings.prod
+      - DOCKERIZED=1
+    command: gunicorn Chatty_green.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120
     ports:
       - "8000:8000"
-    depends_on:
-      - nginx
     env_file:
       - .env
-    environment:
-      - DOCKERIZED=1        # <-- добавляем
     volumes:
       - ./static:/app/static
       - ./staticfiles:/app/staticfiles
       - media_volume:/media
 
-  postojka:
-    build:
-      context: ./postojka
-    container_name: postojka
-    ports:
-      - "8002:8000"
-    restart: always
-    depends_on:
-      - db
-    environment:
-      - PG_NAME=chatty_db
-      - PG_USER=chatty
-      - PG_PASSWORD=chatty_db
-      - DB_HOST=host.docker.internal
-      - DB_PORT=5432
-    env_file:
-      - .env
+
+#  postojka:
+#    build:
+#      context: ./postojka
+#    container_name: postojka
+#    ports:
+#      - "8002:8000"
+#    restart: always
+   # depends_on:
+#    environment:
+#      - PG_NAME=chatty_db
+#      - PG_USER=chatty
+#      - PG_PASSWORD=chatty_db
+#      - DB_HOST=host.docker.internal
+#      - DB_PORT=5432
+#    env_file:
+#      - .env
 
   nginx:
     build:
@@ -44,8 +43,10 @@ services:
       - web
     volumes:
       - media_volume:/media
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     ports:
       - "80:80"
+      - "443:443"
 
 volumes:
   media_volume:

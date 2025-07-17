@@ -21,7 +21,13 @@ from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.urls import reverse_lazy
+import logging
 
+logger = logging.getLogger(__name__)
+
+def custom_login_error(request):
+    logger.exception("Ошибка входа через Google")
+    return render(request, 'login_error.html')
 
 def welcome_view(request):
     return render(request, 'welcome.html')  # Загружаем welcome.html

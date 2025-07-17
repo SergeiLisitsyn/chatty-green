@@ -22,9 +22,9 @@ ENV RUN_MIGRATIONS="false" \
 
 # Код проекта
 COPY . .
-
+COPY .env /app/.env
 # Если нужно собирать статику, раскомментируй:
-RUN python manage.py collectstatic --noinput
+#RUN python manage.py collectstatic --noinput
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 ENTRYPOINT ["./entrypoint.sh"]
